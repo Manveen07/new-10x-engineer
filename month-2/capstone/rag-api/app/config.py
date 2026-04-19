@@ -6,17 +6,18 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     # Application settings
+    app_name: str = "month2-rag-api"
     app_env: Literal["local", "staging", "production"] = "local"
     log_level: str = "INFO"
 
     # Database
-    database_url: str = "postgresql+asyncpg://month1:month1@localhost:5432/month1"
+    database_url: str = "postgresql+asyncpg://month2:month2@localhost:5432/month2"
 
     # Redis
-    redis_url: str = "redis://localhost:6379/0"
+    redis_url: str = "redis://localhost:6379/1"  # Using DB 1 for Month 2
 
-    # Security (secrets are loaded from env, no default fallbacks)
-    secret_key: str
+    # Security
+    secret_key: str  # Required, no default
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 7
@@ -24,6 +25,12 @@ class Settings(BaseSettings):
     # Cache Configuration
     exact_cache_ttl_seconds: int = 3600
     semantic_cache_ttl_seconds: int = 86400
+
+    # RAG Configuration
+    default_top_k: int = 10
+    default_rerank_top_k: int = 5
+    rrf_k: int = 60
+    semantic_threshold: float = 0.93
 
     # LLM Providers
     default_provider: Literal["openai", "anthropic", "ollama"] = "openai"

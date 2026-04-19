@@ -14,7 +14,7 @@ Build the async Python and FastAPI muscle memory that every AI backend needs. By
 
 ## Prerequisites
 
-- Python 3.11+ installed
+- Python 3.12+ installed
 - PostgreSQL 14+ running locally (or Docker)
 - Redis Stack (Docker recommended)
 - Node.js 18+ (for some tooling)

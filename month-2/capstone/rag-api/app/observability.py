@@ -9,7 +9,7 @@ from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 import os
 
-def setup_observability(app: FastAPI, service_name: str = "month1-qa-api") -> None:
+def setup_observability(app: FastAPI, service_name: str = "month2-rag-api") -> None:
     resource = Resource.create({"service.name": service_name})
     provider = TracerProvider(resource=resource)
     
@@ -30,4 +30,3 @@ def setup_observability(app: FastAPI, service_name: str = "month1-qa-api") -> No
     
     # SQLAlchemy instrumentation will be bound when the engine is created
     # SQLAlchemyInstrumentor().instrument(engine=shared_engine)
-
