@@ -28,5 +28,7 @@ def setup_observability(app: FastAPI, service_name: str = "month2-rag-api") -> N
     # Auto-instrument async HTTPX clients
     HTTPXClientInstrumentor().instrument()
     
-    # SQLAlchemy instrumentation will be bound when the engine is created
-    # SQLAlchemyInstrumentor().instrument(engine=shared_engine)
+    # SQLAlchemy instrumentation
+    from app.db.session import engine
+    SQLAlchemyInstrumentor().instrument(engine=engine.sync_engine)
+

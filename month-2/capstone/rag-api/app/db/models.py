@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String, text, Index
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String, text, Index, Text
 from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from pgvector.sqlalchemy import Vector
@@ -38,7 +38,7 @@ class Chunk(Base):
     )
     tenant_id: Mapped[str] = mapped_column(String, nullable=False, index=True)
     chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
-    text: Mapped[str] = mapped_column(String, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
     token_count: Mapped[int] = mapped_column(Integer, nullable=False)
     
     # Metadata about the strategy used to create this chunk

@@ -1,0 +1,24 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: month2-rag-api
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    spec:
+      containerConcurrency: 8
+      containers:
+      - image: gcr.io/PROJECT_ID/month2-rag-api
+        ports:
+        - containerPort: 8080
+        env:
+        - name: APP_ENV
+          value: production
+        - name: LOG_LEVEL
+          value: INFO
+        # In prod, these would be update-secrets references
+        - name: DATABASE_URL
+          value: postgresql+asyncpg://user:pass@host:5432/db
+        - name: REDIS_URL
+          value: redis://host:6379/1

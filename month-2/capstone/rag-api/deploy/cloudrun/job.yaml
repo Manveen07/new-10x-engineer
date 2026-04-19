@@ -1,0 +1,16 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: month2-rag-ingest
+spec:
+  template:
+    spec:
+      template:
+        spec:
+          containers:
+          - image: gcr.io/PROJECT_ID/month2-rag-api
+            args: ["python", "-m", "app.ingest.run"]
+            env:
+            - name: APP_ENV
+              value: production
+            # ... additional envs/secrets

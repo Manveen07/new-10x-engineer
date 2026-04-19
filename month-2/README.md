@@ -1,33 +1,32 @@
-# Month 2 — RAG Pipelines & Vector Data Engineering
+# Month 2 Capstone: Retrieval Engineering Platform
 
-## Goal
-Build production-quality Retrieval-Augmented Generation systems. By month's end you'll have a full RAG pipeline with hybrid search, reranking, evaluation metrics, and a knowledge graph layer.
+A production-caliber retrieval engineering platform focused on measuring retrieval quality, benchmarking architectural tradeoffs, and building a resilient ingestion-to-query pipeline.
 
-## Weekly Breakdown
+## Architectural Baseline
+*   **Vector Store**: `pgvector`-first (Exact search baseline, HNSW for ANN experiments).
+*   **Lexical Baseline**: PostgreSQL Full-Text Search (FTS) using `tsvector` and `ts_rank_cd`. 
+*   **Fusion**: Reciprocal Rank Fusion (RRF).
+*   **Deployment**: 
+    *   **Query Service**: Google Cloud Run Service.
+    *   **Ingestion/Backfills**: Google Cloud Run Jobs.
 
-| Week | Topic | Key Deliverable |
-|------|-------|----------------|
-| 5 | Vector Databases & Indexing | Document search API with pgvector benchmarks |
-| 6 | Advanced RAG Techniques | HyDE, hybrid search, reranking implementations |
-| 7 | Graph RAG & Production Architecture | Graph + vector hybrid retrieval system |
-| 8 | Production RAG Capstone | Evaluated, deployed RAG pipeline |
+## Local Development
 
-## Prerequisites (from Month 1)
-- Working FastAPI project with auth, database, caching
-- LLM provider adapter pattern
-- Docker Compose fluency
-- Async Python proficiency
-
-## New Tools This Month
 ```bash
-pip install pgvector psycopg[binary] langchain langchain-openai langchain-community
-pip install chromadb sentence-transformers rank-bm25 cohere
-pip install neo4j llama-index ragas
-pip install tiktoken unstructured pdf2image pytesseract
+# Start dependencies
+docker-compose up -d
+
+# Initial migration
+cd month-2/capstone/rag-api
+alembic upgrade head
+
+# Run smoke benchmark
+make benchmark-smoke
 ```
 
-## Progress Tracker
-- [ ] Week 5: Vector Databases
-- [ ] Week 6: Advanced RAG
-- [ ] Week 7: Graph RAG
-- [ ] Week 8: Production RAG Capstone
+## Reproducible Benchmarking
+Every search run is governed by a versioned and hashable `RetrievalConfig` containing all parameters (top_k, models, chunking strategy). Every chunk carries a `retrieval_config_hash` and `content_sha256`.
+
+## Performance Gates
+* **Week 1 Smoke Gate**: Non-zero NDCG@10 on seeded mini-corpus.
+* **Regression Gate**: PRs must not regress NDCG@10 by more than 5%.

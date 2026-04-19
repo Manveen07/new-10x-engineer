@@ -21,6 +21,10 @@ def create_app() -> FastAPI:
     # Initialize OpenTelemetry
     setup_observability(app)
     
+    # Include routers
+    from app.api.routes import retrieval
+    app.include_router(retrieval.router)
+
     @app.get("/")
     async def root():
         return {
@@ -36,6 +40,7 @@ def create_app() -> FastAPI:
     @app.get("/health/ready")
     async def readiness():
         from sqlalchemy import text
+        from fastapi import Response
         from app.db.session import AsyncSessionLocal
         from app.clients.redis import get_redis_client
         
@@ -44,16 +49,25 @@ def create_app() -> FastAPI:
             async with AsyncSessionLocal() as session:
                 await session.execute(text("SELECT 1"))
         except Exception:
-            return {"status": "unready", "reason": "database"}
+            return Response(
+                content='{"status": "unready", "reason": "database"}', 
+                status_code=503, 
+                media_type="application/json"
+            )
             
         # 2. Check Redis
         try:
             redis = get_redis_client()
             await redis.ping()
         except Exception:
-            return {"status": "unready", "reason": "redis"}
+            return Response(
+                content='{"status": "unready", "reason": "redis"}', 
+                status_code=503, 
+                media_type="application/json"
+            )
             
         return {"status": "ready"}
+
 
     return app
 
