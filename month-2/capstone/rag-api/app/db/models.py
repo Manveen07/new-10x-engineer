@@ -57,4 +57,5 @@ class Chunk(Base):
     __table_args__ = (
         Index("ix_chunks_fts", "fts", postgresql_using="gin"),
         Index("ix_chunks_doc_id", "document_id"),
+        Index("ix_chunks_doc_index", "document_id", "chunk_index", unique=True),
     )
