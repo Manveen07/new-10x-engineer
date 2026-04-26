@@ -1,311 +1,304 @@
-# Month 1 Capstone: AI-Powered Q&A API
+# Month 1 Capstone: Production Q&A API
 
-## Overview
+## Purpose
 
-Build a production-grade Q&A API that combines everything from Month 1. This is not a toy project — it's the foundation you'll extend in Months 2-4 with RAG pipelines, agents, and MCP servers.
+Build the API foundation that Months 2-4 will extend. This capstone is a production-shaped backend for answering user questions through a cache-first LLM provider flow.
 
-## Architecture
+The goal is not to build RAG yet. The goal is to prove you can build the backend layer that a RAG or agent system can trust.
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                       Client                              │
-│              (curl, Postman, or frontend)                  │
-└──────────────────────┬───────────────────────────────────┘
-                       │
-                       ▼
-┌──────────────────────────────────────────────────────────┐
-│                    FastAPI Backend                         │
-│  ┌──────────┐  ┌──────────┐  ┌────────────────────────┐ │
-│  │ JWT Auth │  │ Rate     │  │ Middleware              │ │
-│  │ + RBAC   │  │ Limiter  │  │ (logging, timing, IDs) │ │
-│  └──────────┘  └──────────┘  └────────────────────────┘ │
-│                                                           │
-│  ┌────────────────────── /qa/ask ─────────────────────┐  │
-│  │                                                     │  │
-│  │  1. Validate input (Pydantic)                       │  │
-│  │  2. Check semantic cache (Redis)                    │  │
-│  │       ├─ HIT → return cached response               │  │
-│  │       └─ MISS → continue                            │  │
-│  │  3. Call LLM via adapter pattern                    │  │
-│  │  4. Cache the response                              │  │
-│  │  5. Log query to PostgreSQL                         │  │
-│  │  6. Return structured response                      │  │
-│  │                                                     │  │
-│  └─────────────────────────────────────────────────────┘  │
-│                                                           │
-└──────┬─────────────────┬───────────────────┬─────────────┘
-       │                 │                   │
-       ▼                 ▼                   ▼
-┌────────────┐  ┌──────────────┐  ┌──────────────────┐
-│ PostgreSQL │  │ Redis Stack  │  │ LLM Provider     │
-│            │  │              │  │ (via adapter)     │
-│ - users    │  │ - semantic   │  │                   │
-│ - queries  │  │   cache      │  │ - OpenAI          │
-│ - history  │  │ - vectors    │  │ - Mock (testing)  │
-│ - stats    │  │              │  │ - Anthropic       │
-└────────────┘  └──────────────┘  └──────────────────┘
+## User Story
+
+As an authenticated user, I can ask a question. The system checks whether it has already answered the same or a semantically similar question. If yes, it returns the cached answer. If not, it calls a configured LLM provider, stores the result, logs cost and latency, and returns a structured answer.
+
+As an admin, I can inspect cache stats, query stats, and service health.
+
+## Required Architecture
+
+```mermaid
+flowchart LR
+    A[Client] --> B[FastAPI]
+    B --> C[Auth and RBAC]
+    B --> D[Rate limiter]
+    B --> E[Q&A service]
+    E --> F[Exact Redis cache]
+    E --> G[Semantic Redis cache]
+    E --> H[LLM provider adapter]
+    H --> I[Mock/OpenAI/Anthropic/Ollama]
+    E --> J[(PostgreSQL)]
+    J --> K[users]
+    J --> L[refresh_tokens]
+    J --> M[queries]
+    J --> N[provider_calls]
+    J --> O[cache_metadata]
+    B --> P[Structured logs]
 ```
 
-## Detailed Requirements
+## Required Stack
 
-### 1. Project Structure
+| Area | Requirement |
+|---|---|
+| Project management | `uv`, `pyproject.toml`, lockfile |
+| Runtime | Python 3.12+ |
+| API | FastAPI with lifespan-managed resources |
+| Settings | `pydantic-settings` |
+| Validation | Pydantic v2 request and response models |
+| Database | PostgreSQL, SQLAlchemy async, Alembic |
+| Cache | Redis exact cache and semantic cache |
+| Auth | JWT access and refresh tokens |
+| Passwords | Argon2 or bcrypt hashing |
+| Provider abstraction | mock, OpenAI, Anthropic, optional local provider |
+| HTTP client | shared `httpx.AsyncClient` with timeouts |
+| Logging | `structlog` structured JSON logs |
+| Retries | bounded provider retries with `stamina` or equivalent |
+| Tests | pytest, pytest-asyncio, httpx test client, respx |
+| Local runtime | Docker Compose |
 
-```
+## Required Project Structure
+
+```text
 qa-api/
-├── app/
-│   ├── __init__.py
-│   ├── main.py              # App creation, lifespan, middleware
-│   ├── config.py            # Pydantic Settings
-│   ├── dependencies.py      # DB session, current user, etc.
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   ├── auth.py          # /auth/register, /auth/login, /auth/refresh
-│   │   ├── qa.py            # /qa/ask, /qa/history
-│   │   └── admin.py         # /admin/stats, /admin/cache
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   ├── auth.py          # Token, UserCreate, UserResponse
-│   │   ├── qa.py            # Question, Answer, QueryHistory
-│   │   └── admin.py         # StatsResponse, CacheStats
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── auth_service.py  # Password hashing, token creation
-│   │   ├── qa_service.py    # Core Q&A logic (cache check → LLM → cache store)
-│   │   └── cache_service.py # Semantic cache operations
-│   ├── providers/
-│   │   ├── __init__.py
-│   │   ├── base.py          # LLMProvider abstract base class
-│   │   ├── openai.py        # OpenAI adapter
-│   │   ├── anthropic.py     # Anthropic adapter
-│   │   ├── mock.py          # Mock adapter (testing)
-│   │   └── factory.py       # Provider factory
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── database.py      # SQLAlchemy ORM models
-│   └── middleware/
-│       ├── __init__.py
-│       ├── logging.py       # Request logging
-│       ├── timing.py        # Request timing
-│       └── rate_limit.py    # Rate limiting
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py          # Pytest fixtures (test DB, test client)
-│   ├── test_auth.py         # Auth flow tests
-│   ├── test_qa.py           # Q&A endpoint tests
-│   └── test_cache.py        # Semantic cache tests
-├── docker-compose.yml
-├── Dockerfile
-├── .env.example
-├── requirements.txt
-├── alembic.ini
-└── alembic/
-    └── versions/
+  app/
+    __init__.py
+    main.py
+    config.py
+    lifespan.py
+    dependencies.py
+    logging.py
+    errors.py
+    routers/
+      auth.py
+      health.py
+      qa.py
+      users.py
+      admin.py
+    schemas/
+      auth.py
+      errors.py
+      health.py
+      qa.py
+      users.py
+      admin.py
+    models/
+      database.py
+    repositories/
+      users.py
+      refresh_tokens.py
+      queries.py
+      provider_calls.py
+      cache_metadata.py
+    services/
+      auth.py
+      qa.py
+      cache.py
+      rate_limit.py
+    providers/
+      base.py
+      mock.py
+      openai.py
+      anthropic.py
+      ollama.py
+      registry.py
+    clients/
+      http.py
+      redis.py
+      db.py
+  alembic/
+  docs/
+    architecture.md
+    demo-script.md
+    decisions/
+    benchmarks/
+  tests/
+    conftest.py
+    test_auth.py
+    test_health.py
+    test_qa.py
+    test_cache.py
+    test_providers.py
+  .env.example
+  Dockerfile
+  docker-compose.yml
+  Makefile
+  pyproject.toml
+  README.md
 ```
 
-### 2. API Endpoints
+## Required Endpoints
 
 | Method | Path | Auth | Description |
-|--------|------|------|-------------|
-| POST | /auth/register | None | Create account |
-| POST | /auth/login | None | Get access + refresh tokens |
-| POST | /auth/refresh | Refresh token | Get new token pair |
-| POST | /qa/ask | Bearer token | Ask a question |
-| GET | /qa/history | Bearer token | User's past queries |
-| GET | /admin/stats | Admin only | Cache stats, top queries, latency |
-| DELETE | /admin/cache | Admin only | Clear semantic cache |
-| GET | /health | None | Service + dependency health |
+|---|---|---|---|
+| GET | `/health/live` | none | Process is running |
+| GET | `/health/ready` | none | DB and Redis are reachable |
+| POST | `/auth/register` | none | Create user |
+| POST | `/auth/login` | none | Issue access and refresh tokens |
+| POST | `/auth/refresh` | refresh token | Rotate access token |
+| POST | `/auth/logout` | bearer token | Revoke refresh token/session |
+| GET | `/users/me` | bearer token | Current user |
+| POST | `/qa/ask` | bearer token | Main Q&A endpoint |
+| GET | `/qa/history` | bearer token | Current user's query history |
+| GET | `/admin/cache/stats` | admin | Cache hit rate and entries |
+| DELETE | `/admin/cache` | admin | Clear cache namespace |
+| GET | `/admin/query-stats` | admin | Latency, provider, and cache stats |
 
-### 3. Database Schema
+## Required Data Model
 
-```sql
--- Users table
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    hashed_password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'user',  -- 'user' or 'admin'
-    tier VARCHAR(20) DEFAULT 'free',  -- 'free' or 'paid' (for rate limiting)
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT NOW()
-);
+Minimum PostgreSQL tables:
 
--- Query history table
-CREATE TABLE queries (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    question TEXT NOT NULL,
-    answer TEXT NOT NULL,
-    provider VARCHAR(50) NOT NULL,      -- which LLM answered
-    cache_hit BOOLEAN DEFAULT FALSE,    -- was this served from cache?
-    latency_ms FLOAT NOT NULL,          -- total response time
-    input_tokens INTEGER,
-    output_tokens INTEGER,
-    created_at TIMESTAMP DEFAULT NOW()
-);
+| Table | Purpose |
+|---|---|
+| `users` | identity, role, tier, password hash |
+| `refresh_tokens` | revocable session/token state |
+| `queries` | user question, answer, cache outcome, latency |
+| `provider_calls` | provider/model/tokens/cost/status/retry metadata |
+| `cache_entries` | cache key, namespace, TTL, metadata |
 
--- Indexes
-CREATE INDEX idx_queries_user_id ON queries(user_id);
-CREATE INDEX idx_queries_created_at ON queries(created_at);
-CREATE INDEX idx_queries_cache_hit ON queries(cache_hit);
+Minimum indexes:
+
+- `users.email` unique.
+- `refresh_tokens.token_hash` unique.
+- `queries(user_id, created_at)`.
+- `provider_calls(query_id)`.
+- `cache_entries(cache_key)`.
+- `cache_entries(namespace, created_at)`.
+
+## `/qa/ask` Required Flow
+
+```text
+1. Authenticate user.
+2. Validate question payload.
+3. Enforce rate limit by tier.
+4. Generate normalized cache key.
+5. Check exact Redis cache.
+6. If exact hit, persist query with cache_outcome=exact_hit and return.
+7. Check semantic cache.
+8. If semantic hit, persist query with cache_outcome=semantic_hit and return.
+9. Build provider request.
+10. Call provider through provider interface with timeout and bounded retry.
+11. Persist provider call metadata.
+12. Store answer in exact and semantic cache.
+13. Persist query history.
+14. Return structured answer.
 ```
 
-### 4. Core Flow: /qa/ask
+Response shape:
 
-```python
-async def ask_question(question: str, user: User, db: AsyncSession):
-    start = time.perf_counter()
-
-    # Step 1: Check semantic cache
-    cache_result = await cache_service.get(question)
-    if cache_result.hit:
-        latency = (time.perf_counter() - start) * 1000
-        await log_query(db, user, question, cache_result.response,
-                       cache_hit=True, latency_ms=latency, provider="cache")
-        return {"answer": cache_result.response, "cached": True, "latency_ms": latency}
-
-    # Step 2: Call LLM
-    provider = get_llm_provider()  # From factory, based on env var
-    llm_response = await provider.complete([
-        {"role": "system", "content": "You are a helpful assistant. Answer concisely."},
-        {"role": "user", "content": question},
-    ])
-
-    # Step 3: Cache the response
-    await cache_service.set(question, llm_response.content)
-
-    # Step 4: Log to database
-    latency = (time.perf_counter() - start) * 1000
-    await log_query(db, user, question, llm_response.content,
-                   cache_hit=False, latency_ms=latency,
-                   provider=provider.provider_name,
-                   input_tokens=llm_response.input_tokens,
-                   output_tokens=llm_response.output_tokens)
-
-    return {
-        "answer": llm_response.content,
-        "cached": False,
-        "latency_ms": latency,
-        "provider": provider.provider_name,
-    }
+```json
+{
+  "answer": "string",
+  "cache": {
+    "outcome": "miss",
+    "similarity": null,
+    "matched_query": null
+  },
+  "provider": {
+    "name": "mock",
+    "model": "mock-chat",
+    "input_tokens": 12,
+    "output_tokens": 48,
+    "estimated_cost_usd": 0.0
+  },
+  "latency_ms": 123.4,
+  "request_id": "..."
+}
 ```
 
-### 5. Rate Limiting Tiers
+## Required Observability
 
-| Tier | /qa/ask limit | Other endpoints |
-|------|--------------|-----------------|
-| free | 10 req/min | 60 req/min |
-| paid | 100 req/min | 300 req/min |
-| admin | unlimited | unlimited |
+Every `/qa/ask` request should log:
 
-### 6. Environment Variables
+- `request_id`
+- `user_id`
+- `route`
+- `cache_outcome`
+- `provider`
+- `model`
+- `input_tokens`
+- `output_tokens`
+- `estimated_cost_usd`
+- `latency_ms`
+- `retry_count`
+- `status`
+- `error_type` when failed
 
-```env
-# .env.example
-DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/qa_api
-REDIS_URL=redis://localhost:6379
+## Required Tests
 
-SECRET_KEY=your-secret-key-here
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-REFRESH_TOKEN_EXPIRE_DAYS=7
+| Test file | Required coverage |
+|---|---|
+| `test_health.py` | live and ready checks |
+| `test_auth.py` | register, login, refresh, logout, `/users/me`, admin rejection |
+| `test_qa.py` | cache miss, exact hit, semantic hit, provider failure, auth failure |
+| `test_cache.py` | TTL, namespace, threshold behavior, stats |
+| `test_providers.py` | mock provider, provider factory, timeout/retry behavior |
 
-LLM_PROVIDER=mock           # mock, openai, anthropic
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
+Tests must run in mock provider mode with no live API keys.
 
-CACHE_SIMILARITY_THRESHOLD=0.88
-CACHE_TTL_SECONDS=3600
+## Required Documentation
 
-RATE_LIMIT_FREE=10
-RATE_LIMIT_PAID=100
-```
+Add:
 
-### 7. Docker Compose
-
-```yaml
-# docker-compose.yml
-version: "3.8"
-services:
-  api:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/qa_api
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - db
-      - redis
-
-  db:
-    image: postgres:16
-    environment:
-      POSTGRES_DB: qa_api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  redis:
-    image: redis/redis-stack:latest
-    ports:
-      - "6379:6379"
-      - "8001:8001"  # RedisInsight UI
-
-volumes:
-  pgdata:
-```
+- `README.md` with setup, endpoints, architecture, demo flow, tests, and limitations.
+- `docs/architecture.md` with Mermaid diagram.
+- `docs/demo-script.md` with exact commands for a reviewer.
+- `docs/decisions/0001-tooling-choices.md`.
+- `docs/decisions/0002-fastapi-project-structure.md`.
+- `docs/decisions/0003-provider-adapter-pattern.md`.
+- `docs/decisions/0004-semantic-cache-design.md`.
+- `docs/decisions/0005-cloud-run-deployment-target.md`.
+- `docs/benchmarks/cache-threshold-sweep.md`.
+- `docs/benchmarks/qa-api-latency.md`.
 
 ## Evaluation Criteria
 
-### Must Have (pass/fail)
-- [ ] Auth flow works end-to-end (register → login → ask question)
-- [ ] RBAC enforced (admin endpoints reject regular users)
-- [ ] Semantic cache returns cached results for similar queries
-- [ ] LLM provider swappable via environment variable
-- [ ] Docker Compose starts the full stack
-- [ ] Health endpoint checks all dependencies
+### Must Have
 
-### Quality Metrics
-- [ ] Cache hit rate >60% on repeated similar queries
-- [ ] API handles 50 concurrent requests without errors
-- [ ] Consistent error response shape across all endpoints
-- [ ] All middleware working (request IDs, logging, timing)
-- [ ] Tests pass with >70% coverage
+- [ ] App starts locally.
+- [ ] `/docs` renders.
+- [ ] Health endpoints work.
+- [ ] Auth flow works end to end.
+- [ ] RBAC blocks non-admin users from admin endpoints.
+- [ ] `/qa/ask` works with mock provider and no API key.
+- [ ] Exact cache hit path works.
+- [ ] Semantic cache hit path works.
+- [ ] Cache miss path calls provider adapter.
+- [ ] Query history is stored.
+- [ ] Provider-call metadata is stored.
+- [ ] Tests pass.
+- [ ] Docker Compose starts API, PostgreSQL, and Redis.
 
-### Stretch Goals
-- [ ] Streaming responses for LLM calls
-- [ ] WebSocket endpoint for real-time Q&A
-- [ ] Query analytics dashboard endpoint
-- [ ] Automatic cache warming on startup
+### Quality Bar
 
-## Architecture Decision Record (ADR)
+- [ ] Error responses use one consistent envelope.
+- [ ] Provider calls have explicit timeouts.
+- [ ] Retries are bounded and logged.
+- [ ] Logs include cost and latency fields.
+- [ ] Cache threshold is documented with a tiny benchmark.
+- [ ] README explains what is intentionally not in Month 1.
+- [ ] ADRs explain the major tradeoffs.
 
-After building, write a brief ADR answering:
+## Not Doing In This Capstone
 
-1. **Why FastAPI over Flask/Django?**
-   (async native, auto-docs, Pydantic integration, dependency injection)
+- Full document ingestion.
+- RAG over user documents.
+- LangChain or LangGraph.
+- MCP.
+- Multi-agent workflows.
+- Fine-tuning.
+- Frontend UI.
 
-2. **Why PostgreSQL for metadata + Redis for cache?**
-   (relational data needs ACID; cache needs speed + vector similarity)
+Those belong in later months.
 
-3. **Why the adapter pattern for LLM providers?**
-   (providers change constantly; testing needs mocks; fallback support)
+## Month 2 Handoff
 
-4. **Why semantic caching instead of exact-match?**
-   (users ask the same question different ways; LLM calls are expensive)
+Month 2 should be able to reuse:
 
-5. **What would you change with more time?**
-   (your honest assessment — this shows engineering maturity)
+- FastAPI structure.
+- Auth and RBAC.
+- Settings.
+- Error envelope.
+- Async PostgreSQL.
+- Redis.
+- Provider abstraction.
+- Query/provider telemetry.
+- Docker and test workflow.
 
-## How This Connects to Month 2
-
-In Month 2, you'll extend this system with:
-- Vector database (pgvector) for document storage
-- RAG pipeline (retrieval + generation)
-- Advanced retrieval (hybrid search, reranking)
-- The /qa/ask endpoint becomes a full RAG endpoint
-
-Everything you build this month is the foundation. Build it well.
+If Month 2 has to rebuild those from scratch, Month 1 is not finished.

@@ -1,258 +1,178 @@
-# Week 4: Semantic Caching & System Design Fundamentals
+# Week 4: Semantic Caching, System Design, And Capstone Integration
 
-## Why This Matters
-LLM calls are expensive ($0.01-0.10+ per query) and slow (1-5 seconds). Semantic caching can cut costs by 30-60% and latency by 10x for repeated similar queries. System design thinking ties together everything from Month 1 and prepares you for the architecture decisions in Months 2-4.
+## Outcome
 
----
+By the end of Week 4 the Month 1 capstone should be a runnable Q&A API. It should validate a question, authenticate the user, check exact and semantic cache paths, call a provider on cache miss, persist query history and provider-call data, log cost/latency/cache outcome, and return a structured answer.
 
-## Day-by-Day Plan
+## What This Week Teaches
 
-### Monday — Redis Vector Similarity Search (1.5h)
+- Redis Stack basics and vector search.
+- Exact cache vs semantic cache.
+- Similarity threshold tuning.
+- Cache invalidation and TTLs.
+- Latency and cost measurement.
+- Health/readiness checks across dependencies.
+- AI system design tradeoffs.
+- Capstone documentation, tests, ADRs, and demo flow.
 
-**Read (30 min):**
-- Redis blog: What is Semantic Caching?
-  https://redis.io/blog/what-is-semantic-caching/
+## Day 16: Redis Vector Search
 
-**Read (30 min):**
-- RedisVL SemanticCache documentation
-  https://redis.io/docs/latest/develop/ai/redisvl/user_guide/llmcache/
+Exercise: `../exercises/day16_redis_vectors.py`
 
-**Read (30 min):**
-- Redis Stack quickstart (Docker setup)
-  https://redis.io/docs/latest/operate/oss_and_stack/install/install-stack/docker/
+Build:
 
-**Key concepts:**
-- Traditional cache: exact key match (`"what is python"` != `"what's python"`)
-- Semantic cache: vector similarity match (`"what is python"` ≈ `"what's python"`)
-- Redis Stack includes RediSearch which supports vector similarity (HNSW index)
-- Workflow: query → embed → search cache → if hit (similarity > threshold) return cached → else call LLM → cache result
-- Similarity threshold is the critical tuning parameter: too low = stale results, too high = low hit rate
+- Redis Stack running locally through Docker.
+- A small vector index.
+- Insert query embeddings with metadata.
+- Search similar vectors.
+- Compare vector search latency against brute force for a small dataset.
 
-**Setup:**
-```bash
-# Start Redis Stack with Docker
-docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+Capstone connection:
 
-# Install Python client
-pip install redisvl redis openai
+- This becomes the semantic lookup path before calling the LLM provider.
+
+Done when:
+
+- You can insert and retrieve vector-like records.
+- You can explain the distance metric and threshold.
+- You can show search results with score and metadata.
+
+## Day 17: Semantic Cache
+
+Exercise: `../exercises/day17_semantic_cache.py`
+
+Build:
+
+- `SemanticCache.get(query)`.
+- `SemanticCache.set(query, response, metadata)`.
+- TTL support.
+- Namespace support.
+- Cache stats: hits, misses, hit rate, avg lookup latency.
+
+Cache result model should include:
+
+- `hit`
+- `hit_type`
+- `response`
+- `matched_query`
+- `similarity`
+- `latency_ms`
+
+Capstone connection:
+
+- `/qa/ask` should return from cache before provider call where safe.
+
+Done when:
+
+- Repeated exact questions hit exact cache.
+- Similar questions can hit semantic cache above threshold.
+- Misses fall through to the provider.
+
+## Day 18: Cache Tuning And Evaluation
+
+Exercise: `../exercises/day18_cache_tuning.py`
+
+Build:
+
+- A small evaluation set of question variants.
+- Threshold sweep for 0.80, 0.85, 0.90, and 0.95.
+- False-positive and false-negative notes.
+- Latency saved estimate.
+- Cost saved estimate.
+
+Recommended report:
+
+```text
+threshold | hit_rate | false_positive_rate | false_negative_rate | avg_latency_saved_ms | estimated_cost_saved_usd
 ```
 
-**Exercise:** See `exercises/day16_redis_vectors.py`
+Capstone connection:
 
-Set up Redis Stack and:
-1. Store 100 text embeddings with metadata
-2. Perform vector similarity search (KNN query)
-3. Compare results at different distance thresholds
-4. Measure search latency vs brute-force comparison
+- The README should not claim "semantic cache works" without a tiny measurement.
 
----
+Done when:
 
-### Tuesday — Build a Semantic Cache (1.5h)
+- You choose a default threshold and explain why.
+- You document when semantic caching is unsafe.
 
-**Read (1h):**
-- Redis LangCache tutorial (follow along with code)
-  https://redis.io/tutorials/semantic-caching-with-redis-langcache/
+## Day 19: AI System Design
 
-**Read (30 min):**
-- RedisVL SemanticCache API reference
-  https://redis.io/docs/latest/develop/ai/redisvl/api/cache/
+Exercise: `../exercises/day19_ai_system_design.md`
 
-**Exercise:** See `exercises/day17_semantic_cache.py`
+Build:
 
-Build a semantic cache from scratch (not just using RedisVL's built-in):
-1. `SemanticCache` class with `get()` and `set()` methods
-2. On `get(query)`: embed query → search Redis for similar → return if above threshold
-3. On `set(query, response)`: embed query → store in Redis with response as metadata
-4. Add TTL support (cached entries expire after N hours)
-5. Add namespace support (separate caches for different use cases)
-6. Test with 20 query variations and measure hit rate
+- Architecture diagram for the Q&A API.
+- Failure-mode table.
+- Cost-driver table.
+- Scaling notes for 10x traffic.
+- Degraded-mode behavior when Redis, DB, or provider is down.
 
-Target: cache hit rate >60% on semantically similar query variations.
+Required scenarios:
 
----
+- Redis down.
+- PostgreSQL down.
+- Provider timeout.
+- Provider returns malformed output.
+- User exceeds rate limit.
 
-### Wednesday — Tune and Evaluate the Cache (1.5h)
+Capstone connection:
 
-**Read (1h):**
-- Medium: Semantic Caching of AI Agents Using Redis
-  https://shilpathota.medium.com/semantic-caching-of-ai-agents-using-redis-database-b114edfa5e68
+- These notes become the README "Architecture and tradeoffs" section and ADRs.
 
-**Read (30 min):**
-- RedisVL distance metrics documentation
-  https://redis.io/docs/latest/develop/ai/redisvl/user_guide/
+## Day 20: Final Capstone Integration
 
-**Exercise:** See `exercises/day18_cache_tuning.py`
+Exercise: `../capstone/CAPSTONE.md`
 
-Tune your semantic cache:
-1. Test similarity thresholds: 0.80, 0.85, 0.90, 0.95
-   - For each: measure hit rate, false positive rate, false negative rate
-2. Test different embedding models: text-embedding-3-small vs text-embedding-3-large
-   - Measure quality difference vs cost difference
-3. Add tag-based filtering (cache per user, per topic, per session)
-4. Implement cache invalidation strategies:
-   - TTL-based (time expires)
-   - Event-based (source data changed → invalidate related entries)
-   - Manual (admin clears specific entries)
-5. Build a dashboard: hit rate, avg latency saved, cost saved
+Build:
 
-**Key tuning insights:**
-- 0.85-0.90 is the sweet spot for most use cases
-- Below 0.85: too many false positives (returning wrong cached answers)
-- Above 0.95: too many misses (barely better than exact match)
-- Embedding model quality matters more than threshold tuning
+- `/qa/ask` route.
+- `/qa/history` route.
+- Admin cache/stats route.
+- Exact cache and semantic cache.
+- Provider call on cache miss.
+- Query history write.
+- Provider-call write.
+- Tests for cache hit, cache miss, provider error, auth failure, and rate limit.
+- Docker Compose.
+- README, architecture diagram, ADRs, and demo script.
 
----
+Done when:
 
-### Thursday — System Design for AI Applications (1.5h)
+- `uv run pytest` passes.
+- The mock provider path works without API keys.
+- Docker Compose starts all dependencies.
+- The README can guide someone through the demo in under five minutes.
 
-**Read (1h):**
-- System Design Handbook: AI system design guide
-  https://www.systemdesignhandbook.com/guides/ai-system-design/
+## Weekend 4: Portfolio Polish
 
-**Read (30 min):**
-- donnemartin/system-design-primer — Start here section
-  https://github.com/donnemartin/system-design-primer#system-design-topics-start-here
+Polish the capstone as a public proof-of-work artifact:
 
-**Key architecture patterns for AI systems:**
+- Add screenshots of `/docs`, health endpoint, example answer, logs, and tests.
+- Add `docs/demo-script.md`.
+- Add `docs/architecture.md`.
+- Add ADRs under `docs/decisions/`.
+- Add benchmark notes under `docs/benchmarks/`.
+- Add a "Not doing in Month 1" section so the scope is clear.
 
-```
-┌────────────────────────────────────────────────────────┐
-│                    API Gateway / LB                      │
-├────────────────────────────────────────────────────────┤
-│  ┌──────────┐  ┌──────────┐  ┌──────────────────────┐ │
-│  │ Auth     │  │ Rate     │  │ Request Router       │ │
-│  │ Service  │  │ Limiter  │  │ (simple vs complex)  │ │
-│  └──────────┘  └──────────┘  └──────────────────────┘ │
-├────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌───────────────┐  ┌────────────┐  │
-│  │ Semantic     │  │ RAG Pipeline  │  │ Agent      │  │
-│  │ Cache (Redis)│  │ (retrieval)   │  │ Orchestrator│ │
-│  └──────────────┘  └───────────────┘  └────────────┘  │
-├────────────────────────────────────────────────────────┤
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐ │
-│  │PostgreSQL│  │ Vector   │  │ LLM      │  │ Object│ │
-│  │ (meta)   │  │ Store    │  │ Provider │  │ Store │ │
-│  └──────────┘  └──────────┘  └──────────┘  └───────┘ │
-├────────────────────────────────────────────────────────┤
-│  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐  │
-│  │ Observability│  │ Eval Pipeline│  │ Async Queue │  │
-│  │ (traces)     │  │ (quality)    │  │ (ingestion) │  │
-│  └──────────────┘  └──────────────┘  └─────────────┘  │
-└────────────────────────────────────────────────────────┘
-```
+## Week 4 Acceptance Gate
 
-**No exercise today — study and diagram.** Draw the system architecture for:
-1. A customer support chatbot serving 1000 users/day
-2. A document Q&A system for a 50GB corpus
-3. A multi-agent workflow that processes insurance claims
-
-For each, identify: bottlenecks, scaling strategy, failure modes, and cost drivers.
-
----
-
-### Friday — System Design Case Studies (1.5h)
-
-**Read (30 min):**
-- Evidently AI ML system design case studies
-  https://www.evidentlyai.com/ml-system-design
-
-**Read (30 min):**
-- GitHub: themanojdesai/genai-llm-ml-case-studies
-  https://github.com/themanojdesai/genai-llm-ml-case-studies
-  Pick 2-3 that interest you and read them
-
-**Read (30 min):**
-- ombharatiya/ai-system-design-guide
-  https://github.com/ombharatiya/ai-system-design-guide
-
-**Study these real-world architectures:**
-1. How does ChatGPT handle millions of concurrent users?
-2. How does Notion AI serve document Q&A at scale?
-3. How do companies like Stripe use AI for fraud detection?
-
-**For each, note:**
-- What's the data flow?
-- Where does caching sit?
-- How do they handle latency?
-- What's the evaluation strategy?
-- What would break first at 10x scale?
-
----
-
-### Weekend — Month 1 Capstone Project (2-3h)
-
-See `capstone/` directory for the full spec.
-
-**Build: AI-Powered Q&A API**
-
-This capstone combines everything from Month 1:
-
-```
-Client → FastAPI (auth, validation, rate limiting)
-         ├─→ Semantic Cache (Redis) → return if hit
-         ├─→ PostgreSQL (query metadata, user history)
-         ├─→ LLM Provider Adapter → generate answer
-         └─→ Store result in cache
-```
-
-**Requirements:**
-1. **FastAPI backend** with proper project structure (Week 2)
-2. **JWT auth** with RBAC — admin can see all queries, users see their own (Week 2)
-3. **Async PostgreSQL** for user accounts, query history, and metadata (Week 2)
-4. **Redis semantic caching** with measured hit rates (Week 4)
-5. **LLM provider adapter** — swap providers via env var (Week 3)
-6. **Structured error handling** — consistent JSON error responses (Week 2)
-7. **Request logging + timing middleware** (Week 2)
-8. **Rate limiting** — 10 queries/min for free tier, 100 for paid (Week 2)
-9. **Health check** + cache stats endpoint (Week 4)
-10. **Docker Compose** setup (FastAPI + PostgreSQL + Redis)
-
-**Endpoints:**
-- `POST /auth/register` — create account
-- `POST /auth/login` — get tokens
-- `POST /qa/ask` — ask a question (main endpoint)
-- `GET /qa/history` — user's query history
-- `GET /admin/stats` — cache hit rate, avg latency, top queries
-- `GET /health` — service health + dependency checks
-
-**Evaluation criteria:**
-- Cache hit rate >60% on repeated similar queries
-- API handles 50 concurrent requests without errors
-- Swapping LLM providers requires only env var change
-- Auth flow works end-to-end
-- Tests pass with >70% coverage
-
-**Deliverable:**
-Write a brief Architecture Decision Record (ADR) explaining:
-- Why you chose each technology
-- What trade-offs you made
-- What you'd change with more time
-
----
-
-## Skill Checkpoint
-
-1. Draw the system architecture for a production Q&A service handling 1000 req/s. Where does caching sit?
-2. What's your caching strategy for queries with different parameters (e.g., different users, different contexts)?
-3. How do you invalidate the semantic cache when source data changes?
-4. Design a system that gracefully degrades when Redis is down (cache miss, not total failure)
-5. Explain the cost analysis: how much does semantic caching save vs the cost of running Redis?
-
----
+- [ ] `/qa/ask` authenticates user and validates input.
+- [ ] Exact cache works.
+- [ ] Semantic cache works.
+- [ ] Cache miss calls provider adapter.
+- [ ] Query history is persisted.
+- [ ] Provider-call metadata is persisted.
+- [ ] Logs include request ID, cache outcome, latency, provider, model, token counts, and estimated cost.
+- [ ] Readiness checks verify DB and Redis.
+- [ ] Tests run without live API keys.
+- [ ] README, ADRs, and benchmark notes exist.
 
 ## Core Resources
 
-| Resource | Type | URL |
-|----------|------|-----|
-| Redis semantic caching docs | Reference | https://redis.io/docs/latest/develop/ai/redisvl/user_guide/llmcache/ |
-| System Design Primer | Reference | https://github.com/donnemartin/system-design-primer |
-| AI System Design Guide | Patterns | https://github.com/ombharatiya/ai-system-design-guide |
-| Evidently AI case studies | Case studies | https://www.evidentlyai.com/ml-system-design |
-
-## Supplementary Resources
-
-- Book: *Designing Data-Intensive Applications* by Martin Kleppmann — the bible of system design
-- Book: *Designing Machine Learning Systems* by Chip Huyen — ML-specific system design
-- Redis University (free courses) — https://university.redis.io
-- System Design Interview channel (YouTube) — practical walkthroughs
-- InfoQ architecture articles — https://www.infoq.com/architecture-design/
+| Resource | Use |
+|---|---|
+| https://redis.io/docs/latest/develop/ai/ | Redis AI/vector docs |
+| https://redis.io/docs/latest/develop/ai/redisvl/user_guide/llmcache/ | semantic cache concepts |
+| https://www.python-httpx.org/advanced/timeouts/ | provider timeout design |
+| https://fastapi.tiangolo.com/deployment/docker/ | Docker deployment |
+| https://mermaid.js.org/syntax/flowchart.html | architecture diagrams |

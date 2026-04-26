@@ -1,22 +1,24 @@
-.PHONY: install dev test lint build
+.PHONY: install dev test lint format typecheck build benchmark-smoke
 
 install:
-	pip install -e .[dev]
+	uv sync --extra dev
 
 dev:
-	uvicorn app.main:app --reload --host 0.0.0.0 --port 8081
+	uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8081
 
 test:
-	pytest -v
+	uv run pytest -v
 
 lint:
-	ruff check .
-	mypy app
+	uv run ruff check .
+
+typecheck:
+	uv run mypy app
 
 format:
-	ruff check --fix .
-	ruff format .
+	uv run ruff check --fix .
+	uv run ruff format .
 
 # Benchmark commands
 benchmark-smoke:
-	python -m benchmarks.run_retrieval_eval --config benchmarks/configs/smoke.yaml
+	uv run python -m benchmarks.run_retrieval_eval --config benchmarks/configs/smoke.yaml

@@ -1,9 +1,12 @@
 from app.config import settings
 from app.providers.base import ChatProvider
+from app.providers.mock import MockChatProvider
 
 def build_chat_provider() -> ChatProvider:
     provider_name = settings.default_provider
-    if provider_name == "openai":
+    if provider_name == "mock":
+        return MockChatProvider(model=settings.default_model)
+    elif provider_name == "openai":
         # Return generic OpenAI provider stub
         raise NotImplementedError("OpenAI provider not yet implemented.")
     elif provider_name == "anthropic":

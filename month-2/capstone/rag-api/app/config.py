@@ -27,14 +27,21 @@ class Settings(BaseSettings):
     semantic_cache_ttl_seconds: int = 86400
 
     # RAG Configuration
+    vector_backend: Literal["pgvector"] = "pgvector"
+    lexical_backend: Literal["postgres_fts"] = "postgres_fts"
     default_top_k: int = 10
     default_rerank_top_k: int = 5
     rrf_k: int = 60
     semantic_threshold: float = 0.93
+    embedding_provider: Literal["mock", "openai", "sentence_transformers"] = "mock"
+    embedding_model: str = "mock-embedding"
+    embedding_dimensions: int = 1536
+    reranker_provider: Literal["mock", "cohere", "cross_encoder", "disabled"] = "mock"
+    reranker_model: str = "mock-reranker"
 
     # LLM Providers
-    default_provider: Literal["openai", "anthropic", "ollama"] = "openai"
-    default_model: str = "gpt-5.4-mini"
+    default_provider: Literal["mock", "openai", "anthropic", "ollama"] = "mock"
+    default_model: str = "mock-chat"
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
 

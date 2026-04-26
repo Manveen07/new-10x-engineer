@@ -17,8 +17,13 @@ class ChatRequest:
 @dataclass(slots=True)
 class ChatResponse:
     text: str
+    provider: str
+    model: str
     input_tokens: int | None = None
     output_tokens: int | None = None
+    latency_ms: float | None = None
+    estimated_cost_usd: float | None = None
+    finish_reason: str | None = None
 
 @dataclass(slots=True)
 class StreamEvent:

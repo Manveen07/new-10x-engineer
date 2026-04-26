@@ -3,7 +3,7 @@ from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from pgvector.sqlalchemy import Vector
-from typing import List, Optional
+from typing import Any, Optional
 
 from app.db.session import Base
 
@@ -21,7 +21,7 @@ class Document(Base):
         DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
 
-    chunks: Mapped[List["Chunk"]] = relationship(
+    chunks: Mapped[list["Chunk"]] = relationship(
         "Chunk", back_populates="document", cascade="all, delete-orphan"
     )
 
@@ -48,7 +48,7 @@ class Chunk(Base):
     meta: Mapped[dict] = mapped_column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
     
     # Text search and Vector columns
-    fts: Mapped[Optional[any]] = mapped_column(TSVECTOR, nullable=True)
+    fts: Mapped[Optional[Any]] = mapped_column(TSVECTOR, nullable=True)
     # 1536 is standard for text-embedding-3-small
     embedding: Mapped[Optional[Vector]] = mapped_column(Vector(1536), nullable=True)
 

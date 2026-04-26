@@ -1,138 +1,102 @@
-# Week 8: Production RAG Pipeline Capstone
+# Week 8: Production RAG Capstone
 
-## Why This Matters
-This is where theory becomes a deployable system. You'll build an end-to-end RAG pipeline, evaluate it with real metrics, and make it production-ready. This project becomes your portfolio piece and the foundation for Month 3's agent layer.
+## Outcome
 
----
+By the end of Week 8, the Month 2 capstone should be a reviewer-ready RAG API: ingest documents, retrieve context, answer with citations, log retrieval traces, run benchmarks, and explain tradeoffs.
 
-## Day-by-Day Plan
+## Day 36: End-To-End RAG Flow
 
-### Monday — End-to-End Pipeline with Evaluation (1.5h)
+Exercise: `../exercises/day36_e2e_rag_flow.md`
 
-**Read (1h):**
-- Weaviate: Advanced RAG Techniques ebook
-  https://weaviate.io/ebooks/advanced-rag-techniques
+Build:
 
-**Read (30 min):**
-- Redis: 10 techniques to improve RAG accuracy
-  https://redis.io/blog/10-techniques-to-improve-rag-accuracy/
+- ingest seed corpus.
+- search indexed chunks.
+- generate answer from retrieved context.
+- return citations.
+- persist query and retrieval run metadata.
 
-**Plan your capstone pipeline:**
-- What documents are you using? (Pick a domain you care about — technical docs, legal, medical, etc.)
-- What chunking strategy?
-- Which embedding model?
-- What retrieval pipeline? (hybrid + rerank recommended)
-- How will you evaluate?
+Done when:
 
----
+- A single demo command can show ingest -> search -> answer.
 
-### Tuesday — Build the Ingestion Pipeline (1.5h)
+## Day 37: Production Ingestion Job
 
-**Implement:**
-1. Document loading: handle PDF, Markdown, plain text
-   - Use `unstructured` library or `pypdf2` for PDFs
-   - Use front-matter extraction for metadata
-2. Chunking: recursive text splitting with semantic boundaries
-   - 400-500 tokens per chunk, 50 token overlap
-   - Preserve section headers as metadata
-3. Embedding: batch processing with rate limiting
-   - Use your adapter pattern from Month 1
-   - Batch size: 100 texts per API call
-4. Storage: pgvector with metadata columns
-   - Store: content, embedding, source_file, section, page_number, chunk_index
-5. Handle duplicates: hash content to detect re-ingestion
+Exercise: `../exercises/day37_ingestion_job.md`
 
-**Exercise:** Ingest at least 50 documents (200+ chunks).
+Build:
 
----
+- Cloud Run Job-ready CLI.
+- backfill-safe idempotency.
+- batch size config.
+- failure report.
+- retry behavior.
 
-### Wednesday — Build the Retrieval Pipeline (1.5h)
+Done when:
 
-**Implement:**
-1. Query embedding using your adapter
-2. Hybrid search: BM25 + vector with RRF fusion
-3. Reranking: cross-encoder or Cohere Rerank
-4. Context assembly:
-   - Deduplicate overlapping chunks
-   - Order by relevance
-   - Truncate to fit context window (leave room for system prompt + answer)
-5. Semantic cache integration (from Month 1 Week 4)
-6. Query transformation: HyDE for ambiguous queries
+- Ingestion can be run as a separate job from the API.
 
----
+## Day 38: Load And Latency Testing
 
-### Thursday — Build the Generation Pipeline (1.5h)
+Exercise: `../exercises/day38_latency_testing.md`
 
-**Implement:**
-1. System prompt with instructions for citation
-2. Context + query → LLM generation
-3. Structured output with Pydantic:
-   ```python
-   class RAGResponse(BaseModel):
-       answer: str
-       citations: list[Citation]
-       confidence: float  # 0-1
-       sources_used: int
-   ```
-4. Streaming responses (SSE for long answers)
-5. Fallback: "I don't have enough information" when context is insufficient
-6. Token counting: track input/output for cost monitoring
+Build:
 
----
+- p50/p95 dense search latency.
+- p50/p95 hybrid search latency.
+- p50/p95 answer latency.
+- cache-hit vs cache-miss comparison.
 
-### Friday — Evaluation and Optimization (1.5h)
+Done when:
 
-**Setup evaluation:**
-```bash
-pip install ragas deepeval
-```
+- README reports latency with caveats.
 
-**Create test dataset:**
-- 20 question-answer pairs with ground truth
-- Include: easy factual, hard multi-hop, unanswerable (no context)
+## Day 39: Security And Tenancy
 
-**Measure with Ragas:**
-| Metric | What it measures | Target |
-|--------|-----------------|--------|
-| Faithfulness | Is the answer grounded in context? | >0.8 |
-| Context Precision | Are retrieved chunks relevant? | >0.7 |
-| Context Recall | Did we find all relevant chunks? | >0.7 |
-| Answer Relevancy | Does the answer address the question? | >0.8 |
+Exercise: `../exercises/day39_tenancy_security.md`
 
-**Iterate:**
-1. Run evaluation
-2. Identify weakest metric
-3. Adjust the relevant pipeline stage
-4. Re-evaluate
-5. Repeat until targets met
+Build:
 
----
+- tenant filters on all document/chunk/retrieval queries.
+- admin-only ingestion.
+- source deletion behavior.
+- no cross-tenant retrieval leakage tests.
 
-### Weekend — Polish and Document (2h)
+Done when:
 
-1. Write README with architecture diagram
-2. Add performance benchmarks (latency, throughput, cost)
-3. Docker Compose deployment (FastAPI + PostgreSQL/pgvector + Redis + Neo4j optional)
-4. Create a simple demo script or Streamlit UI
+- Retrieval cannot return another tenant's chunks.
 
-**Done when:**
-- Ragas faithfulness >0.8, context precision >0.7
-- API handles concurrent requests
-- Documented with architecture diagram and benchmarks
-- Deployable with `docker compose up`
+## Day 40: Capstone Polish
 
----
+Exercise: `../capstone/CAPSTONE.md`
 
-## Month 2 Capstone Specification
+Build:
 
-See `capstone/CAPSTONE.md` for the full project spec.
+- README.
+- architecture docs.
+- benchmark reports.
+- ADRs.
+- demo script.
+- final test pass.
 
----
+## Weekend 8: Public Proof Of Work
 
-## Skill Checkpoint
+Create:
 
-1. Walk through your pipeline end-to-end. What's the p95 latency? Where are the bottlenecks?
-2. Your faithfulness score is 0.6. What do you change?
-3. Your context recall is low but precision is high. What does this tell you?
-4. How would you scale this to 10x the document corpus?
-5. What's the monthly cost to run this system for 1000 queries/day?
+- screenshots of `/docs`, benchmark output, and example answer with citations.
+- `docs/demo-script.md`.
+- `docs/architecture.md`.
+- `docs/benchmarks/retrieval-quality.md`.
+- `docs/benchmarks/latency.md`.
+- ADRs for pgvector, hybrid retrieval, reranking, evals, and graph deferral.
+
+## Week 8 Acceptance Gate
+
+- [ ] `/v1/search` works.
+- [ ] `/v1/answer` works.
+- [ ] seeded corpus ingests.
+- [ ] benchmarks run.
+- [ ] answer includes citations.
+- [ ] retrieval trace is persisted.
+- [ ] docs are reviewer-ready.
+- [ ] Month 3 agents can call the RAG API as a tool.

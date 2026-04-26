@@ -1,35 +1,29 @@
 import logging
 import sys
-from pythonjsonlogger import jsonlogger
-from opentelemetry import trace
+
+import structlog
+
 
 def setup_logging(log_level: str = "INFO") -> None:
-    logger = logging.getLogger()
-    logger.setLevel(log_level)
-
-    # Discard existing handlers
-    for handler in logger.handlers[:]:
-        logger.removeHandler(handler)
-
-    # Note: custom class allows injecting OpenTelemetry trace_id and span_id
-    class CustomJsonFormatter(jsonlogger.JsonFormatter):
-        def add_fields(self, log_record, record, message_dict):
-            super().add_fields(log_record, record, message_dict)
-            
-            # Inject OpenTelemetry context if available
-            span = trace.get_current_span()
-            if span and span.get_span_context().is_valid:
-                log_record["trace_id"] = f"{span.get_span_context().trace_id:x}"
-                log_record["span_id"] = f"{span.get_span_context().span_id:x}"
-            
-            # Inject request_id if previously set in log_record
-            if hasattr(record, "request_id"):
-                log_record["request_id"] = record.request_id
-
-    logHandler = logging.StreamHandler(sys.stdout)
-    formatter = CustomJsonFormatter(
-        '%(timestamp)s %(level)s %(name)s %(message)s',
-        timestamp=True
+    logging.basicConfig(
+        format="%(message)s",
+        stream=sys.stdout,
+        level=getattr(logging, log_level.upper(), logging.INFO),
     )
-    logHandler.setFormatter(formatter)
-    logger.addHandler(logHandler)
+
+    structlog.configure(
+        processors=[
+            structlog.contextvars.merge_contextvars,
+            structlog.processors.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso", utc=True),
+            structlog.processors.StackInfoRenderer(),
+            structlog.processors.format_exc_info,
+            structlog.processors.JSONRenderer(),
+        ],
+        wrapper_class=structlog.make_filtering_bound_logger(
+            getattr(logging, log_level.upper(), logging.INFO)
+        ),
+        context_class=dict,
+        logger_factory=structlog.PrintLoggerFactory(file=sys.stdout),
+        cache_logger_on_first_use=True,
+    )

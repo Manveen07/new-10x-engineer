@@ -1,309 +1,160 @@
 """
-Week 4 - Day 2: Build a Semantic Cache from Scratch
-=====================================================
+Day 17: Semantic Cache
 
-Build a semantic cache that stores LLM responses and returns
-cached results for semantically similar queries.
+Goal:
+    Build the cache API used by /qa/ask: exact lookup first, semantic lookup
+    second, provider call only on miss.
 
-Pre-req:
-  pip install redis numpy openai
-  Docker: redis/redis-stack running on port 6379
-
-Run with: python day17_semantic_cache.py
+Capstone output:
+    app/services/cache.py with get/set/stats behavior and tests.
 """
 
-import asyncio
 import hashlib
-import json
+import math
 import time
-from dataclasses import dataclass
-
-import numpy as np
-
-# Redis imports — install with: pip install redis
-# import redis.asyncio as redis
+from dataclasses import dataclass, field
+from typing import Literal
 
 
-# ──────────────────────────────────────────────
-# Data models
-# ──────────────────────────────────────────────
+CacheOutcome = Literal["exact_hit", "semantic_hit", "miss"]
 
-@dataclass
+
+@dataclass(frozen=True)
 class CacheEntry:
-    query: str
-    response: str
+    normalized_question: str
+    answer: str
     embedding: list[float]
-    metadata: dict
+    namespace: str
     created_at: float
     ttl_seconds: int
+    metadata: dict[str, object] = field(default_factory=dict)
 
 
-@dataclass
+@dataclass(frozen=True)
 class CacheResult:
-    hit: bool
-    response: str | None
-    similarity: float
-    cached_query: str | None
+    outcome: CacheOutcome
+    answer: str | None
+    matched_query: str | None
+    similarity: float | None
     latency_ms: float
 
 
-# ──────────────────────────────────────────────
-# Exercise 1: Embedding Function
-# In production, use OpenAI or another provider.
-# For development, use a simple hash-based mock.
-# ──────────────────────────────────────────────
-
-class EmbeddingProvider:
-    """Generates embeddings for text."""
-
-    def __init__(self, use_mock: bool = True):
-        self.use_mock = use_mock
-        self.dimension = 256  # mock dimension (OpenAI uses 1536)
-
-    async def embed(self, text: str) -> list[float]:
-        """
-        Generate an embedding vector for the given text.
-
-        Mock mode: creates a deterministic vector from text hash.
-        Production: calls OpenAI text-embedding-3-small.
-        """
-        if self.use_mock:
-            return self._mock_embed(text)
-        # YOUR CODE HERE — add real embedding call
-        raise NotImplementedError("Add real embedding provider")
-
-    def _mock_embed(self, text: str) -> list[float]:
-        """
-        Deterministic mock embedding.
-        Similar texts should produce similar vectors.
-
-        Strategy: normalize text, hash character n-grams,
-        accumulate into a fixed-size vector, normalize to unit length.
-        """
-        # Normalize text
-        text = text.lower().strip()
-
-        # Initialize vector
-        vec = np.zeros(self.dimension)
-
-        # Hash character trigrams and accumulate
-        for i in range(len(text) - 2):
-            trigram = text[i:i+3]
-            h = int(hashlib.md5(trigram.encode()).hexdigest(), 16)
-            idx = h % self.dimension
-            vec[idx] += 1.0
-
-        # Normalize to unit vector
-        norm = np.linalg.norm(vec)
-        if norm > 0:
-            vec = vec / norm
-
-        return vec.tolist()
+def normalize_question(question: str) -> str:
+    return " ".join(question.lower().strip().split())
 
 
-# ──────────────────────────────────────────────
-# Exercise 2: Cosine Similarity
-# ──────────────────────────────────────────────
-
-def cosine_similarity(a: list[float], b: list[float]) -> float:
-    """
-    Compute cosine similarity between two vectors.
-    Returns value between -1 and 1 (1 = identical, 0 = orthogonal).
-
-    YOUR CODE HERE
-    """
-    pass
+def exact_cache_key(namespace: str, question: str) -> str:
+    digest = hashlib.sha256(normalize_question(question).encode("utf-8")).hexdigest()
+    return f"qa:{namespace}:{digest}"
 
 
-# ──────────────────────────────────────────────
-# Exercise 3: The Semantic Cache
-# ──────────────────────────────────────────────
+def cosine_similarity(left: list[float], right: list[float]) -> float:
+    numerator = sum(a * b for a, b in zip(left, right, strict=False))
+    left_norm = math.sqrt(sum(a * a for a in left))
+    right_norm = math.sqrt(sum(b * b for b in right))
+    if left_norm == 0 or right_norm == 0:
+        return 0.0
+    return numerator / (left_norm * right_norm)
 
-class SemanticCache:
-    """
-    A semantic cache that stores LLM responses and returns
-    cached results for semantically similar queries.
 
-    For simplicity, this version uses in-memory storage.
-    Exercise 4 upgrades it to Redis.
-    """
+class InMemorySemanticCache:
+    """Learning implementation. Replace storage with Redis in the capstone."""
 
-    def __init__(
-        self,
-        embedding_provider: EmbeddingProvider,
-        similarity_threshold: float = 0.85,
-        default_ttl: int = 3600,  # 1 hour
-        namespace: str = "default",
-    ):
-        self.embedder = embedding_provider
-        self.threshold = similarity_threshold
-        self.default_ttl = default_ttl
-        self.namespace = namespace
-        self._cache: list[CacheEntry] = []
-
-        # Stats
+    def __init__(self, threshold: float = 0.88) -> None:
+        self.threshold = threshold
+        self.entries: list[CacheEntry] = []
         self.hits = 0
         self.misses = 0
 
-    async def get(self, query: str) -> CacheResult:
-        """
-        Look up a query in the cache.
+    async def get(self, question: str, namespace: str = "default") -> CacheResult:
+        start = time.perf_counter()
+        normalized = normalize_question(question)
+        query_embedding = mock_embed(normalized)
 
-        Steps:
-        1. Embed the query
-        2. Compare against all cached embeddings
-        3. If best match > threshold AND not expired → return cached response
-        4. Otherwise → cache miss
+        for entry in self.entries:
+            if entry.namespace == namespace and entry.normalized_question == normalized:
+                self.hits += 1
+                return CacheResult(
+                    "exact_hit",
+                    entry.answer,
+                    entry.normalized_question,
+                    1.0,
+                    (time.perf_counter() - start) * 1000,
+                )
 
-        YOUR CODE HERE
-        """
-        pass
+        best_entry: CacheEntry | None = None
+        best_score = 0.0
+        for entry in self.entries:
+            if entry.namespace != namespace:
+                continue
+            score = cosine_similarity(query_embedding, entry.embedding)
+            if score > best_score:
+                best_score = score
+                best_entry = entry
+
+        if best_entry and best_score >= self.threshold:
+            self.hits += 1
+            return CacheResult(
+                "semantic_hit",
+                best_entry.answer,
+                best_entry.normalized_question,
+                best_score,
+                (time.perf_counter() - start) * 1000,
+            )
+
+        self.misses += 1
+        return CacheResult("miss", None, None, best_score or None, (time.perf_counter() - start) * 1000)
 
     async def set(
         self,
-        query: str,
-        response: str,
-        metadata: dict | None = None,
-        ttl: int | None = None,
+        question: str,
+        answer: str,
+        namespace: str = "default",
+        ttl_seconds: int = 3600,
+        metadata: dict[str, object] | None = None,
     ) -> None:
-        """
-        Store a query-response pair in the cache.
+        normalized = normalize_question(question)
+        self.entries.append(
+            CacheEntry(
+                normalized_question=normalized,
+                answer=answer,
+                embedding=mock_embed(normalized),
+                namespace=namespace,
+                created_at=time.time(),
+                ttl_seconds=ttl_seconds,
+                metadata=metadata or {},
+            )
+        )
 
-        Steps:
-        1. Embed the query
-        2. Create a CacheEntry
-        3. Store it
-
-        YOUR CODE HERE
-        """
-        pass
-
-    def clear(self, namespace: str | None = None) -> int:
-        """Clear cache entries. Returns count of removed entries."""
-        # YOUR CODE HERE
-        pass
-
-    @property
-    def hit_rate(self) -> float:
-        """Return the cache hit rate as a percentage."""
+    def stats(self) -> dict[str, object]:
         total = self.hits + self.misses
-        return (self.hits / total * 100) if total > 0 else 0.0
-
-    @property
-    def stats(self) -> dict:
         return {
             "hits": self.hits,
             "misses": self.misses,
-            "hit_rate": f"{self.hit_rate:.1f}%",
-            "entries": len(self._cache),
-            "namespace": self.namespace,
+            "hit_rate": self.hits / total if total else 0.0,
+            "entries": len(self.entries),
+            "threshold": self.threshold,
         }
 
 
-# ──────────────────────────────────────────────
-# Exercise 4: Redis-Backed Cache (upgrade)
-# Replace in-memory storage with Redis vectors.
-# Only attempt this if Redis Stack is running.
-# ──────────────────────────────────────────────
-
-class RedisSemanticCache(SemanticCache):
-    """
-    Redis-backed semantic cache using vector similarity search.
-
-    Requires Redis Stack (includes RediSearch with vector support).
-
-    YOUR CODE HERE — override get() and set() to use Redis
-    instead of self._cache list.
-
-    Hints:
-    - Use HSET to store entries with vector field
-    - Use FT.SEARCH with KNN query for similarity search
-    - Or use the redisvl library for a higher-level API
-    """
-    pass
+def mock_embed(text: str, dimensions: int = 32) -> list[float]:
+    vector = [0.0] * dimensions
+    for token in text.split():
+        index = int(hashlib.sha256(token.encode("utf-8")).hexdigest(), 16) % dimensions
+        vector[index] += 1.0
+    return vector
 
 
-# ──────────────────────────────────────────────
-# Exercise 5: Cache-Wrapped LLM
-# Combine the cache with an LLM provider.
-# ──────────────────────────────────────────────
-
-class CachedLLM:
-    """
-    Wraps an LLM with semantic caching.
-
-    Usage:
-        llm = CachedLLM(provider, cache)
-        response = await llm.ask("What is Python?")
-        # First call: hits LLM, caches result
-        # Second similar call: returns cached result instantly
-    """
-
-    def __init__(self, cache: SemanticCache):
-        self.cache = cache
-
-    async def ask(self, query: str) -> dict:
-        """
-        1. Check cache
-        2. If hit → return cached response
-        3. If miss → call LLM → cache result → return
-
-        Return dict with: response, cached (bool), similarity, latency_ms
-
-        YOUR CODE HERE
-        """
-        pass
-
-
-# ──────────────────────────────────────────────
-# Demo and Testing
-# ──────────────────────────────────────────────
-
-async def demo():
-    embedder = EmbeddingProvider(use_mock=True)
-    cache = SemanticCache(embedder, similarity_threshold=0.85)
-
-    # Test similar queries
-    test_queries = [
-        # Group 1: Python questions (should cache-hit each other)
-        "What is Python programming language?",
-        "What's Python?",
-        "Tell me about Python",
-        "Explain Python programming",
-
-        # Group 2: JavaScript questions (should cache-hit each other)
-        "What is JavaScript?",
-        "Tell me about JavaScript",
-        "Explain JavaScript to me",
-
-        # Group 3: Unrelated (should NOT hit)
-        "What is the weather today?",
-        "How do I cook pasta?",
-    ]
-
-    print("Populating cache with initial responses...")
-    await cache.set(
-        "What is Python programming language?",
-        "Python is a high-level, interpreted programming language known for its simplicity.",
-    )
-    await cache.set(
-        "What is JavaScript?",
-        "JavaScript is a dynamic programming language used primarily for web development.",
-    )
-
-    print("\nTesting cache hits/misses:")
-    print("-" * 60)
-
-    for query in test_queries:
-        result = await cache.get(query)
-        status = "HIT" if result.hit else "MISS"
-        sim = f"{result.similarity:.3f}" if result.similarity > 0 else "N/A"
-        print(f"[{status}] (sim={sim}) {query[:50]}")
-        if result.hit:
-            print(f"       → {result.response[:60]}...")
-
-    print(f"\nCache stats: {cache.stats}")
+async def demo() -> None:
+    cache = InMemorySemanticCache(threshold=0.75)
+    await cache.set("What is async Python?", "Async Python handles IO without blocking.")
+    print(await cache.get("what is async python?"))
+    print(await cache.get("Explain async python"))
+    print(cache.stats())
+    print("\nExercise: replace InMemorySemanticCache storage with Redis.")
 
 
 if __name__ == "__main__":
+    import asyncio
+
     asyncio.run(demo())

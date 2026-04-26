@@ -1,239 +1,184 @@
-# Week 3: PostgreSQL Optimization & AI Design Patterns
+# Week 3: PostgreSQL And AI Design Patterns
 
-## Why This Matters
-Every AI system stores metadata, user queries, conversation history, and evaluation results in a relational database. Vector databases get the hype, but PostgreSQL is the backbone. This week also introduces design patterns that make your AI code maintainable and swappable — critical when LLM providers change pricing or capabilities monthly.
+## Outcome
 
----
+By the end of Week 3 the capstone should have real persistence and a clean provider boundary. You should be able to inspect query performance, design indexes, tune slow queries, swap LLM providers without route changes, and log provider cost/latency data.
 
-## Day-by-Day Plan
+## What This Week Teaches
 
-### Monday — EXPLAIN ANALYZE Deep Dive (1.5h)
+- PostgreSQL query plans with `EXPLAIN (ANALYZE, BUFFERS)`.
+- B-tree, GIN, partial, composite, and covering indexes.
+- Query rewrites for common performance mistakes.
+- Repository/service separation.
+- Provider adapter pattern for LLMs.
+- Strategy/factory patterns for model, embedding, and retrieval choices.
+- Bounded retries, timeouts, and provider fallback.
+- Cost and latency tracking for every LLM call.
 
-**Read (45 min):**
-- PostgreSQL official EXPLAIN documentation
-  https://www.postgresql.org/docs/current/sql-explain.html
-- Use of EXPLAIN (helpful visual tutorial)
-  https://www.postgresql.org/docs/current/using-explain.html
+## Day 11: EXPLAIN ANALYZE
 
-**Read (45 min):**
-- Dalibo EXPLAIN visualizer (bookmark this tool — you'll use it constantly)
-  https://explain.dalibo.com
-- PgMustard blog — how to read EXPLAIN ANALYZE
-  https://www.pgmustard.com/docs/explain
-
-**Key concepts:**
-- `EXPLAIN` shows the plan, `EXPLAIN ANALYZE` executes and shows actual times
-- Always use `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)` for full detail
-- Key fields: `actual time`, `rows`, `loops`, `Buffers: shared hit/read`
-- Seq Scan = reading every row. Index Scan = using an index. Bitmap Index Scan = hybrid
-- "Actual rows" vs "Plan rows" mismatch = bad statistics → run `ANALYZE`
-
-**Exercise:** See `exercises/day11_explain_analyze.py`
-
-Set up a test table with 1M+ rows. Run EXPLAIN ANALYZE on:
-1. Full table scan (WHERE on unindexed column)
-2. Index scan (WHERE on indexed column)
-3. Join between two large tables
-4. Aggregation with GROUP BY
-5. Subquery vs JOIN comparison
-
-Paste each plan into https://explain.dalibo.com and annotate the bottlenecks.
-
----
-
-### Tuesday — Indexing Strategies (1.5h)
-
-**Read (1h):**
-- Percona practical guide to PostgreSQL indexes
-  https://www.percona.com/blog/a-practical-guide-to-postgresql-indexes/
-
-**Read (30 min):**
-- PostgreSQL index types documentation
-  https://www.postgresql.org/docs/current/indexes-types.html
-
-**Key concepts:**
-- **B-tree** (default): equality and range queries. Use for: `WHERE id = 5`, `WHERE date > '2025-01-01'`
-- **GIN** (Generalized Inverted Index): full-text search, JSONB, arrays. Use for: `WHERE tags @> '{"python"}'`
-- **GiST**: geometric data, range types, full-text. Use for: spatial queries
-- **Partial indexes**: `CREATE INDEX ... WHERE status = 'active'` — smaller, faster, focused
-- **Composite indexes**: column order matters! Put high-cardinality columns first
-- **Covering indexes** (INCLUDE): avoid table lookups for frequently accessed columns
-
-**Exercise:** See `exercises/day12_indexing.py`
-
-On your 1M-row test table:
-1. Create a B-tree index, benchmark with EXPLAIN ANALYZE
-2. Create a GIN index on a JSONB column
-3. Create a partial index on active records only
-4. Create a composite index and show the column-order effect
-5. Compare index sizes with `pg_relation_size()`
-
----
-
-### Wednesday — Query Tuning Patterns (1.5h)
-
-**Read (1h):**
-- PostgreSQL wiki on performance optimization
-  https://wiki.postgresql.org/wiki/Performance_Optimization
-- PostgreSQL anti-patterns
-  https://wiki.postgresql.org/wiki/Don%27t_Do_This
-
-**Read (30 min):**
-- Common Table Expressions (CTEs) performance considerations
-  https://www.postgresql.org/docs/current/queries-with.html
-
-**Key red flags and fixes:**
-- `Seq Scan` on large table → add an index or fix the WHERE clause
-- `Sort` with `external merge Disk` → add an index matching ORDER BY, or increase `work_mem`
-- `Hash Join` with `Batches > 1` → increase `work_mem`
-- `Nested Loop` on large tables → usually fine for small outer tables, bad for large
-- `Filter: (removed X rows)` → index isn't selective enough, check partial index
-- CTEs in PostgreSQL 12+ can be inlined — but `MATERIALIZED` forces isolation
-
-**Exercise:** See `exercises/day13_query_tuning.py`
-
-Take 3 intentionally slow queries and optimize them:
-1. SELECT with function in WHERE (prevents index use) → rewrite
-2. OR conditions across different columns → UNION approach
-3. Correlated subquery → JOIN rewrite
-Document before/after EXPLAIN ANALYZE for each.
-
----
-
-### Thursday — Adapter Pattern and Provider Abstraction (1.5h)
-
-**Read (1h):**
-- Unite.AI design patterns for AI guide
-  https://www.unite.ai/design-patterns-in-python-for-ai-and-llm-engineers-a-practical-guide/
-- GitHub: arunpshankar/Python-Design-Patterns-for-AI
-  https://github.com/arunpshankar/Python-Design-Patterns-for-AI
-
-**Read (30 min):**
-- Python abc module docs
-  https://docs.python.org/3/library/abc.html
-
-**The Adapter Pattern for LLMs:**
-```
-            ┌─────────────┐
-            │  LLMAdapter  │  (abstract interface)
-            │  .complete() │
-            │  .embed()    │
-            └──────┬───────┘
-         ┌─────────┼─────────┐
-         │         │         │
-   ┌─────┴───┐ ┌──┴────┐ ┌──┴──────┐
-   │ OpenAI  │ │Claude │ │ Local   │
-   │ Adapter │ │Adapter│ │ Adapter │
-   └─────────┘ └───────┘ └─────────┘
-```
-
-**Why this matters for AI:**
-- LLM providers change pricing, rate limits, and capabilities constantly
-- You need to swap providers without changing application code
-- Testing: swap in a mock adapter for deterministic tests
-- Fallback: if OpenAI is down, fall back to Claude automatically
-
-**Exercise:** See `exercises/day14_adapter_pattern.py`
-
-Build an LLM provider adapter with:
-- Abstract base class: `LLMProvider` with `complete()`, `embed()`, `count_tokens()`
-- OpenAI adapter
-- Anthropic adapter (Claude)
-- Mock adapter (for testing — returns deterministic responses)
-- Factory function that creates the right adapter from config/env var
-- Automatic fallback: if primary fails, try secondary
-
----
-
-### Friday — Strategy Pattern and Factory Pattern for AI (1.5h)
-
-**Read (30 min):**
-- Medium: 3 essential design patterns for AI projects
-  https://medium.com/@ethanbrooks42/level-up-your-python-with-3-essential-design-patterns-for-ai-and-llm-projects-525597fad295
-
-**Read (1h):**
-- AI Agents Kit code patterns
-  https://aiagentskit.com/blog/ai-agent-code-patterns/
-- Refactoring Guru: Strategy Pattern
-  https://refactoring.guru/design-patterns/strategy/python/example
-
-**Strategy Pattern for AI:**
-```
-# Different embedding strategies for different use cases
-class EmbeddingStrategy(ABC):
-    async def embed(self, text: str) -> list[float]: ...
-
-class OpenAIEmbedding(EmbeddingStrategy):     # High quality, costs money
-class CohereEmbedding(EmbeddingStrategy):      # Good multilingual
-class LocalEmbedding(EmbeddingStrategy):       # Free, runs locally
-
-# Different retrieval strategies
-class RetrievalStrategy(ABC):
-    async def retrieve(self, query: str, k: int) -> list[Document]: ...
-
-class VectorRetrieval(RetrievalStrategy):      # Semantic similarity
-class BM25Retrieval(RetrievalStrategy):        # Keyword matching
-class HybridRetrieval(RetrievalStrategy):      # Both combined
-```
-
-**Factory Pattern:**
-- Creates the right strategy based on configuration
-- Centralizes creation logic
-- Makes it easy to add new strategies without changing client code
-
-**Exercise:** See `exercises/day15_strategy_factory.py`
+Exercise: `../exercises/day11_explain_analyze.py`
 
 Build:
-1. Embedding strategy (OpenAI, Cohere placeholder, local/mock)
-2. Retrieval strategy (vector, BM25, hybrid)
-3. Factory that creates retrieval pipelines from a config dict
-4. Pipeline that combines embedding + retrieval + generation strategies
-5. Swap strategies via environment variable or config file
 
----
+- A local table with enough rows to make plans visible.
+- Queries that demonstrate sequential scan, index scan, join, sort, and aggregation.
+- Notes for each query plan.
 
-### Weekend — Integration (1-2h)
+Required evidence:
 
-**Combine Weeks 2 and 3:**
+- `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)` before optimization.
+- A short explanation of the bottleneck.
+- A proposed index or rewrite.
+- `EXPLAIN` after the change.
 
-Add to your Week 2 FastAPI project:
-1. Optimized PostgreSQL queries (demonstrate index usage with EXPLAIN ANALYZE)
-2. LLM provider adapter (swap providers via env var)
-3. Embedding strategy (at least mock + one real provider)
-4. A `/search` endpoint that uses the adapter and retrieval strategy
-5. A `/admin/query-stats` endpoint that shows EXPLAIN ANALYZE output for debugging
+Capstone connection:
 
-**Done when:**
-- EXPLAIN ANALYZE proves your indexes are being used
-- Swapping `LLM_PROVIDER=openai` to `LLM_PROVIDER=mock` requires zero code changes
-- Tests pass with the mock adapter
-- The search endpoint returns relevant results
+- Query history, user lookup, token lookup, and admin stats need predictable DB behavior.
 
----
+## Day 12: Indexing Strategies
 
-## Skill Checkpoint
+Exercise: `../exercises/day12_indexing.py`
 
-1. Given a slow query, walk through the EXPLAIN ANALYZE output step by step and identify the bottleneck
-2. When should you use a GIN index vs B-tree? Give a real example of each
-3. Diagram the Adapter pattern for an LLM provider abstraction — show the interface, concrete implementations, and the factory
-4. What's the difference between the Adapter and Strategy patterns? When do you use each?
-5. You're building an AI app that might switch from OpenAI to Claude next month. Design the abstraction layer
+Build:
 
----
+- B-tree index for common lookups.
+- Composite index where column order matters.
+- Partial index for active rows.
+- GIN index for JSONB or text-search-like data.
+- Index size comparison.
+
+Capstone indexes to design:
+
+- `users.email`
+- `refresh_tokens.token_hash`
+- `queries.user_id, created_at`
+- `provider_calls.query_id`
+- `cache_entries.cache_key`
+- `cache_entries.created_at`
+
+Done when:
+
+- You can explain each index in terms of a real query.
+- You can show at least one example where an index is not worth adding.
+
+## Day 13: Query Tuning Patterns
+
+Exercise: `../exercises/day13_query_tuning.py`
+
+Build:
+
+- Rewrite a query that uses a function on an indexed column.
+- Rewrite an `OR` query where separate indexes are not used well.
+- Rewrite a correlated subquery as a join.
+- Add pagination that does not accidentally load all rows.
+
+Capstone connection:
+
+- `/qa/history` and admin analytics should stay fast as query history grows.
+
+Done when:
+
+- Each optimization includes before/after plan evidence.
+- You explain the tradeoff, not just the speedup.
+
+## Day 14: LLM Provider Adapter
+
+Exercise: `../exercises/day14_adapter_pattern.py`
+
+Build in the capstone:
+
+- `ChatProvider` or `LLMProvider` protocol/base class.
+- `MockProvider` that needs no API key and is deterministic.
+- `OpenAIProvider`.
+- `AnthropicProvider`.
+- Optional local provider such as Ollama.
+- Provider factory from typed settings.
+
+Provider response model should include:
+
+- `text`
+- `provider`
+- `model`
+- `input_tokens`
+- `output_tokens`
+- `latency_ms`
+- `estimated_cost_usd`
+- `finish_reason`
+
+Done when:
+
+- Routes call only the provider interface.
+- Tests use the mock provider.
+- Switching provider is an environment/config change, not an app rewrite.
+
+## Day 15: Strategy And Factory Patterns
+
+Exercise: `../exercises/day15_strategy_factory.py`
+
+Build:
+
+- Strategy for exact cache vs semantic cache.
+- Strategy for hosted embedding vs mock embedding.
+- Factory for provider selection.
+- Factory for cache backend selection.
+- Bounded retry wrapper for provider calls.
+
+Capstone connection:
+
+- Month 2 will add retrieval strategies. Month 1 should teach the pattern without building full RAG.
+
+Done when:
+
+- The capstone can run in `mock` mode with no external API key.
+- Provider errors are retried only where retry is safe.
+- Retry count and final status are logged.
+
+## Weekend 3: Provider Integration And Observability
+
+Exercise: `../exercises/weekend3_provider_observability.md`
+
+Fold Days 11-15 into the capstone:
+
+- Add provider call table.
+- Add query history table.
+- Add provider factory.
+- Add mock provider tests.
+- Add timeout and retry boundaries.
+- Add structured logs for provider calls.
+- Add an ADR for provider abstraction.
+
+Required provider log fields:
+
+- `request_id`
+- `provider`
+- `model`
+- `latency_ms`
+- `input_tokens`
+- `output_tokens`
+- `estimated_cost_usd`
+- `retry_count`
+- `status`
+- `error_type`
+
+## Week 3 Acceptance Gate
+
+- [ ] Query-history schema exists.
+- [ ] Provider-call schema exists.
+- [ ] Provider adapter interface exists.
+- [ ] Mock provider is deterministic.
+- [ ] Provider choice comes from settings.
+- [ ] Provider calls have timeouts.
+- [ ] Safe failures are retried with a bound.
+- [ ] Provider metrics are logged and persisted.
+- [ ] DB indexes are justified by actual queries.
 
 ## Core Resources
 
-| Resource | Type | URL |
-|----------|------|-----|
-| PostgreSQL EXPLAIN docs | Reference | https://www.postgresql.org/docs/current/sql-explain.html |
-| Dalibo EXPLAIN visualizer | Tool | https://explain.dalibo.com |
-| Percona index guide | Tutorial | https://www.percona.com/blog/a-practical-guide-to-postgresql-indexes/ |
-| Python Design Patterns for AI (repo) | Patterns | https://github.com/arunpshankar/Python-Design-Patterns-for-AI |
-| Refactoring Guru (all patterns) | Reference | https://refactoring.guru/design-patterns |
-
-## Supplementary Resources
-
-- Book: *Designing Data-Intensive Applications* by Martin Kleppmann — Chapter 3 (Storage and Retrieval)
-- pgMustard (paid but excellent EXPLAIN analysis tool) — https://www.pgmustard.com
-- PostgreSQL Index Advisor — https://github.com/supabase/index_advisor
-- The twelve-factor app methodology — https://12factor.net (context for config management)
+| Resource | Use |
+|---|---|
+| https://www.postgresql.org/docs/current/using-explain.html | reading query plans |
+| https://www.postgresql.org/docs/current/indexes.html | indexes |
+| https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html | async database sessions |
+| https://www.python-httpx.org/advanced/timeouts/ | HTTP timeouts |
+| https://docs.python.org/3/library/typing.html#typing.Protocol | provider contracts |

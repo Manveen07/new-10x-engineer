@@ -1,34 +1,38 @@
-import httpx
-import redis.asyncio as redis
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+
+import httpx
+import redis.asyncio as redis
+import structlog
 from fastapi import FastAPI
-import logging
 
 from app.clients import http, redis as redis_client_module
 from app.config import settings
 
-logger = logging.getLogger(__name__)
+
+logger = structlog.get_logger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    logger.info("Initializing shared clients...")
-    
-    # Initialize HTTPx client
-    http.http_client = httpx.AsyncClient(timeout=60.0)
-    
-    # Initialize Redis client
+    logger.info("shared_clients_starting")
+
+    http.http_client = httpx.AsyncClient(
+        timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0)
+    )
     redis_client_module.redis_client = redis.from_url(
-        settings.redis_url, 
-        encoding="utf-8", 
-        decode_responses=True
+        settings.redis_url,
+        encoding="utf-8",
+        decode_responses=True,
     )
 
     try:
         yield
     finally:
-        logger.info("Closing shared clients...")
-        if http.http_client:
+        logger.info("shared_clients_closing")
+        if http.http_client is not None:
             await http.http_client.aclose()
-        if redis_client_module.redis_client:
+            http.http_client = None
+        if redis_client_module.redis_client is not None:
             await redis_client_module.redis_client.aclose()
+            redis_client_module.redis_client = None

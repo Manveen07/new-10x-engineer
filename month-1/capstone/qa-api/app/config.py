@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     semantic_cache_ttl_seconds: int = 86400
 
     # LLM Providers
-    default_provider: Literal["openai", "anthropic", "ollama"] = "openai"
-    default_model: str = "gpt-5.4-mini"
+    default_provider: Literal["mock", "openai", "anthropic", "ollama"] = "mock"
+    default_model: str = "mock-chat"
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
 

@@ -1,0 +1,12 @@
+name: smoke
+tenant_id: demo
+retrieval_configs:
+  - name: dense_only
+    retrieval_mode: dense
+  - name: hybrid
+    retrieval_mode: hybrid
+metrics:
+  - precision_at_5
+  - recall_at_10
+  - mrr_at_10
+  - ndcg_at_10

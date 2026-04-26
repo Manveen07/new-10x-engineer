@@ -1,190 +1,146 @@
-# Week 1: Advanced Async Python Patterns
+# Week 1: Tooling And Advanced Async Python
 
-## Why This Matters
-The entire AI backend stack — LLM API calls, vector database queries, embedding generation, agent tool execution — runs on async Python. You cannot build performant AI systems without fluency in asyncio. Every week after this assumes you can write async code without thinking about it.
+## Outcome
 
----
+By the end of Week 1 you should be able to write async Python that is safe under real API pressure: bounded concurrency, backpressure, retries, cancellation, clean shutdown, and structured logs. You will also set up the tooling standard used by the Month 1 capstone.
 
-## Day-by-Day Plan
+## What This Week Teaches
 
-### Monday — Coroutines and the Event Loop (1.5h)
+- `uv` project setup, Ruff, mypy, pytest, and ADR habits.
+- `async def`, `await`, the event loop, and coroutine scheduling.
+- `asyncio.gather`, `asyncio.as_completed`, and `TaskGroup`.
+- Semaphores for concurrency limits.
+- Queues for producer-consumer pipelines and backpressure.
+- Retry boundaries, timeouts, and cancellation behavior.
+- Structured logs for async pipelines.
 
-**Read (45 min):**
-- Python official asyncio conceptual overview
-  https://docs.python.org/3/library/asyncio.html
-- Real Python async walkthrough (first half)
-  https://realpython.com/async-io-python/
+## Day 0: Modern Python Tooling
 
-**Key concepts to internalize:**
-- A coroutine is a function defined with `async def` — calling it returns a coroutine object, not a result
-- `await` suspends the coroutine and gives control back to the event loop
-- The event loop is a single-threaded scheduler — it runs one coroutine at a time but switches between them at `await` points
-- `asyncio.run()` creates the event loop and runs the top-level coroutine
+Exercise: `../exercises/day0_tooling_setup.md`
 
-**Exercise (45 min):** See `exercises/day1_coroutines.py`
+Build:
 
-**Additional resource:**
-- Python asyncio library reference (bookmark this — you'll use it all month)
-  https://docs.python.org/3/library/asyncio.html
+- Create or verify a `pyproject.toml`-based Python 3.12 project.
+- Use `uv` for environment and dependency management.
+- Configure `ruff check`, `ruff format`, `mypy`, and `pytest`.
+- Add `docs/decisions/0001-tooling-choices.md` in the capstone explaining why this stack is used.
 
----
+Done when:
 
-### Tuesday — asyncio.gather and Concurrent Execution (1.5h)
+- `uv run ruff check .` passes.
+- `uv run ruff format --check .` passes.
+- `uv run pytest` runs.
+- You can explain why this repo does not use ad hoc `pip install` notes as the main workflow.
 
-**Read (25 min):**
-- Krython tutorial on gather and wait patterns
-  https://krython.com/tutorial/python/asyncio-patterns-gather-and-wait/
+## Day 1: Coroutines And The Event Loop
 
-**Read (20 min):**
-- SuperFastPython guide to asyncio.gather
-  https://superfastpython.com/asyncio-gather/
+Exercise: `../exercises/day1_coroutines.py`
 
-**Key concepts:**
-- `asyncio.gather(*coros)` runs coroutines concurrently and returns results in order
-- `return_exceptions=True` prevents one failure from canceling everything
-- `asyncio.wait()` gives more control: FIRST_COMPLETED, FIRST_EXCEPTION, ALL_COMPLETED
-- `asyncio.as_completed()` yields results as they finish (not in order)
-- Wall-clock time with gather ≈ slowest task, not sum of all tasks
+Build:
 
-**Exercise (45 min):** See `exercises/day2_gather.py`
+- Small async functions that simulate network-bound work.
+- Timing comparison between sequential and async execution.
+- Notes explaining what `await` does and why async is not the same as threads.
 
-**Additional resource:**
-- asyncio.TaskGroup (Python 3.11+) — the modern replacement for gather
-  https://docs.python.org/3/library/asyncio-task.html#asyncio.TaskGroup
+Capstone connection:
 
----
+- LLM calls, Redis calls, database calls, and HTTP clients all depend on this model.
 
-### Wednesday — Semaphores and Backpressure (1.5h)
+## Day 2: Concurrent Execution
 
-**Read (45 min):**
-- Better Stack guide on async programming (focus on concurrency control section)
-  https://betterstack.com/community/guides/scaling-python/python-async-programming/
+Exercise: `../exercises/day2_gather.py`
 
-**Read (30 min):**
-- SuperFastPython guide to asyncio.Semaphore
-  https://superfastpython.com/asyncio-semaphore/
+Build:
 
-**Key concepts:**
-- `asyncio.Semaphore(n)` limits concurrent access to n — essential for rate-limited APIs
-- `BoundedSemaphore` prevents releasing more than you acquired (catches bugs)
-- Backpressure = slowing producers when consumers can't keep up
-- Without backpressure, you'll OOM on large workloads or get rate-limited/banned
-- Pattern: `async with semaphore: await fetch(url)` — simple and correct
+- Concurrent work with `asyncio.gather`.
+- Ordered results with `gather`.
+- First-finished processing with `as_completed`.
+- Failure handling with and without `return_exceptions`.
 
-**Exercise (45 min):** See `exercises/day3_semaphores.py`
+Capstone connection:
 
-**Additional resource:**
-- Real-world rate limiting patterns
-  https://docs.aiohttp.org/en/stable/client_advanced.html#limiting-connection-pool-size
+- Later provider calls and batch embedding calls need controlled concurrent execution.
 
----
+## Day 3: Semaphores And Rate Limits
 
-### Thursday — Producer-Consumer with asyncio.Queue (1.5h)
+Exercise: `../exercises/day3_semaphores.py`
 
-**Read (30 min):**
-- DEV Community producer-consumer tutorial
-  https://dev.to/xsub/how-to-implement-the-producer-consumer-concurrency-design-pattern-with-asyncio-coroutines-23gj
+Build:
 
-**Read (30 min):**
-- Python docs on asyncio.Queue
-  https://docs.python.org/3/library/asyncio-queue.html
+- Fetch or simulate 20+ tasks while allowing only N concurrent operations.
+- Implement a token-bucket style limiter.
+- Show evidence that concurrency and rate are different controls.
 
-**Key concepts:**
-- `asyncio.Queue(maxsize=N)` — when full, `put()` blocks the producer (backpressure!)
-- `queue.join()` waits until all items are processed (every `get()` needs a `task_done()`)
-- Producer-consumer decouples data generation from processing — critical for pipelines
-- Multiple producers + multiple consumers = parallelism without shared state
-- Poison pill pattern: producers send `None` to signal consumers to stop
+Capstone connection:
 
-**Exercise (30 min):** See `exercises/day4_queue.py`
+- `/qa/ask` is expensive. Provider calls and embedding calls need both timeout and rate boundaries.
 
-**Additional resource:**
-- Trio (alternative async library) for comparison
-  https://trio.readthedocs.io/en/stable/
+## Day 4: Producer-Consumer Queues
 
----
+Exercise: `../exercises/day4_queue.py`
 
-### Friday — TaskGroup and Error Handling (1.5h)
+Build:
 
-**Read (1h):**
-- DEV Community: Mastering Python Async Patterns in 2026
-  https://dev.to/shehzan/mastering-python-async-patterns-a-complete-guide-to-asyncio-in-2026-10o6
+- Producer-consumer workflow using `asyncio.Queue(maxsize=N)`.
+- Backpressure when producers outrun consumers.
+- Clean shutdown with sentinels or cancellation.
 
-**Read (30 min):**
-- Python 3.11 TaskGroup documentation
-  https://docs.python.org/3/library/asyncio-task.html#asyncio.TaskGroup
+Capstone connection:
 
-**Key concepts:**
-- `TaskGroup` (3.11+) is structured concurrency — all tasks in the group are managed together
-- If one task raises, all others are cancelled and the exception propagates
-- This is SAFER than `gather` — no orphaned tasks
-- `asyncio.Event` for signaling between coroutines (e.g., graceful shutdown)
-- `asyncio.shield()` protects critical operations from cancellation
-- Exception groups (`ExceptionGroup`) collect multiple errors from TaskGroup
+- Month 2 ingestion will reuse this pattern. Month 1 uses it to understand API work queues and cache warmups.
 
-**Exercise (30 min):** See `exercises/day5_taskgroup.py`
+## Day 5: TaskGroup, Cancellation, And Errors
 
----
+Exercise: `../exercises/day5_taskgroup.py`
 
-### Weekend — Integration Exercise (1-2h)
+Build:
 
-**Build: Async Web Scraper Pipeline**
+- Structured concurrency with `TaskGroup`.
+- A failure case where one task fails and sibling tasks are cancelled.
+- A cleanup path that still runs after cancellation.
 
-See `exercises/weekend1_scraper_pipeline.py` for the full spec.
+Capstone connection:
 
-**Architecture:**
-```
-[Producer 1] ──┐
-[Producer 2] ──┤──> asyncio.Queue(maxsize=10) ──┤──> [Consumer 1]
-[Producer 3] ──┘                                 └──> [Consumer 2]
-                                                         │
-                                                    [Results Store]
-```
+- Lifespan-managed clients and background tasks must shut down cleanly.
 
-**Requirements:**
-- 3 producers fetching pages from a list of URLs
-- Semaphore(5) for rate limiting
-- Queue(maxsize=10) for backpressure
-- 2 consumers extracting titles and links
-- TaskGroup for lifecycle management
-- Graceful shutdown on Ctrl+C via asyncio.Event
-- Retry logic (3 attempts with exponential backoff)
-- Process 50+ pages concurrently
+## Weekend 1: Async Scraper / Enrichment Pipeline
 
-**Done when:**
-- Pipeline handles 50+ URLs without crashing
-- Handles network failures gracefully (retries, then skips)
-- Shuts down cleanly on Ctrl+C (no orphaned tasks)
-- You can explain every async primitive used and why
+Exercise: `../exercises/weekend1_scraper_pipeline.py`
 
----
+Build a small pipeline that looks like a simplified AI data-enrichment job:
 
-## Skill Checkpoint
+- Producers load URLs or company names.
+- Workers fetch data with bounded concurrency.
+- Consumers parse and normalize results.
+- Retries are bounded and logged.
+- Queue size prevents runaway memory growth.
+- Final output includes success count, failure count, latency summary, and error reasons.
 
-Answer these without looking at notes:
+Required structured log fields:
 
-1. What's the difference between `asyncio.gather()` and `TaskGroup`? When would you use each?
-2. When would you use a `Semaphore` vs setting `Queue(maxsize=N)`? (They solve different problems!)
-3. Write a producer-consumer where one producer crashing doesn't kill the others
-4. What happens if you forget `task_done()` and call `queue.join()`?
-5. Explain the event loop to someone who knows threads but not async
+- `request_id` or `item_id`
+- `stage`
+- `status`
+- `attempt`
+- `latency_ms`
+- `error_type`
 
----
+## Week 1 Acceptance Gate
 
-## Core Resources (Bookmark These)
+- [ ] Tooling is configured with uv, Ruff, mypy, and pytest.
+- [ ] You can explain event loop scheduling.
+- [ ] You can show bounded concurrency with a semaphore.
+- [ ] You can show backpressure with a bounded queue.
+- [ ] You can explain `gather` vs `TaskGroup`.
+- [ ] The weekend pipeline processes 50+ items without crashing on partial failures.
+- [ ] The pipeline emits structured logs that would be useful in production.
 
-| Resource | Type | URL |
-|----------|------|-----|
-| Python asyncio docs | Reference | https://docs.python.org/3/library/asyncio.html |
-| Real Python async walkthrough | Tutorial | https://realpython.com/async-io-python/ |
-| SuperFastPython asyncio guides | Deep dives | https://superfastpython.com/python-asyncio/ |
-| aiohttp docs | Library | https://docs.aiohttp.org/en/stable/ |
-| Python Concurrency with asyncio (book) | Book | Manning Publications, Matthew Fowler |
+## Core Resources
 
-## Supplementary Resources (If You Want More)
-
-- Talk: import asyncio by David Beazley (YouTube) — the classic live-coding talk
-- Lynn Root: Advanced asyncio (YouTube) — patterns for production
-- asyncio cheatsheet: https://www.pythonsheets.com/notes/python-asyncio.html
-- Trio vs asyncio comparison (for context on structured concurrency philosophy)
-  https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
+| Resource | Use |
+|---|---|
+| https://docs.astral.sh/uv/ | uv project workflow |
+| https://docs.astral.sh/ruff/ | linting and formatting |
+| https://docs.python.org/3/library/asyncio.html | asyncio reference |
+| https://docs.python.org/3/library/asyncio-task.html#task-groups | TaskGroup reference |
+| https://realpython.com/async-io-python/ | async walkthrough |
