@@ -2,16 +2,15 @@ from app.config import settings
 from app.providers.base import ChatProvider
 from app.providers.mock import MockChatProvider
 
+
 def build_chat_provider() -> ChatProvider:
     provider_name = settings.default_provider
     if provider_name == "mock":
         return MockChatProvider(model=settings.default_model)
-    elif provider_name == "openai":
-        # Return generic OpenAI provider stub
+    if provider_name == "openai":
         raise NotImplementedError("OpenAI provider not yet implemented.")
-    elif provider_name == "anthropic":
+    if provider_name == "anthropic":
         raise NotImplementedError("Anthropic provider not yet implemented.")
-    elif provider_name == "ollama":
+    if provider_name == "ollama":
         raise NotImplementedError("Ollama provider not yet implemented.")
-    else:
-        raise ValueError(f"Unknown provider configured: {provider_name}")
+    raise ValueError(f"Unknown provider configured: {provider_name}")
