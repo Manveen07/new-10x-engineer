@@ -32,14 +32,11 @@ class ChatResponse:
 @dataclass(slots=True)
 class StreamEvent:
     type: str
-    data: str | dict
+    data: str | dict[str, str | None]
 
 
 class ChatProvider(Protocol):
     name: str
 
-    async def generate(self, request: ChatRequest) -> ChatResponse:
-        raise NotImplementedError
-
-    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamEvent]:
-        raise NotImplementedError
+    async def generate(self, request: ChatRequest) -> ChatResponse: ...
+    def stream(self, request: ChatRequest) -> AsyncIterator[StreamEvent]: ...

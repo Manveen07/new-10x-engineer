@@ -6,9 +6,9 @@ import redis.asyncio as redis
 import structlog
 from fastapi import FastAPI
 
-from app.clients import http, redis as redis_client_module
+from app.clients import http
+from app.clients import redis as redis_client_module
 from app.config import settings
-
 
 logger = structlog.get_logger(__name__)
 

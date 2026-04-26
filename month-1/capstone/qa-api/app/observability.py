@@ -11,6 +11,9 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExport
 
 
 def setup_observability(app: FastAPI, service_name: str = "month1-qa-api") -> None:
+    if os.environ.get("OTEL_SDK_DISABLED", "").lower() == "true":
+        return
+
     resource = Resource.create({"service.name": service_name})
     provider = TracerProvider(resource=resource)
 

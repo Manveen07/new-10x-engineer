@@ -6,7 +6,6 @@ from app.lifespan import lifespan
 from app.logging import setup_logging
 from app.observability import setup_observability
 
-
 setup_logging(settings.log_level)
 logger = structlog.get_logger(__name__)
 
