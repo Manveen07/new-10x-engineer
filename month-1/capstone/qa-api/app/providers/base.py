@@ -1,11 +1,13 @@
+from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from typing import Protocol
-from collections.abc import AsyncIterator
+
 
 @dataclass(slots=True)
 class ChatMessage:
     role: str
     content: str
+
 
 @dataclass(slots=True)
 class ChatRequest:
@@ -13,6 +15,7 @@ class ChatRequest:
     model: str
     temperature: float = 0.0
     max_tokens: int = 512
+
 
 @dataclass(slots=True)
 class ChatResponse:
@@ -25,13 +28,18 @@ class ChatResponse:
     estimated_cost_usd: float | None = None
     finish_reason: str | None = None
 
+
 @dataclass(slots=True)
 class StreamEvent:
     type: str
     data: str | dict
 
+
 class ChatProvider(Protocol):
     name: str
 
-    async def generate(self, request: ChatRequest) -> ChatResponse: ...
-    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamEvent]: ...
+    async def generate(self, request: ChatRequest) -> ChatResponse:
+        raise NotImplementedError
+
+    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamEvent]:
+        raise NotImplementedError
