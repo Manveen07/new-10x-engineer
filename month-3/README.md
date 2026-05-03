@@ -1,131 +1,69 @@
-# Month 3 - Controlled Agents, MCP, And Human Oversight
+# Month 3 - RAG Fundamentals And Project 2 Design
 
 ## Goal
 
-Build production-shaped agentic systems on top of the Month 1 API foundation and Month 2 RAG platform. By the end of Month 3, you should have an agentic RAG service that uses LangGraph for explicit state, calls the Month 2 RAG API as a tool, exposes selected tools through MCP, pauses for human approval on risky actions, logs every tool call, and is evaluated with task-level metrics.
+Build enough retrieval depth to design Project 2 properly before shipping it. Month 3 is reading-heavy by design, but it must still produce working code: contextualization on a toy corpus, local Postgres/pgvector setup, and the first ingestion pipeline for GTM/Clay knowledge.
 
-The job-ready signal is not "I made an agent that can do anything." The signal is: **I can build an agent that is bounded, observable, resumable, safe, and testable.**
+Canonical output by the end of the month:
 
-## Research Basis
+- Contextual retrieval prototype on a small corpus.
+- Project 2 stack decision.
+- Local Postgres + pgvector running.
+- Initial ingestion pipeline.
+- Retrieval eval plan.
+- Project 2 design doc.
+- Public post 3 published.
+- One Bengaluru/community event attended or watched.
 
-Current production-agent guidance converges on the same themes:
+Existing agent exercises in this folder are useful in Month 5, but Month 3 is now focused on RAG design.
 
-- LangGraph is positioned as a low-level orchestration framework for long-running, stateful agents with durable execution, streaming, persistence, and human-in-the-loop support.
-- LangGraph persistence/checkpointing enables human review, replay, memory, and fault-tolerant execution.
-- MCP standardizes how apps expose tools, resources, and prompts to AI systems, but tool invocation needs explicit human oversight and security controls.
-- Production agent observability must capture traces, tool calls, latency, costs, quality, and failure patterns.
-- Job-relevant agent systems need bounded tool loops, deterministic state transitions, approval gates, and evals, not open-ended autonomy.
+## Week Plan
 
-## How Month 3 Compounds Months 1-2
+| Week | Time | Focus | Deliverable |
+|---|---:|---|---|
+| 9 | 8h | Read Anthropic Contextual Retrieval and Greg Kamradt text splitting | toy contextual retrieval implementation |
+| 10 | 8h | Read Jason Liu and Hamel RAG eval guidance | retrieval notes and eval principles |
+| 11 | 8h | Pick stack, set up Postgres + pgvector, skim AI Engineering Ch. 6 | local retrieval data layer |
+| 12 | 8h | DLAI accuracy/evals course, begin Clay/GTM ingestion, write design doc | Project 2 design doc and post |
 
-| Earlier skill | Month 3 use |
-|---|---|
-| Month 1 FastAPI/auth/settings/logging | agent API, run storage, trace endpoints |
-| Month 1 provider abstraction | agent model calls and structured outputs |
-| Month 2 RAG API | retrieval/search/answer tools |
-| Month 2 evals | task success, groundedness, tool correctness |
-| Month 2 retrieval telemetry | agent traces include retrieval traces |
-| PostgreSQL | agent runs, checkpoints, approvals, tool-call logs |
-| Redis | rate limits, short-lived run state, queues if needed |
+## Project 2 Design Requirements
 
-## Month 3 Stack
+The design doc should define:
 
-| Area | Default | Why |
-|---|---|---|
-| Agent orchestration | LangGraph | explicit state, routing, checkpoints, durable execution |
-| Tool boundary | typed Python tools + MCP server | local correctness first, protocol integration second |
-| Retrieval tool | Month 2 `/v1/search` and `/v1/answer` | agents reuse RAG instead of rebuilding it |
-| State | Pydantic/TypedDict graph state | inspectable and testable |
-| Persistence | PostgreSQL checkpointer/run tables | resume, replay, audit |
-| Human approval | HITL approval queue | risky actions need review |
-| Observability | structlog + trace table + optional LangSmith/Langfuse | inspect tool sequence, cost, latency |
-| Evaluation | task suites + tool trajectory checks | measure agent behavior, not just final text |
+- Corpus sources and attribution/consent rules.
+- Document model and chunk metadata.
+- Chunking strategy and contextualization prompt.
+- Dense retrieval provider.
+- Lexical retrieval choice: BM25 or PostgreSQL full-text search.
+- Hybrid fusion method, defaulting to RRF.
+- Reranker interface.
+- Retrieval eval dataset generation plan.
+- Metrics: recall@10/20, MRR, NDCG, context precision.
+- Generation eval plan and calibration set.
+- Deployment and tracing plan.
 
-## Month Structure
+Suggested location: `projects/gtm-clay-rag/docs/design.md`.
 
-| Week | Theme | Main deliverable |
-|---|---|---|
-| 9 | LangGraph fundamentals and state | bounded research/RAG agent with explicit graph |
-| 10 | Tools, planning, memory, and durable execution | resumable agent with tool registry and run traces |
-| 11 | MCP server/client integration | MCP tools for search/answer and safe tool invocation |
-| 12 | HITL, evaluation, and capstone | agentic RAG system with approvals, evals, traces, docs |
+## Monthly Checklist
 
-## Daily Exercise Map
+- [ ] Anthropic Contextual Retrieval read.
+- [ ] Greg Kamradt text-splitting notes taken.
+- [ ] Jason Liu RAG articles read.
+- [ ] Hamel RAG eval guidance read.
+- [ ] Toy contextual retrieval prototype works.
+- [ ] Postgres + pgvector running locally.
+- [ ] Project 2 stack decision written.
+- [ ] Ingestion pipeline started.
+- [ ] Retrieval eval design written.
+- [ ] One Bengaluru/community event attended or watched.
+- [ ] Post 3 published: "How I'm setting up retrieval evals before writing a single line of RAG code."
 
-| Day | Exercise | File or folder | Required output |
-|---|---|---|---|
-| 41 | Agent boundaries | `exercises/day41_agent_boundaries.md` | use-case, tools, non-goals, risk table |
-| 42 | LangGraph state model | `exercises/day42_langgraph_state.py` | typed state and node contracts |
-| 43 | Basic graph | `exercises/day43_basic_graph.md` | plan -> retrieve -> answer graph |
-| 44 | Routing and bounded loops | `exercises/day44_routing_bounded_loops.py` | loop limit and stop conditions |
-| 45 | RAG tools | `exercises/day45_rag_tools.md` | Month 2 search/answer tool wrappers |
-| Weekend 9 | Research/RAG agent | `exercises/weekend9_research_agent.md` | cited agent answer with trace |
-| 46 | Tool registry | `exercises/day46_tool_registry.py` | typed tool schemas and permissions |
-| 47 | Durable execution | `exercises/day47_durable_execution.md` | checkpoint/resume design |
-| 48 | Memory design | `exercises/day48_memory_design.md` | short-term vs long-term memory rules |
-| 49 | Tool failure handling | `exercises/day49_tool_failure_handling.py` | retries, fallback, degraded result |
-| 50 | Agent tracing | `exercises/day50_agent_tracing.md` | trace schema for runs/tool calls |
-| Weekend 10 | Resumable agent | `exercises/weekend10_resumable_agent.md` | persisted run with replay notes |
-| 51 | MCP concepts | `exercises/day51_mcp_concepts.md` | tools/resources/prompts boundary |
-| 52 | MCP search server | `exercises/day52_mcp_search_server.md` | expose Month 2 search as MCP tool |
-| 53 | MCP client | `exercises/day53_mcp_client.md` | agent calls MCP tool |
-| 54 | MCP security | `exercises/day54_mcp_security.md` | allowlist, input validation, human review |
-| 55 | Prompt/resource design | `exercises/day55_mcp_resources_prompts.md` | resource and prompt templates |
-| Weekend 11 | MCP integration | `exercises/weekend11_mcp_integration.md` | agent uses MCP tools safely |
-| 56 | HITL approvals | `exercises/day56_hitl_approvals.md` | approval queue and decisions |
-| 57 | Agent eval set | `exercises/day57_agent_eval_set.md` | task suite with expected tool paths |
-| 58 | Agent metrics | `exercises/day58_agent_metrics.py` | task success, tool accuracy, cost, latency |
-| 59 | Red-team tests | `exercises/day59_red_team_tests.md` | prompt injection/tool misuse cases |
-| 60 | Capstone polish | `capstone/CAPSTONE.md` | agentic RAG capstone docs and demo |
+## Interview Skill Added
 
-## Weekly Acceptance Gates
+You should be able to explain why hybrid retrieval beats pure dense retrieval, why retrieval evals should be separated from generation evals, and why Ragas-style metrics need calibration.
 
-### Week 9 Gate
+## Behind If
 
-- [ ] Agent state is typed.
-- [ ] Graph has explicit nodes and edges.
-- [ ] RAG tool calls use Month 2 API contracts.
-- [ ] Tool loops are bounded.
-- [ ] Agent returns citations or safe uncertainty.
-
-### Week 10 Gate
-
-- [ ] Tool registry includes schemas, permissions, and risk levels.
-- [ ] Agent run traces are persisted.
-- [ ] Tool failures are handled without runaway loops.
-- [ ] Durable execution/resume design is documented.
-- [ ] Memory rules avoid unbounded context growth.
-
-### Week 11 Gate
-
-- [ ] MCP server exposes at least search and answer tools.
-- [ ] MCP client can call those tools from the agent.
-- [ ] Tool inputs are validated.
-- [ ] High-risk tools require explicit approval.
-- [ ] MCP security assumptions are documented.
-
-### Week 12 Gate
-
-- [ ] HITL approval flow works.
-- [ ] Agent eval suite runs.
-- [ ] Metrics include task success, tool-call correctness, groundedness, cost, and latency.
-- [ ] Red-team cases are documented.
-- [ ] README and ADRs explain why the agent is bounded and safe.
-
-## Not Doing In Month 3
-
-- Fully autonomous agents with unbounded tools.
-- Browser/computer control without approval gates.
-- Multi-agent complexity before one agent is reliable.
-- Fine-tuning.
-- Production UI beyond minimal approval/demo surfaces.
-
-## Sources Used
-
-- LangGraph overview: https://docs.langchain.com/oss/python/langgraph/overview
-- LangGraph persistence: https://docs.langchain.com/oss/python/langgraph/persistence
-- LangGraph durable execution: https://docs.langchain.com/oss/python/langgraph/durable-execution
-- LangChain HITL docs: https://docs.langchain.com/oss/python/langchain/human-in-the-loop
-- Anthropic MCP introduction: https://www.anthropic.com/news/model-context-protocol
-- MCP tools docs: https://modelcontextprotocol.io/docs/concepts/tools
-- Ragas metrics: https://docs.ragas.io/en/stable/concepts/metrics/
+- No Project 2 code exists.
+- You cannot explain hybrid retrieval in two sentences.
+- The retrieval eval plan is missing.

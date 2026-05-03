@@ -1,68 +1,75 @@
-# New 10x Engineer
+# Avi's AI Engineer Roadmap
 
-A practical, truth-first roadmap for becoming a job-ready AI engineer.
+A six-month, 8-hours-per-week roadmap for becoming job-ready as an AI engineer by building on real production LLM and GTM automation experience.
 
-This repository is built around my current real skill set and the gaps I need to close. It is not a generic AI roadmap and it does not claim experience I do not have.
+The goal is not to restart from beginner material. The goal is to close specific gaps that hiring managers screen for: evals, retrieval measurement, production deployment, agent reliability, and clear public proof of work.
 
-## Current profile
+## Positioning
 
-I am focused on building useful AI and automation systems for lead generation, enrichment, research, and GTM workflows.
+AI engineer specializing in LLM-powered data and GTM systems.
 
-My current strengths are:
+Current wedge:
 
-- Building lead-generation and outbound automation workflows.
-- Working with Clay.com, enrichment APIs, Google Search / Serper-style workflows, and structured data extraction.
-- Designing business classification pipelines, including domain checks, Google Business / Maps checks, scraping, and status decisions.
-- Creating practical LLM prompts for classification, personalization, signal extraction, and data validation.
-- Evaluating APIs and tools such as BlitzAPI, Apollo-style people data tools, Slack extraction tools, MCP servers, and campaign automation systems.
-- Thinking through production constraints such as cost, reliability, credit burn, hallucination control, and repeatability.
-- Prior development exposure across Python, automation scripts, API workflows, Playwright-style browser automation, n8n/MCP concepts, and full-stack internship work.
+- LLM classification pipelines for noisy business data.
+- Clay, Smartlead, enrichment, web-search, and MCP-based GTM workflows.
+- Real failure-mode experience: hallucination audits, fallback retrieval, API/tool auth failures, cost and repeatability constraints.
+- Bengaluru and Clay operator community context.
 
-## What I still need to improve
+By the end of Month 6, this repo should support active interviewing with:
 
-To become job-ready as an AI engineer, I need stronger depth in:
+- Three production-grade portfolio projects.
+- Eval suites with golden datasets and calibrated judge logic.
+- Live deployments, Langfuse traces, cost/latency notes, and failure-mode sections.
+- Around six public posts or project updates.
+- A visible warm-intro and application funnel for GTM-AI, Bengaluru AI, and applied AI roles.
 
-- Clean Python engineering: packaging, typing, tests, logging, configuration, and maintainable project structure.
-- LLM application engineering: evals, guardrails, structured outputs, tool use, retrieval, and agent workflow design.
-- Data engineering basics: queues, batch jobs, retries, deduplication, data quality checks, and database-backed pipelines.
-- Backend deployment: FastAPI services, background workers, Docker, CI/CD, and cloud deployment.
-- Applied ML/AI fundamentals: embeddings, vector search, retrieval quality, classification metrics, and benchmarking.
-- Portfolio-quality projects that prove I can build reliable systems, not just prompts or wrappers.
-
-## Repository goal
-
-The goal of this repo is to become a public learning and build log showing how I am turning my current automation experience into job-ready AI engineering ability.
-
-The repo is organized around four tracks:
-
-1. **Core engineering** — Python, APIs, testing, architecture, deployment.
-2. **LLM systems** — structured extraction, evals, RAG, agents, tool use, prompt reliability.
-3. **Data and automation pipelines** — scraping, enrichment, data validation, queues, batch processing.
-4. **Portfolio projects** — real projects based on my actual work: winery status classification, LinkedIn lead discovery, Smartlead campaign automation, Slack extraction, and API evaluation.
-
-## How to use this repo
+## Canonical Files
 
 Start here:
 
-1. Read [`ROADMAP.md`](./ROADMAP.md) for the staged plan.
-2. Use [`EXERCISES.md`](./EXERCISES.md) for weekly practice tasks.
-3. Build the projects in [`PROJECTS.md`](./PROJECTS.md).
-4. Track honest progress in [`PROGRESS.md`](./PROGRESS.md).
+1. [MASTER_PLAN.md](./MASTER_PLAN.md) - strategy, skill audit, target roles, anti-patterns, resources. **Read this first.**
+2. [ROADMAP.md](./ROADMAP.md) - the six-month plan, week by week.
+3. [PROJECTS.md](./PROJECTS.md) - the three flagship project specs and standards.
+4. [EXERCISES.md](./EXERCISES.md) - monthly execution checklist.
+5. [PROGRESS.md](./PROGRESS.md) - weekly tracking template.
 
-## Rules for this repo
+Monthly folders:
 
-- Do not write fake claims.
-- Do not add AI-generated fluff.
-- Every project should have a real problem, real inputs, real outputs, and measurable quality checks.
-- Every automation should include cost, failure cases, and anti-hallucination controls.
-- Every portfolio project should be explainable in an interview.
+- [month-1](./month-1/README.md) - eval foundations and Project 1 design.
+- [month-2](./month-2/README.md) - ship the business classification pipeline.
+- [month-3](./month-3/README.md) - RAG fundamentals and Project 2 design.
+- [month-4](./month-4/README.md) - ship the GTM/Clay RAG system.
+- [month-5](./month-5/README.md) - ship the ICP research agent and polish portfolio.
+- [month-6](./month-6/README.md) - job search execution and interview loop.
 
-## Target outcome
+## The Five Tracks
 
-By the end of this roadmap, I should be able to confidently apply for AI Engineer / Automation Engineer / GTM Engineer roles with a portfolio that proves I can:
+Every hour goes into one of these tracks:
 
-- Build working LLM-backed systems.
-- Evaluate output quality with real metrics.
-- Integrate APIs and external tools safely.
-- Deploy backend services.
-- Design reliable pipelines instead of fragile demos.
+1. **Production fluency** - deployed services, traces, cost and latency reasoning.
+2. **Eval-first development** - open coding, golden datasets, calibrated judges, CI gates.
+3. **RAG and retrieval engineering** - hybrid search, contextual retrieval, reranking, retrieval evals.
+4. **Agent engineering** - workflow-first design, step budgets, scoped tools, trajectory evals.
+5. **Public footprint** - writing, project READMEs, OSS contribution, Bengaluru and Clay network.
+
+## The Three Projects
+
+1. **Business classification pipeline with eval harness** - Months 1-2.
+2. **RAG over GTM/Clay knowledge with retrieval evals** - Months 3-4.
+3. **ICP research agent with trajectory evals** - Month 5.
+
+Each project must include a live URL, README, architecture diagram, eval dataset, eval results table, cost-per-call analysis, latency p50/p95, Langfuse traces, and a "Where it fails" section.
+
+## Rules
+
+- Eval before scale.
+- Workflow before agent.
+- One framework or none unless the system genuinely needs more.
+- Public proof beats private learning.
+- No fake claims.
+- No demo without evals.
+- Lean into the GTM and Clay wedge instead of trying to look like a generic SWE candidate.
+
+## Existing Material
+
+Some existing `week-*`, `exercises/`, and `capstone/` folders came from the earlier four-month backend/RAG/agent curriculum. Keep them as reusable drills and implementation material, but treat the new monthly READMEs and root roadmap as canonical.
