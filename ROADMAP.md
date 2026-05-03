@@ -8,7 +8,7 @@ Mission: become job-ready as an AI engineer by turning existing GTM and LLM prod
 
 | Month | Theme | Main outcome |
 |---|---|---|
-| 1 | Evals foundations and Project 1 design | Maven evals work, open-coding notes, annotation workflow, Project 1 design doc, first post |
+| 1 | Evals foundations and Project 1 design | self-paced eval canon, open-coding notes, annotation workflow, Project 1 design doc, first post |
 | 2 | Project 1 ship | Business classifier with schema, golden dataset, LLM-as-judge, deployment, README, second post |
 | 3 | RAG fundamentals and Project 2 design | Contextual retrieval prototype, modern RAG reading, stack choice, ingestion skeleton, third post |
 | 4 | Project 2 ship | Hybrid RAG with contextual retrieval, reranking, ablation table, Ragas calibration, deployment, fourth post |
