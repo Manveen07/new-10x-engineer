@@ -4,12 +4,16 @@
 
 Build the eval-first foundation for the six-month roadmap. Month 1 is not about shipping a large app. It is about learning how to look at LLM outputs rigorously, turning real classifier traces into a failure taxonomy, and designing Project 1 before implementation pressure starts.
 
+**Path:** self-paced from the free Hamel/Shreya canon (no Maven cohort). Sunday `PROGRESS.md` updates are the only forcing function. Do not skip them.
+
+Window: 2026-05-04 to 2026-05-31.
+
 Canonical output by the end of the month:
 
-- Maven AI Evals enrollment and Week 1-3 work completed.
 - 50 real classifier traces reviewed with open-coding notes.
 - Failure taxonomy for the winery/HVAC-style classifier work.
 - Lightweight annotation viewer or annotation workflow.
+- Calibrated LLM-as-judge prototype on a sample of the 50 traces.
 - Project 1 design doc.
 - Personal site or portfolio repo live.
 - Public post 1 published.
@@ -20,10 +24,10 @@ Existing `week-*`, `exercises/`, and `capstone/` material in this folder is reus
 
 | Week | Time | Focus | Deliverable |
 |---|---:|---|---|
-| 1 | 8h | Enroll in Maven AI Evals, set up portfolio repo/site, skim Chip Huyen Ch. 1-2 if needed | portfolio shell and course plan |
-| 2 | 8h | Maven Week 1, Three Gulfs framework, review 50 traces | open-coding notes |
-| 3 | 8h | Maven Week 2, open coding to axial coding, failure taxonomy | taxonomy and annotation workflow |
-| 4 | 8h | Maven Week 3, LLM-as-judge calibration, critique shadowing, Project 1 design | design doc and post draft |
+| 1 | 8h | Set up portfolio repo/site (Quarto or Astro), read Hamel `evals-faq`, pull 50 real classifier traces | portfolio shell live, traces dumped |
+| 2 | 8h | Apply Three Gulfs framework, open-code the 50 traces, read Eugene Yan LLM patterns | open-coding notes |
+| 3 | 8h | Open coding to axial coding, failure taxonomy, build annotation viewer, read Hamel `llm-judge` | taxonomy and annotation workflow |
+| 4 | 8h | LLM-as-judge calibration with critique shadowing on a trace sample, Project 1 design doc, draft post 1 | design doc and post draft |
 
 ## Project 1 Design Requirements
 
@@ -42,12 +46,13 @@ Suggested location: `projects/business-classification-pipeline/docs/design.md`.
 
 ## Monthly Checklist
 
-- [ ] Maven AI Evals enrollment completed.
+- [ ] Hamel `evals-faq`, Eugene Yan LLM patterns, and Hamel `llm-judge` posts read.
 - [ ] Portfolio site or repo is live.
 - [ ] 50 traces reviewed.
 - [ ] Open-coding notes committed or summarized.
 - [ ] Failure taxonomy created.
 - [ ] Annotation viewer/workflow exists.
+- [ ] LLM-as-judge calibrated to >90% agreement on a trace sample.
 - [ ] Project 1 design doc exists.
 - [ ] Post 1 published: "Open coding 50 LLM traces from a real classification pipeline."
 - [ ] `PROGRESS.md` updated every Sunday.
@@ -58,6 +63,6 @@ By the end of this month, you should be able to answer "How do you build an eval
 
 ## Behind If
 
-- You have not enrolled in the Maven cohort.
 - You have reviewed fewer than 50 traces.
 - You do not have a portfolio site or public repo live.
+- You have missed two consecutive Sunday `PROGRESS.md` updates.
