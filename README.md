@@ -1,4 +1,4 @@
-# Avi's AI Engineer Roadmap
+AI Engineer Roadmap
 
 A six-month, 8-hours-per-week roadmap for becoming job-ready as an AI engineer by building on real production LLM and GTM automation experience.
 
