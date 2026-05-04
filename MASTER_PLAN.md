@@ -8,9 +8,20 @@
 
 ---
 
+## Day 0 — Prerequisites (do this weekend, 2026-05-02 / 2026-05-03)
+
+The monthly plan assumes you can write Pydantic models fluently and that `modal deploy` is not a brand-new command in Week 8. These two gaps will hurt mid-Month 2 if you don't front-load them. ~3 hours total.
+
+1. **Pydantic + Instructor speedrun** (~90 min). Read the [Instructor docs intro](https://python.useinstructor.com/) and write one nested Pydantic model that extracts a structured `Company` object (name, domain, status, list of signals with confidence) from one paragraph of text. No project structure needed — single file in a notebook is fine.
+2. **Modal hello world** (~60 min). Sign up at [modal.com](https://modal.com), claim the $30/mo free credits, run their getting-started example, deploy a function that returns "hello world" at a public URL. Goal: never see Modal CLI for the first time when you're under deadline.
+3. **Langfuse free cloud account** (~15 min). Sign up, generate API keys, save to a password manager. You'll wire it into Project 1 in Week 6.
+4. **GitHub + domain** (~30 min). Make sure the GitHub repo for this roadmap is public. If you don't own a personal domain yet, buy one (yourname.com or yourname.dev) — Quarto/Astro deploy needs it in Week 1.
+
+If any of these takes more than 2× the budgeted time, that's the signal. Stop, log it in `PROGRESS.md` Day 0 section, and reduce Week 1 scope accordingly.
+
 ## Start Here — Week 1 (begins Mon 2026-05-04)
 
-This is the only thing you need to do this week. Don't read further until these are done.
+After Day 0 is done. This is the only thing you need to do this week.
 
 1. **Set up the portfolio site** (3 hrs). Quarto or Astro. Pick in 30 min, don't overthink. Live URL by Sunday.
 2. **Pull 50 real classifier traces** from past Clay/winery/HVAC runs (2 hrs). Dump into a single file or notebook.

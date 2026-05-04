@@ -6,6 +6,20 @@ This is your only forcing function (no Maven cohort). Skipping two Sundays in a 
 
 ---
 
+## Day 0 - Weekend of 2026-05-02 / 2026-05-03 (Prerequisites)
+
+See [MASTER_PLAN.md](./MASTER_PLAN.md) "Day 0 — Prerequisites" for context. ~3 hours total.
+
+- [ ] Pydantic + Instructor speedrun: nested `Company` extraction works in a notebook.
+- [ ] Modal hello world deployed at a public URL.
+- [ ] Langfuse free cloud account created, keys saved.
+- [ ] GitHub repo public; personal domain owned.
+
+### Anything that hurt more than expected
+- TBD
+
+---
+
 ## Week 1 - Week of 2026-05-04 (Month 1, Week 1)
 
 ### Focus this week

@@ -24,7 +24,7 @@ Existing agent exercises in this folder are useful in Month 5, but Month 3 is no
 | 9 | 8h | Read Anthropic Contextual Retrieval and Greg Kamradt text splitting | toy contextual retrieval implementation |
 | 10 | 8h | Read Jason Liu and Hamel RAG eval guidance | retrieval notes and eval principles |
 | 11 | 8h | Pick stack, set up Postgres + pgvector, skim AI Engineering Ch. 6 | local retrieval data layer |
-| 12 | 8h | DLAI accuracy/evals course, begin Clay/GTM ingestion, write design doc | Project 2 design doc and post |
+| 12 | 8h | DLAI accuracy/evals course, begin Clay/GTM ingestion, build one module with Cursor or Claude Code agent mode, write design doc | Project 2 design doc, post, and AI-assistant usage notes |
 
 ## Project 2 Design Requirements
 
@@ -54,6 +54,7 @@ Suggested location: `projects/gtm-clay-rag/docs/design.md`.
 - [ ] Postgres + pgvector running locally.
 - [ ] Project 2 stack decision written.
 - [ ] Ingestion pipeline started.
+- [ ] One Project 2 module built with Cursor or Claude Code agent mode, with notes on when to refuse AI assistance.
 - [ ] Retrieval eval design written.
 - [ ] One Bengaluru/community event attended or watched.
 - [ ] Post 3 published: "How I'm setting up retrieval evals before writing a single line of RAG code."

@@ -27,6 +27,8 @@ By the end of Month 6, this repo should support active interviewing with:
 
 Start here:
 
+Doing this right now? Open [PROGRESS.md](./PROGRESS.md) Day 0 / Week 1 and start there.
+
 1. [MASTER_PLAN.md](./MASTER_PLAN.md) - strategy, skill audit, target roles, anti-patterns, resources. **Read this first.**
 2. [ROADMAP.md](./ROADMAP.md) - the six-month plan, week by week.
 3. [PROJECTS.md](./PROJECTS.md) - the three flagship project specs and standards.

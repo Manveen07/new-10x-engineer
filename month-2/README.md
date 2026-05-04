@@ -21,7 +21,7 @@ Existing RAG exercises in this folder are useful later, but Month 2 is now focus
 
 | Week | Time | Focus | Deliverable |
 |---|---:|---|---|
-| 5 | 8h | Maven Week 4, synthetic data, RAG/agent evals, CI/CD integration | course homework patterns folded into Project 1 |
+| 5 | 8h | Read DLAI *Improving Accuracy of LLM Applications* (1-2 hrs). Apply Month 1 taxonomy and judge work to Project 1 scaffolding | self-paced eval patterns folded into Project 1 |
 | 6 | 8h | Schema design, Instructor structured outputs, Langfuse instrumentation, label collection | working classifier skeleton and 100 labels |
 | 7 | 8h | Judge calibration, critique shadowing, confusion matrix, failure fixes | eval harness with more than 90% judge agreement target |
 | 8 | 8h | Modal deployment, README, architecture diagram, iteration log, post | deployed Project 1 and blog post 2 |
@@ -48,6 +48,7 @@ Existing RAG exercises in this folder are useful later, but Month 2 is now focus
 
 ## Monthly Checklist
 
+- [ ] DLAI *Improving Accuracy of LLM Applications* completed.
 - [ ] Project 1 package scaffolded.
 - [ ] Structured output schema implemented.
 - [ ] Mock provider path exists.

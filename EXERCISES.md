@@ -5,6 +5,7 @@ This repo now follows a monthly plan. Existing daily exercise folders remain use
 ## Month 1 - Evals Foundations (self-paced, free path)
 
 - [ ] Set up or update portfolio site (Quarto or Astro, live URL by end of Week 1).
+- [ ] Repackage one old Clay/winery script with `uv`, `ruff`, `pytest`, and Pydantic models.
 - [ ] Read Hamel `evals-faq` end-to-end.
 - [ ] Read Eugene Yan "Patterns for Building LLM-based Systems & Products."
 - [ ] Read Hamel `llm-judge` post.
@@ -41,6 +42,8 @@ This repo now follows a monthly plan. Existing daily exercise folders remain use
 - [ ] Draft ingestion schema.
 - [ ] Draft retrieval eval design.
 - [ ] Begin Project 2 ingestion pipeline.
+- [ ] Build one Project 2 module with Cursor or Claude Code agent mode.
+- [ ] Write notes on when to refuse AI-assistant output.
 - [ ] Attend or watch one Bengaluru AI/community event.
 - [ ] Publish post 3.
 
@@ -56,6 +59,7 @@ This repo now follows a monthly plan. Existing daily exercise folders remain use
 - [ ] Add cited generation.
 - [ ] Calibrate generation judges against about 30 labels.
 - [ ] Deploy Project 2.
+- [ ] Complete a 45-minute "design a doc Q&A system" drill using Project 2 as the backbone.
 - [ ] Submit or schedule a lightning talk.
 - [ ] Publish post 4.
 
@@ -71,6 +75,7 @@ This repo now follows a monthly plan. Existing daily exercise folders remain use
 - [ ] Build trajectory judge and state-transition matrix.
 - [ ] Deploy Project 3.
 - [ ] Polish all three project READMEs.
+- [ ] Draft 6 STAR stories before Month 6 mocks.
 - [ ] Update LinkedIn headline/About.
 - [ ] Publish post 5.
 

@@ -25,7 +25,7 @@ Canonical output by the end of the month:
 | 17 | 8h | Read Anthropic agent guidance and context engineering. Sketch workflow-first design. | design doc and agent boundary decision |
 | 18 | 8h | Build raw orchestration, typed tools, step budget, idempotency tokens | working ICP research workflow/agent |
 | 19 | 8h | Add trajectory evals, golden paths, trajectory judge, state-transition matrix | eval harness and dashboard/report |
-| 20 | 8h | Deploy, write up, polish all project READMEs, update LinkedIn/portfolio | deployed Project 3 and post 5 |
+| 20 | 8h | Deploy, write up, polish all project READMEs, draft 6 STAR stories before Month 6 mocks, update LinkedIn/portfolio | deployed Project 3, post 5, and STAR story set |
 
 ## Project 3 Design Requirements
 
@@ -78,6 +78,7 @@ Suggested location: `projects/icp-research-agent/docs/design.md`.
 - [ ] Final-output evals implemented.
 - [ ] Deployment works.
 - [ ] All three project READMEs polished.
+- [ ] 6 STAR stories drafted before Month 6 mocks.
 - [ ] LinkedIn headline/About updated.
 - [ ] Portfolio site updated.
 - [ ] Post 5 published: "Workflows beat agents until they do not: a step-budgeted ICP researcher."

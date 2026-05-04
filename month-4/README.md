@@ -27,7 +27,7 @@ Existing hardening/portfolio exercises in this folder remain useful support mate
 | 13 | 8h | Contextual retrieval, hybrid retrieval, synthetic query generation | retrieval pipeline and 150 query-chunk pairs |
 | 14 | 8h | Reranking and ablation measurement | dense vs lexical vs hybrid vs hybrid+rerank table |
 | 15 | 8h | Cited generation and generation eval calibration | faithfulness/relevance/context eval report |
-| 16 | 8h | Modal deployment, Langfuse traces, cost analysis, public write-up | deployed Project 2 and post 4 |
+| 16 | 8h | Modal deployment, Langfuse traces, cost analysis, public write-up, 45-minute "design a doc Q&A system" drill using Project 2 as the backbone | deployed Project 2, post 4, and system-design drill notes |
 
 ## Build Requirements
 
@@ -74,6 +74,7 @@ Existing hardening/portfolio exercises in this folder remain useful support mate
 - [ ] Langfuse traces linked or screenshotted.
 - [ ] Post 4 published: "Contextual retrieval on Clay docs: a measured ablation."
 - [ ] Lightning-talk proposal submitted or scheduled.
+- [ ] 45-minute "design a doc Q&A system" drill completed using Project 2 as the backbone.
 
 ## Interview Skill Added
 
