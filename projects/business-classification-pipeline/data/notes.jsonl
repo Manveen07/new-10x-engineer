@@ -1,0 +1,50 @@
+{"idx": 0, "note": "Correct label. Evidence string quotes both 'executive search' and 'contract staffing' \u2014 justifies mixed. Confidence 0.95 may be default (Sat-1 pattern).", "gulf": "n/a", "label": "pass"}
+{"idx": 1, "note": "Correct general_staffing label. Evidence lists 'temporary, contract, temp-to-direct, direct-hire' \u2014 all general staffing vocab, no exec search language. Confidence 0.95 \u2014 third trace at this exact value, hardcoded pattern continuing.", "gulf": "n/a", "label": "pass"}
+{"idx": 2, "note": "Strong pass. Evidence cites placement function, not just keyword.", "gulf": "n/a", "label": "pass"}
+{"idx": 3, "note": "Pass. Evidence quotes both segments verbatim.", "gulf": "n/a", "label": "pass"}
+{"idx": 4, "note": "Pass. Model resisted false_executive_search keyword bait \u2014 strong other signals (IT/eng/mfg + contract). Contrast case for Sat-1 failure mode F-001.", "gulf": "n/a", "label": "pass"}
+{"idx": 5, "note": "Pass. Industry-specific exec search firm. Evidence explicit.", "gulf": "n/a", "label": "pass"}
+{"idx": 6, "note": "Pass. Clean general staffing vocab, no exec signals.", "gulf": "n/a", "label": "pass"}
+{"idx": 7, "note": "Pass label. Evidence string thin \u2014 only 2 short phrases captured; richer signal exists per notes. Flag: thin-evidence pattern.", "gulf": "n/a", "label": "pass"}
+{"idx": 8, "note": "Pass. Second contrast case \u2014 model resisted exec search keyword bait. Strong general staffing signals dominated.", "gulf": "n/a", "label": "pass"}
+{"idx": 9, "note": "Pass. Clean mixed \u2014 both segments quoted explicitly.", "gulf": "n/a", "label": "pass"}
+{"idx": 10, "note": "Pass on label match, but mixed_boundary_ambiguity (F-002) visible \u2014 firm leans general, rule forces 'mixed' because schema lacks segment_strength. Schema-level Specification gulf.", "gulf": "specification", "label": "pass"}
+{"idx": 11, "note": "Pass. Mixed cleanly justified. Industry niche (medical) doesn't change segmentation.", "gulf": "n/a", "label": "pass"}
+{"idx": 12, "note": "Pass. Mixed cleanly justified \u2014 broad function scope + exec mention.", "gulf": "n/a", "label": "pass"}
+{"idx": 13, "note": "Pass. Thin-evidence pattern again \u2014 niche correct, fuller signal in notes not captured. Second instance.", "gulf": "n/a", "label": "pass"}
+{"idx": 14, "note": "Pass. Both segments quoted explicitly.", "gulf": "n/a", "label": "pass"}
+{"idx": 15, "note": "Pass. Inverse of F-002 \u2014 model resisted mixed-collapse despite mid-level mention, correctly chose exec_search based on dominant focus.", "gulf": "n/a", "label": "pass"}
+{"idx": 16, "note": "Pass. Third F-001 resistance case \u2014 'retainer search' present but main work (light industrial) dominated. Model's discriminator working.", "gulf": "n/a", "label": "pass"}
+{"idx": 17, "note": "Pass. Multi-mode staffing for creative niche. No exec signals.", "gulf": "n/a", "label": "pass"}
+{"idx": 18, "note": "Pass. Both segments quoted; multi-mode staffing + exec search.", "gulf": "n/a", "label": "pass"}
+{"idx": 19, "note": "Pass. Clean mixed \u2014 both segments + role-level range from C-suite to entry-level.", "gulf": "n/a", "label": "pass"}
+{"idx": 20, "note": "Pass. Clean mixed \u2014 temp + direct + exec search all named.", "gulf": "n/a", "label": "pass"}
+{"idx": 21, "note": "Pass. Clean general staffing \u2014 no exec signals at all.", "gulf": "n/a", "label": "pass"}
+{"idx": 22, "note": "Pass. Thin-evidence 3rd instance \u2014 full operation in notes not surfaced.", "gulf": "n/a", "label": "pass"}
+{"idx": 23, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 24, "note": "Pass. F-001 resistance #4 \u2014 model correctly dismissed exec-search keyword in favor of general staffing description.", "gulf": "n/a", "label": "pass"}
+{"idx": 25, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 26, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 27, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 28, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 29, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 30, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 31, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 32, "note": "Pass on label, but borderline. Thin evidence 4th instance + missed senior-accounting component (Controllers/CFO permanent placements). Quiet F-002-inverse \u2014 model under-called exec presence.", "gulf": "specification", "label": "ambiguous"}
+{"idx": 33, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 34, "note": "Pass. Clean mixed \u2014 both segments explicit. Filter false-positive (boundary marker was connective).", "gulf": "n/a", "label": "pass"}
+{"idx": 35, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 36, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 37, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 38, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 39, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 40, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 41, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 42, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 43, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 44, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 45, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 46, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 47, "note": "Pass. Clean mixed \u2014 explicit entry-to-exec range. Filter false-positive.", "gulf": "n/a", "label": "pass"}
+{"idx": 48, "note": "Same pattern as traces 0-21: clean classification, 0.95 default confidence, evidence supports label. No new failure mode.", "gulf": "n/a", "label": "pass", "auto_tagged": true}
+{"idx": 49, "note": "Pass. F-001 resistance #5 \u2014 keyword vs description discrimination working.", "gulf": "n/a", "label": "pass"}
