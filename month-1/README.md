@@ -1,76 +1,80 @@
-# Month 1 — Evals Foundations and Project 1 Design
+# Month 1 — Code Rebuild + Eval Foundations + leadlens Design
 
 ## Goal
 
-Build the eval-first foundation for the six-month roadmap. Month 1 is not about shipping a large app. It is about learning how to look at LLM outputs rigorously, turning real classifier traces into a failure taxonomy, and designing Project 1 before implementation pressure starts.
+Two things at once:
 
-**Path:** self-paced from the free Hamel/Shreya canon (no Maven cohort). Sunday `PROGRESS.md` updates are the only forcing function. Do not skip them.
+1. **Rebuild Python fluency** that AI tools eroded — daily no-AI keyboard reps, modern stack (`uv` / `ruff` / `pytest`), threaded through every project block. By end of month you can write a Pydantic model + Instructor extraction + a test for it, without AI, in 10 minutes.
+2. **Build the eval-first foundation** on your existing 50 staffing-firm classifier traces — open coding → axial coding → calibrated LLM-as-judge → design doc for **leadlens** (Project 1). This is the single highest-leverage portfolio skill in 2026.
 
-**Window:** 2026-05-04 to 2026-05-31.
+Month 1 is not about shipping a large app. It's about earning the right to ship one in Month 2.
+
+**Pace:** 8–10 hrs/week. Self-paced. Sunday `PROGRESS.md` updates are the only forcing function.
+
+**Window:** 2026-05-25 → 2026-06-21.
 
 ## Outcome by end of month
 
-- 50 real classifier traces reviewed with open-coding notes.
-- Failure taxonomy for the winery/HVAC-style classifier work.
-- Lightweight annotation viewer.
+- Daily no-AI 30-min coding kata habit (20+ sessions logged).
+- Modern Python stack installed and used (`uv`, `ruff`, `pytest`, `pre-commit`).
+- Personal portfolio site live at your domain.
+- AsanaBot + PresentAI READMEs refreshed.
+- All 50 traces open-coded with one-line notes (extends your existing Saturday-notes start).
+- Failure taxonomy with 4–7 named categories (you already have 3 — `false executive-search signal`, `mixed-boundary ambiguity`, `schema drift` — extend).
+- Lightweight annotation viewer (Streamlit or FastHTML).
 - Calibrated LLM-as-judge prototype with >90% agreement against hand labels.
-- Project 1 design doc at `projects/business-classification-pipeline/docs/design.md`.
-- Personal portfolio site live.
-- Public blog post 1 published.
+- leadlens design doc at `projects/business-classification-pipeline/DESIGN.md`.
+- Blog post 1 published.
 
-## Week Files
+## Week files
 
-Each week has its own daily plan, deliverable checklist, and "behind if" markers. Open the file for the week you are in.
+Open the file for the week you're in. Don't skim ahead — each week's content adapts to what you learned last week.
 
 | Week | File | Window | Outcome |
 |---|---|---|---|
-| 1 | [week-1.md](./week-1.md) | 2026-05-04 → 2026-05-10 | Tooling done, 50 traces pulled, portfolio site live |
-| 2 | [week-2.md](./week-2.md) | 2026-05-11 → 2026-05-17 | All 50 traces open-coded with Three Gulfs |
-| 3 | [week-3.md](./week-3.md) | 2026-05-18 → 2026-05-24 | Failure taxonomy + annotation viewer + 50 traces tagged |
-| 4 | [week-4.md](./week-4.md) | 2026-05-25 → 2026-05-31 | LLM-as-judge >90% agreement, Project 1 design doc, blog post 1 published |
+| 1 | [week-1.md](./week-1.md) | 2026-05-25 → 2026-05-31 | No-AI rebuild + portfolio site live + AsanaBot/PresentAI READMEs refreshed |
+| 2 | [week-2.md](./week-2.md) | 2026-06-01 → 2026-06-07 | All 50 traces open-coded with Three Gulfs + annotation viewer running |
+| 3 | [week-3.md](./week-3.md) | 2026-06-08 → 2026-06-14 | Axial taxonomy + first LLM-as-judge + first iteration to >85% agreement |
+| 4 | [week-4.md](./week-4.md) | 2026-06-15 → 2026-06-21 | Judge calibrated to >90% + leadlens DESIGN.md + blog post 1 published |
 
-## Project 1 Design Doc — Required Sections
+## leadlens DESIGN.md — what it must contain by end of Week 4
 
-By end of Week 4 the design doc must define:
+- **Input contract:** company name, domain, optional location.
+- **Output schema** (Pydantic, nested): operating status, segment (e.g. `executive_search` / `general_staffing` / `mixed`), signals[] with evidence + confidence, citations[].
+- **Retrieval/evidence path:** web search (Tavily or Google CSE), Maps lookups, prior known data — fallback chain if primary fails.
+- **Golden dataset plan:** how you'll hand-label 100 companies in Month 2 (sourcing, ambiguity sampling, label rubric).
+- **Eval dimensions:** segment correctness, signal correctness, evidence support quality, confidence calibration.
+- **Judge plan:** binary judge per dimension, critique shadowing pattern, agreement target >90%.
+- **Failure taxonomy reference:** link to `failure-taxonomy.md`.
+- **Deployment target + observability:** Modal + Langfuse + cost target + p50/p95 target.
 
-- Input contract: company name, domain, optional location.
-- Output schema (Pydantic): operating status, ICP fit, sub-segment, signals, confidence, citations.
-- Retrieval/evidence path: web search, Maps-style sources, prior data.
-- Golden dataset plan: 100 companies across pass/fail/edge cases (built in Month 2).
-- Eval dimensions: status correctness, ICP-fit correctness, evidence support, confidence calibration.
-- Judge plan: binary judge checks, critique shadowing, agreement target above 90%.
-- Failure taxonomy reference: link to `failure-taxonomy.md`.
-- Deployment target and observability plan.
+Location: [projects/business-classification-pipeline/DESIGN.md](../projects/business-classification-pipeline/) (create file in Week 4).
 
-Location: [projects/business-classification-pipeline/docs/design.md](../projects/business-classification-pipeline/docs/design.md).
+## Interactivity rules for this month
 
-## Monthly Checklist
+- **Read+Drill pairs:** every reading triggers one 30-min build. No reading allowed without a build chaser. Examples:
+  - Read Hamel `llm-judge` → write a 20-line LLM judge in a notebook the same evening.
+  - Read Eugene Yan on critique shadowing → run it on 3 traces immediately.
+- **Daily no-AI 30 min:** before any AI-paired session, do a no-AI warm-up. See [START_HERE.md](../START_HERE.md) for the rotation.
+- **Sunday log is non-negotiable.** Even a 5-line update beats silence.
 
-- [ ] Hamel `evals-faq`, Eugene Yan LLM patterns, and Hamel `llm-judge` posts read.
-- [ ] Portfolio site live at your domain.
-- [ ] 50 traces pulled and committed under `projects/business-classification-pipeline/data/`.
-- [ ] All 50 traces open-coded with one-line notes.
-- [ ] Failure taxonomy with 4–7 named categories at `projects/business-classification-pipeline/docs/failure-taxonomy.md`.
-- [ ] Annotation viewer (Streamlit or FastHTML) runs locally.
-- [ ] All 50 traces tagged with a taxonomy category.
-- [ ] LLM-as-judge agreement >90% with hand labels after ≥3 prompt iterations.
-- [ ] Judge iteration log committed.
-- [ ] Project 1 design doc complete.
-- [ ] Blog post 1 published: "Open coding 50 LLM traces from a real classification pipeline."
-- [ ] LinkedIn cross-post made.
-- [ ] `PROGRESS.md` updated every Sunday + monthly review filled.
+## Interview skill added by end of month
 
-## Interview Skill Added
+You should be able to answer **"How do you build an eval?"** in three concise sentences using your own classifier as the example:
 
-By end of month, you should be able to answer **"How do you build an eval?"** in three concise sentences using your own classifier as the example: pull 50 real traces, open-code them, cluster into a taxonomy, build a critique-shadowed LLM judge, calibrate to >90% agreement.
+> "Pulled 50 real traces from my staffing-firm classifier, open-coded them by hand to discover three failure modes — false executive-search signal, mixed-boundary ambiguity, schema drift — then built a binary LLM-as-judge with critique shadowing and iterated the prompt three times until it agreed with my hand labels at 92%. The judge then runs in CI."
 
-## Behind If
+If you can say that fluently and pull up the artifacts on screen, that's a senior-junior signal in 60 seconds.
 
-- Fewer than 50 traces have been reviewed.
-- Portfolio site is not live.
-- Two consecutive Sunday `PROGRESS.md` updates have been missed.
-- Blog post 1 is not published by 2026-05-31.
+## Behind if
+
+- Fewer than 15 no-AI katas logged.
+- Portfolio site not live by end of Week 1.
+- Fewer than 50 traces open-coded by end of Week 2.
+- Judge agreement <85% by end of Week 4.
+- Blog post 1 not published by 2026-06-21.
+- Two consecutive Sunday `PROGRESS.md` updates missed.
 
 ## Next month
 
-→ [../month-2/README.md](../month-2/README.md) — Project 1 ship: convert eval discipline into a deployed classification pipeline with a 100-example golden dataset.
+→ [../month-2/README.md](../month-2/README.md) — Ship leadlens: turn the design + judge into a deployed classifier with 100-example golden dataset, Loom walkthrough, blog post 2.

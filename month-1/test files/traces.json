@@ -1,0 +1,802 @@
+[
+  {
+    "id": "trace_001",
+    "input": {
+      "company_name": "Daley And Associates, Llc",
+      "domain": "daleyaa.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search and contract staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The firm description explicitly mentions both 'executive search' and 'contract staffing', indicating a mixed practice. They place professionals in accounting, finance, IT, legal, administrative, and life sciences roles, which suggests a mix of levels."
+  },
+  {
+    "id": "trace_002",
+    "input": {
+      "company_name": "The Nagler Group",
+      "domain": "naglergroup.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing solutions for temporary, contract, temporary-to-direct hire, and direct-hire placements."
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description explicitly mentions temporary, contract, and direct-hire placements, indicating a general staffing agency rather than an executive search firm."
+  },
+  {
+    "id": "trace_003",
+    "input": {
+      "company_name": "20/20 Foresight Executive Talent Solutions",
+      "domain": "2020-4.com"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "Executive Search, which identifies and places top executive talent"
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "The description explicitly mentions 'Executive Search' and focuses on placing 'top executive talent'. No disqualifying staffing signals are present."
+  },
+  {
+    "id": "trace_004",
+    "input": {
+      "company_name": "Cordia Resources By Cherry Bekaert",
+      "domain": "cordiaresources.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search for C-level and senior roles, direct-hire and temporary staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description explicitly mentions 'executive search for C-level and senior roles' AND 'direct-hire and temporary staffing', so it is classified as 'mixed'."
+  },
+  {
+    "id": "trace_005",
+    "input": {
+      "company_name": "Spyglass Partners, Llc",
+      "domain": "spyglasspartners.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "filling roles in IT, engineering, manufacturing, supply chain, and logistics through contract, contract-to-hire, and direct hire placements"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on contract, contract-to-hire, and direct hire placements in IT, engineering, manufacturing, supply chain, and logistics. This indicates a general staffing agency rather than an executive search firm, despite the presence of 'executive search' in the keywords."
+  },
+  {
+    "id": "trace_006",
+    "input": {
+      "company_name": "Michael Latas & Associates",
+      "domain": "latas.com"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search and consulting firm dedicated exclusively to serving the construction and architectural, engineering, planning industries."
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "The description explicitly states 'executive search' and focuses on 'professional level needs' within specific industries. No disqualifying staffing signals are present."
+  },
+  {
+    "id": "trace_007",
+    "input": {
+      "company_name": "Allegis Global Solutions",
+      "domain": "allegisglobalsolutions.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "contingent, permanent, and project-based staffing"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on talent acquisition, management, and various staffing solutions including contingent, permanent, and project-based staffing. No explicit mention of executive or retained search."
+  },
+  {
+    "id": "trace_008",
+    "input": {
+      "company_name": "Catawba Valley Staffing",
+      "domain": "cv-staffing.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing consultants, staffing solutions"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "Keywords and description indicate general staffing, including 'industrial, medical, professional, clerical, technical'."
+  },
+  {
+    "id": "trace_009",
+    "input": {
+      "company_name": "Professional Placement Services",
+      "domain": "ppswork.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing and recruiting firm...project-based staffing, contract-to-hire, and direct placement services"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description mentions 'employment placement agencies and executive search services', but the overall business is clearly general staffing, contract, and direct placement across various industries. The seniority score is low because the description does not focus on senior leadership roles."
+  },
+  {
+    "id": "trace_010",
+    "input": {
+      "company_name": "24 Seven Talent",
+      "domain": "24seventalent.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive recruitment services; traditional staffing for contract and direct hire positions"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'executive recruitment services' and 'traditional staffing for contract and direct hire positions', indicating a mixed practice."
+  },
+  {
+    "id": "trace_011",
+    "input": {
+      "company_name": "Staffing Service Usa",
+      "domain": "staffingserviceusa.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "employment placement agencies and executive search services, clerical staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'executive search services' AND 'clerical staffing' / 'light industrial recruitment', so it's a mixed firm. The focus seems to be more on general staffing, but the presence of 'executive search' requires a 'mixed' classification."
+  },
+  {
+    "id": "trace_012",
+    "input": {
+      "company_name": "Med Search Recruiting Network, Inc",
+      "domain": "medrecruiters.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search and staffing firm"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description explicitly mentions both 'executive search' and 'staffing firm', indicating a mixed practice. The firm also mentions 'sales team expansion' and 'talent acquisition' which suggests a broader scope than just senior leadership."
+  },
+  {
+    "id": "trace_013",
+    "input": {
+      "company_name": "Quest Groups Llc",
+      "domain": "questgroups.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search, tech startup staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions 'executive search' which is a positive signal for executive search. However, it also mentions 'tech startup staffing' and focuses on roles in engineering, accounting, product marketing, business development, and sales, indicating a broader range of placements beyond just senior leadership. Therefore, it's classified as mixed."
+  },
+  {
+    "id": "trace_014",
+    "input": {
+      "company_name": "Mahler Private Staffing",
+      "domain": "mahlerprivatestaffing.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "household and family office professionals"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The firm specializes in staffing for private homes and family offices, including roles like estate managers, chefs, personal assistants, and nannies. This indicates a focus on general staffing rather than executive search."
+  },
+  {
+    "id": "trace_015",
+    "input": {
+      "company_name": "Abacus Group, Llc",
+      "domain": "abacusgroupstaffing.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive recruitment and staffing firm that specializes in the permanent placement and temporary staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description explicitly mentions 'executive recruitment' AND 'temporary staffing', so it's a mixed practice. The firm handles both permanent and temporary placements across various disciplines."
+  },
+  {
+    "id": "trace_016",
+    "input": {
+      "company_name": "Ac Lion Digital Executive Search",
+      "domain": "aclion.com"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "executive recruiting firm focused on digital talent acquisition for fast-growth and emerging technology companies"
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "The firm specializes in executive recruitment and staffing solutions for C-suite, VP, and senior leadership positions, as well as mid-level management roles. However, the focus is clearly on executive recruitment."
+  },
+  {
+    "id": "trace_017",
+    "input": {
+      "company_name": "Champion Personnel System",
+      "domain": "championpersonnel.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "Light Industrial staffing across Greater Cleveland, serving manufacturers and distributors"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on light industrial staffing, manufacturing, and distribution, indicating a general staffing agency rather than an executive search firm. Mentions 'contingency & retainer search' but the overall focus is on light industrial."
+  },
+  {
+    "id": "trace_018",
+    "input": {
+      "company_name": "Icreatives",
+      "domain": "icreatives.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "tailored staffing solutions for temporary, full-time, freelance, and contract positions"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on staffing and recruiting for creative roles, offering temporary, full-time, freelance, and contract positions. No mention of executive or retained search."
+  },
+  {
+    "id": "trace_019",
+    "input": {
+      "company_name": "Ringside Talent",
+      "domain": "ringsidetalent.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing and recruiting firm...specializes in permanent, temporary, contract, and project staffing...Executive Search"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description explicitly mentions both 'executive search' and various forms of staffing (temporary, contract, etc.), indicating a mixed practice."
+  },
+  {
+    "id": "trace_020",
+    "input": {
+      "company_name": "Emerging Blue",
+      "domain": "emergingblue.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search, temporary staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'executive search' and 'temporary staffing', indicating a mixed practice. The firm handles roles from C-suite to entry-level."
+  },
+  {
+    "id": "trace_021",
+    "input": {
+      "company_name": "Accounting & Finance Professionals",
+      "domain": "afprofessionals.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "temporary staffing, direct hire placement, and executive search"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'executive search' and 'temporary staffing', indicating a mixed practice."
+  },
+  {
+    "id": "trace_022",
+    "input": {
+      "company_name": "The Peak Organization",
+      "domain": "peakorg.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "professional temporary and permanent staffing solutions"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on 'staffing solutions' and mentions various types of staffing including IT, marketing, and office support, indicating a general staffing agency rather than an executive search firm. No executive search signals are present."
+  },
+  {
+    "id": "trace_023",
+    "input": {
+      "company_name": "Professional Recruiters Group",
+      "domain": "prgrecruiters.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing and recruiting"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The firm provides recruiting, advertising, screening, interviewing, evaluations, payroll taxes, payroll administration, unemployment / workers' compensation, record keeping, and insurance. This indicates general staffing services."
+  },
+  {
+    "id": "trace_024",
+    "input": {
+      "company_name": "Go-Staff, Inc.",
+      "domain": "go-staff.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing services, temp staffing"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description mentions 'staffing services' and 'temp staffing', indicating a general staffing agency rather than an executive search firm."
+  },
+  {
+    "id": "trace_025",
+    "input": {
+      "company_name": "Pyramid Consulting Group, Llc",
+      "domain": "pyramidcg.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing, temporary, temp-to-perm, and permanent placements"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The firm specializes in temporary, temp-to-perm, and permanent placements across North America. Also mentions 'executive search' in keywords, but the description is clearly dominated by general staffing."
+  },
+  {
+    "id": "trace_026",
+    "input": {
+      "company_name": "Sp Associates, Inc.",
+      "domain": "spassociates.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search, contract assignments"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The firm offers both 'executive search' and 'contract assignments', indicating a mixed practice. They place 'officers, managers, skilled professionals, and executives' suggesting a mix of seniority levels."
+  },
+  {
+    "id": "trace_027",
+    "input": {
+      "company_name": "Jas Recruitment",
+      "domain": "jas-recruitment.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing and recruiting firm...executive search"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'staffing and recruiting' and 'executive search', indicating a mixed practice. They also do 'direct hire' and 'contract recruitment'."
+  },
+  {
+    "id": "trace_028",
+    "input": {
+      "company_name": "Mfg Jobs Inc.",
+      "domain": "cncjobsinc.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "temp staffing, temporary staffing, manufacturing workforce"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The firm specializes in permanent placement staffing for the manufacturing industry, including roles such as CNC Machinists, Engineers, and Project Managers. They also offer temp and contract staffing."
+  },
+  {
+    "id": "trace_029",
+    "input": {
+      "company_name": "Acertitude",
+      "domain": "acertitude.com"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "global executive search firm and leadership consultancy"
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "Focuses on board, C-level, and senior executive search."
+  },
+  {
+    "id": "trace_030",
+    "input": {
+      "company_name": "Executive Staffing Solutions",
+      "domain": "ess123.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search for positions ranging from C-level executives to mid-level roles. ESS offers specialized staffing services"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both executive search and staffing services, including mid-level roles, indicating a mixed practice."
+  },
+  {
+    "id": "trace_031",
+    "input": {
+      "company_name": "Philly Temps & Perm",
+      "domain": "phillytemps.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "temporary staffing, temp-to-perm placements, and permanent placements"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description explicitly mentions temporary staffing, temp-to-perm placements, and permanent placements, indicating a general staffing agency rather than an executive search firm. Keywords such as 'clerical office support', 'data entry', 'receptionist', and 'light industrial' further support this classification."
+  },
+  {
+    "id": "trace_032",
+    "input": {
+      "company_name": "Nisha Group - \u00d7\u00a7\u00d7\u2018\u00d7\u2022\u00d7\u00a6\u00d7\u00aa \u00d7\u00a0\u00d7\u2122\u00d7\u00a9\u00d7\u201d",
+      "domain": "nisha.co.il"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search, staffing placement hitech"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The firm does both executive search and general staffing, so it is classified as mixed. They recruit for mid-level to C-level positions."
+  },
+  {
+    "id": "trace_033",
+    "input": {
+      "company_name": "Mgr Accounting Recruiters",
+      "domain": "mgrar.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "temporary staffing solutions"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description mentions both permanent placements in senior accounting roles (Controllers, CFO) and temporary staffing solutions. The keywords also include 'staffing', 'temporary hire', 'permanent placement'. This indicates a general staffing agency with some focus on accounting and finance roles."
+  },
+  {
+    "id": "trace_034",
+    "input": {
+      "company_name": "Front Office Partners",
+      "domain": "frontofficepartners.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "recruitment and staffing services, particularly for front office roles."
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on 'recruitment and staffing services' and 'front office roles', indicating a general staffing agency rather than an executive search firm. The keywords also suggest a focus on 'startup recruitment' and 'staffing partner'."
+  },
+  {
+    "id": "trace_035",
+    "input": {
+      "company_name": "Kane Partners Llc",
+      "domain": "kanepartners.net"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search, contract staffing"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions 'executive search' but also 'contract staffing', 'direct placement', and focuses on IT, Engineering, and Manufacturing recruitment, indicating a mixed practice."
+  },
+  {
+    "id": "trace_036",
+    "input": {
+      "company_name": "Barrystaff, Inc.",
+      "domain": "barrystaff.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "industrial staffing, clerical staffing, permanent placements"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "Keywords include industrial staffing, clerical staffing, and permanent placements, indicating a general staffing agency rather than an executive search firm. The description mentions 'staffing company' which is another strong signal."
+  },
+  {
+    "id": "trace_037",
+    "input": {
+      "company_name": "Browning Associates",
+      "domain": "executivejobsearch.net"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "assisting VP and C-suite executives with job searches"
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "The description focuses on VP and C-suite executives, executive search services, and career management for high-level professionals. No mention of temp/staffing/hourly."
+  },
+  {
+    "id": "trace_038",
+    "input": {
+      "company_name": "Vertex Solutions",
+      "domain": "vtxsolutions.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing recruiting, talent acquisition"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "Keywords include 'staffing recruiting, talent acquisition, employment placement agencies and executive search services'. The description focuses on technology solutions and learning/training, not executive roles."
+  },
+  {
+    "id": "trace_039",
+    "input": {
+      "company_name": "Execusearch Staffing Solutions",
+      "domain": "execusearch-inc.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search and placement for permanent, contract, and temporary roles"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description explicitly mentions 'executive search' AND also mentions 'contract' and 'temporary' roles, so it is classified as 'mixed'."
+  },
+  {
+    "id": "trace_040",
+    "input": {
+      "company_name": "Dps Pro & Diversified Personnel Services (Dps)",
+      "domain": "dpsworks.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "manufacturing staffing, skilled trades staffing, temporary workforce"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on connecting job seekers with employers in manufacturing, skilled trades, admin, and service careers, indicating a general staffing agency rather than an executive search firm."
+  },
+  {
+    "id": "trace_041",
+    "input": {
+      "company_name": "Ams Staffing Inc.",
+      "domain": "ams-staff.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "full-time placements, temp-to-permanent positions, and contract staffing"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on staffing across various sectors, including full-time, temp-to-perm, and contract positions. No mention of executive or retained search."
+  },
+  {
+    "id": "trace_042",
+    "input": {
+      "company_name": "Otterbase",
+      "domain": "otterbase.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive staffing, supplemental staffing services"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions both 'executive staffing' and 'supplemental staffing services', indicating a mixed practice. The company focuses on 'talent placement' which is a general staffing signal."
+  },
+  {
+    "id": "trace_043",
+    "input": {
+      "company_name": "Time Staffing Inc.",
+      "domain": "timestaffinginc.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "industrial and clerical fields"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on industrial and clerical staffing, temp-to-hire, and general staffing services. No executive search signals are present."
+  },
+  {
+    "id": "trace_044",
+    "input": {
+      "company_name": "Express Employment Professionals Franchising",
+      "domain": "expressfranchising.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "temporary, contract, and full-time placements"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "Description focuses on staffing and workforce solutions including temporary and contract placements. No executive search signals present."
+  },
+  {
+    "id": "trace_045",
+    "input": {
+      "company_name": "Pioneer Data Systems, Inc.",
+      "domain": "pioneerdata.com"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "staffing and recruiting firm...talent acquisition solutions"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on staffing and talent acquisition solutions across various sectors, including IT, clinical research, engineering, and finance. It does not mention executive search or retained search. The keywords include 'contract staffing' and 'offshore staffing', indicating a general staffing focus."
+  },
+  {
+    "id": "trace_046",
+    "input": {
+      "company_name": "Action Management Services",
+      "domain": "actionmgmt.com"
+    },
+    "output": {
+      "status": "executive_search",
+      "confidence": 0.95,
+      "evidence": [
+        "executive search and recruitment firm"
+      ]
+    },
+    "ground_truth": "executive_search",
+    "notes": "The firm specializes in recruiting management professionals at various levels. Mentions executive search."
+  },
+  {
+    "id": "trace_047",
+    "input": {
+      "company_name": "Freeman+Leonard",
+      "domain": "freemanleonard.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "employment placement agencies and executive search; staffing and consulting solutions"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The firm description mentions both 'executive search' and 'staffing', so it is a mixed practice. They place for permanent, contract, project, and consulting positions."
+  },
+  {
+    "id": "trace_048",
+    "input": {
+      "company_name": "Addition Management",
+      "domain": "additionmanagement.com"
+    },
+    "output": {
+      "status": "mixed",
+      "confidence": 0.95,
+      "evidence": [
+        "executive recruiting firm...placing candidates in roles from entry-level to executive positions"
+      ]
+    },
+    "ground_truth": "mixed",
+    "notes": "The description mentions 'executive recruiting firm' but also states they place candidates from 'entry-level to executive positions', indicating a mix of executive search and general staffing."
+  },
+  {
+    "id": "trace_049",
+    "input": {
+      "company_name": "Stocker & Associates, Llc",
+      "domain": "stockerassociates.net"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "Professional Placement in Accounting, Finance, Human Resources, and Administrative Support"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "The description focuses on 'Professional Placement in Accounting, Finance, Human Resources, and Administrative Support' which indicates general staffing rather than executive search. The keywords also include 'staffing solutions' and 'administrative support'."
+  },
+  {
+    "id": "trace_050",
+    "input": {
+      "company_name": "Pulse Jobs",
+      "domain": "pulsejobs.net"
+    },
+    "output": {
+      "status": "general_staffing",
+      "confidence": 0.95,
+      "evidence": [
+        "recruitment and staffing firm that connects job seekers with employers"
+      ]
+    },
+    "ground_truth": "general_staffing",
+    "notes": "Although the keywords include 'executive search', the description focuses on general recruitment and staffing, connecting job seekers with employers across various industries and roles. The mention of 'reviewing qualifications, conducting interviews, performing skills assessments, and checking references' suggests a broader staffing approach rather than exclusive executive search."
+  }
+]

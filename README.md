@@ -1,8 +1,10 @@
-# Avi's AI Engineer Roadmap
+# Manveen's 6-Month AI Engineer Roadmap
 
-A six-month, 8-hours-per-week roadmap for becoming job-ready as an AI engineer by building on real production LLM and GTM automation experience.
+**Mission:** Be hireable as a junior **GenAI / LLM Application Engineer** by November 2026 — through three shipped public projects, four to six written posts, one OSS contribution, and an MCP server, while rebuilding hands-on coding fluency that AI tools eroded.
 
-The goal is not to restart from beginner material. The goal is to close specific gaps that hiring managers screen for: evals, retrieval measurement, production deployment, agent reliability, and clear public proof of work.
+**Pace:** 8–10 hours/week. Sustainable, college-compatible, designed to finish — not to look impressive on a Notion page.
+
+**Window:** 2026-05-25 → 2026-11-08 (24 weeks).
 
 ---
 
@@ -10,73 +12,84 @@ The goal is not to restart from beginner material. The goal is to close specific
 
 → **[START_HERE.md](./START_HERE.md)**
 
-That file tells you exactly what week you are in, what to do today, and which file to open next. Bookmark it. Open it every working session. You should never have to ask "what now?".
+That file tells you exactly what week you are in and what to do today. Bookmark it. Open it every working session. You should never have to ask "what now?".
 
 ---
 
-## Positioning
+## Who this plan is for (you)
 
-AI engineer specializing in LLM-powered data and GTM systems.
+- Final-year BTech CS at MSIT, graduating Aug 2026
+- AI/ML intern at Caprae Capital (Sasquatch data pipelines) + current GTM Engineer at Precise Leads (n8n + scraping + lead enrichment)
+- Shipped projects: **AsanaBot** (Vision Transformers + MediaPipe for yoga pose feedback) and **PresentAI** (Next.js SaaS + Gemini for slide generation)
+- Comfortable with Python basics; rusty on async, typing, Pydantic, modern tooling because AI writes most of your code now
+- Targeting **US-remote** as primary funnel via four channels — Mercor, HN/YC/Wellfound, direct outbound to US AI founders, and curated remote boards — with **India product startups** as the realistic safety. Your existing GTM-engineer outbound skill (Slack scraping → qualification → outreach at Precise Leads) is your biggest single advantage and is what makes US-remote the *right* primary, not just the ambitious one.
 
-Current wedge:
+## What you're building toward (Nov 2026 readiness bar)
 
-- LLM classification pipelines for noisy business data.
-- Clay, Smartlead, enrichment, web-search, and MCP-based GTM workflows.
-- Real failure-mode experience: hallucination audits, fallback retrieval, API/tool auth failures, cost and repeatability constraints.
-- Bengaluru and Clay operator community context.
+1. **Three deployed projects** — classifier with evals, production RAG, agent + MCP server.
+2. **Four to six technical blog posts** on your own domain, each with a real failure mode you found.
+3. **One merged OSS pull request** to a known LLM/AI repo.
+4. **One MCP server** — registered, demoable from Claude Desktop or Cursor.
+5. **A README portfolio** any hiring manager can scan in 90 seconds and conclude "yes, this person ships."
+6. **An interview funnel actually open** — 25+ applications, 5+ first rounds, 1+ offer cycle in motion.
 
-By the end of Month 6, this repo should support active interviewing with:
+## Positioning (your wedge)
 
-- Three production-grade portfolio projects.
-- Eval suites with golden datasets and calibrated judge logic.
-- Live deployments, Langfuse traces, cost/latency notes, and failure-mode sections.
-- Six public posts on your own domain.
-- A visible warm-intro and application funnel for GTM-AI, Bengaluru AI, and applied AI roles.
+"GenAI app engineer who ships LLM systems with evals and an MCP server, not just a chatbot demo."
 
-## Repository Map
+You're the rare junior who has (a) shipped a full-stack GenAI SaaS (PresentAI), (b) a CV/PyTorch project (AsanaBot), and (c) production-flavored data/automation experience from two internships. Most fresher candidates show ML coursework *or* a GenAI tutorial demo, not both plus eval-first thinking. The plan turns that cross-section into something hiring managers see immediately.
 
-**Strategy** (read once, re-skim quarterly)
-- [START_HERE.md](./START_HERE.md) — daily landing page.
+## Repository map
+
+**Strategy** (read once, re-skim monthly)
+- This file — one-screen positioning.
 - [MASTER_PLAN.md](./MASTER_PLAN.md) — full strategy, skill audit, target roles, anti-patterns, resources.
 
 **Plan** (read at the start of each month)
-- [ROADMAP.md](./ROADMAP.md) — six-month week-by-week table.
-- [PROJECTS.md](./PROJECTS.md) — three flagship project specs and common standard.
+- [ROADMAP.md](./ROADMAP.md) — 24-week month-by-month table.
+- [PROJECTS.md](./PROJECTS.md) — three flagship project specs: leadlens, docsight, reposcout.
 - [EXERCISES.md](./EXERCISES.md) — monthly execution checklist.
 
-**Execution** (read every working day)
+**Execution** (open every working day)
+- [START_HERE.md](./START_HERE.md) — daily landing page.
 - [month-1/](./month-1/README.md) → [month-6/](./month-6/README.md) — per-month overviews + per-week daily plans.
-- [PROGRESS.md](./PROGRESS.md) — weekly Sunday log.
-- [projects/business-classification-pipeline/](./projects/business-classification-pipeline/) — Project 1 home (Months 1–2).
-- [projects/gtm-clay-rag/](./projects/gtm-clay-rag/) — Project 2 home (Months 3–4).
-- [projects/icp-research-agent/](./projects/icp-research-agent/) — Project 3 home (Month 5).
+- [PROGRESS.md](./PROGRESS.md) — weekly Sunday log. The single forcing function.
+- [projects/business-classification-pipeline/](./projects/business-classification-pipeline/) — leadlens (Months 1–2). Already has your 50 traces.
+- [projects/gtm-clay-rag/](./projects/gtm-clay-rag/) — will be renamed to **docsight** in Month 3.
+- [projects/icp-research-agent/](./projects/icp-research-agent/) — will be renamed to **reposcout** in Month 5.
 
-## The Five Tracks
+## The six tracks
 
-Every hour goes into one of these:
+Every hour goes into one of these. Rebalance monthly.
 
-1. **Production fluency** — deployed services, traces, cost and latency reasoning.
+1. **Code fluency rebuild** — daily no-AI keyboard warm-ups, weekly build blocks, modern Python stack.
 2. **Eval-first development** — open coding, golden datasets, calibrated judges, CI gates.
-3. **RAG and retrieval engineering** — hybrid search, contextual retrieval, reranking, retrieval evals.
-4. **Agent engineering** — workflow-first design, step budgets, scoped tools, trajectory evals.
-5. **Public footprint** — writing, project READMEs, OSS contribution, Bengaluru and Clay network.
+3. **RAG / retrieval engineering** — hybrid search, contextual retrieval, reranking, retrieval evals.
+4. **Agent engineering + MCP** — workflow-first, step budgets, scoped tools, trajectory evals, MCP server.
+5. **Public footprint (US-resonant)** — blog, GitHub, X, LinkedIn, OSS contribution, Loom walkthroughs, community presence.
+6. **Outbound channel (your unfair advantage)** — sourcing US AI founders, Insight-Email outreach, Mercor + HN + Wellfound + direct outbound funnel. Light in Months 3–4, ramps in Months 5–6.
 
-## The Three Projects
+## The three projects
 
-| # | Project | Months | Folder |
-|---|---|---|---|
-| 1 | Business classification pipeline + eval harness | 1–2 | [projects/business-classification-pipeline](./projects/business-classification-pipeline/) |
-| 2 | RAG over GTM/Clay knowledge with retrieval evals | 3–4 | [projects/gtm-clay-rag](./projects/gtm-clay-rag/) |
-| 3 | ICP research agent with trajectory evals | 5 | [projects/icp-research-agent](./projects/icp-research-agent/) |
+| # | Codename | Months | What it proves | Folder |
+|---|---|---|---|---|
+| 1 | **leadlens** | 1–2 | Eval-first development on a real classifier | [projects/business-classification-pipeline](./projects/business-classification-pipeline/) |
+| 2 | **docsight** | 3–4 | Production RAG with measured retrieval quality | [projects/gtm-clay-rag](./projects/gtm-clay-rag/) |
+| 3 | **reposcout** | 5 | Agent design + MCP server + trajectory evals | [projects/icp-research-agent](./projects/icp-research-agent/) |
 
-Each project must include a live URL, README, architecture diagram, eval dataset, eval results table, cost-per-call analysis, latency p50/p95, Langfuse traces, and a "Where it fails" section.
+Each project must include a live URL, README to standard, eval dataset, eval results table, cost-per-call, latency p50/p95, Langfuse traces, and a "Where it fails" section. Full specs in [PROJECTS.md](./PROJECTS.md).
 
-## Rules
+## Standing rules (re-read every Sunday for first three months)
 
-- Eval before scale.
-- Workflow before agent.
-- One framework or none unless the system genuinely needs more.
-- Public proof beats private learning.
-- No fake claims.
-- No demo without evals.
-- Lean into the GTM and Clay wedge instead of trying to look like a generic SWE candidate.
+1. **Eval before scale.** Every project gets a golden dataset before optimization.
+2. **One framework or none.** Raw SDK + Pydantic + Instructor is the default; add LangGraph only at the node that genuinely needs it.
+3. **Workflow before agent.** Default to deterministic code; agentic dynamism only where required.
+4. **Type the code yourself before asking AI.** 5-minute hand-coded warm-up daily, no AI. Then AI is a pair, not a crutch.
+5. **Ship in public weekly.** Even a commit, a tweet, a README diff. Hidden work doesn't compound.
+6. **Production thinking lives in the README.** "Where it fails," cost-per-call, latency p50/p95, eval results table — no exceptions.
+
+Full anti-patterns list in [MASTER_PLAN.md](./MASTER_PLAN.md) §7.
+
+## Start here
+
+Open **[START_HERE.md](./START_HERE.md)**. It tells you the current week and what to do today.
