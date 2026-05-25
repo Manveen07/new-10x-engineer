@@ -72,6 +72,29 @@ All 3 named failure modes (`false_executive_search_signal`, `mixed_boundary_ambi
 - Public footprint: 2 (1 tweet, no blog posts, no Loom)
 - Outbound funnel readiness: 3 (Precise Leads mechanics, no leadlens-shaped artifact yet)
 
+### Mon May 25 — holiday, Week 2 work pulled forward
+- Project work: ~4.5 hrs
+- Kata 1 done (nested Pydantic + parse_company + 3 pytest tests, all green, no AI for model + tests)
+- Annotation viewer shipped (`projects/business-classification-pipeline/annotator.py`)
+- 50 traces annotated (22 hand-coded via calibration pairing + 22 stratified-sampled auto-tag via `filter_traces.py` + 6 boundary cases hand-coded)
+- Bulk-save script (`bulk_save_notes.py`) merged hand annotations into `data/notes.jsonl` (50/50 entries)
+- v2 taxonomy locked in `notes/week-1-saturday-notes-v2.md`: F-003 (hardcoded confidence) promoted to highest priority, F-001 demoted (model handles), F-004 (thin-evidence) added new, F-002 kept medium
+- Commit pushed: `0baea8b` — 11 files, 1556 insertions
+
+#### Mon learnings
+- Filter-then-hand-code is correct open-coding methodology once pattern stability hits (~20 traces). Don't grind through pass-only cases.
+- Pre-commit hook caught + auto-formatted 4 files on first commit attempt → blocked. Re-stage with `git add -u`, re-commit succeeded. Pattern locked.
+- Self-vocab gap surfaced ("retainer search" = retained exec search, not "casual/on-demand"). Comprehension gulf on labeler side. Judge prompt needs this term defined.
+- Filter false-positive rate ~33% on boundary-marker heuristic (2 of 6 hits were connective grammar). Tune marker list before reuse.
+
+#### Mon stuck box
+- (none — clean session)
+
+### Remaining Week 1 work
+- Katas 2–5 (Tue–Fri evenings, 15 min each, no AI)
+- 4 deferred Hamel evals-faq Qs (Sat May 30 morning, 30 min)
+- Next Sat May 30 weekend block now has slack since trace open-coding done. Reading + writing focus, or pull Week 3 axial-coding forward.
+
 ---
 
 ## Weekly template (copy this for each new week)
