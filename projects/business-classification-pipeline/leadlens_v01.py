@@ -14,7 +14,10 @@ class JobPosting(BaseModel):
     ai_authenticity: Literal["real_ai_role", "ai_adjacent", "ai_washed", "non_ai"]
     core_stack: list[str] = Field(
         max_length=20,
-        description="Specific frameworks/libraries named: LangGraph, RAG, MCP, PyTorch, Postgres, etc.",
+        description="Specific frameworks/libraries named in the source description: LangGraph, RAG, MCP, PyTorch, Postgres, etc. If source does not enumerate any frameworks, return an empty list AND set stack_unspecified=True.",
+    )
+    stack_unspecified: bool = Field(
+        description="True when the source description does not enumerate frameworks/libraries (empty core_stack reflects missing source data, not classifier failure). False when at least one tech term was named.",
     )
     remote_status: Literal[
         "fully_remote", "hybrid", "onsite", "remote_within_region", "unclear"
