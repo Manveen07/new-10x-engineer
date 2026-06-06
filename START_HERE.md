@@ -29,6 +29,8 @@ Three layers, each shorter than the last.
 - [PROJECTS.md](./PROJECTS.md) — three flagship project specs (leadlens, docsight, reposcout).
 - [EXERCISES.md](./EXERCISES.md) — monthly checklist (tick boxes as you go).
 - [month-1/README.md](./month-1/README.md) … [month-6/README.md](./month-6/README.md) — per-month overviews.
+- [REFERENCE.md](./REFERENCE.md) — technique cheat-sheet (eval / RAG / agent / LLMOps specifics + sources). Open while building.
+- [interview_prep_qa.md](./interview_prep_qa.md) — interview Q&A bank for the 5 clusters (evals, RAG, agents, LLMOps, cost modeling).
 
 ### Layer 3 — Execution (open every working day)
 - `month-N/week-N.md` — daily plan for the week you're in.
