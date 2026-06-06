@@ -1,374 +1,287 @@
-# Master Plan — Avi's AI Engineer Roadmap
+# Master Plan — Manveen's AI Engineer Roadmap
 
-**Mission:** Become job-ready as an AI engineer in ~6 months at 8 hours/week by turning existing production GTM/LLM work into a defensible portfolio. Not starting over — closing specific gaps hiring managers screen for.
+**Mission:** Be hireable as a junior **GenAI / LLM Application Engineer** by November 2026, on 8–10 hours/week, with three deployed projects, an MCP server, and an OSS contribution that prove eval-first thinking.
 
-**Positioning:** AI engineer specializing in LLM-powered data and GTM systems. Real production experience with LLM classification pipelines, MCP servers, enrichment automation. Bengaluru-based, embedded in Clay operator community. Wedge: most AI-eng candidates are SWEs who built a chatbot — you're a GTM operator who shipped LLM systems that move revenue.
+**Window:** 2026-05-25 → 2026-11-08 (24 weeks). Currently: pre-Week 1 reset.
 
-**Target by Month 6:** Actively interviewing with 3 production-grade projects, ~6 public posts, eval-first thinking, warm-intro funnel into Bengaluru AI startups and the Clay/GTM ecosystem.
-
----
-
-## Start Here — Week 1 (begins Mon 2026-05-04)
-
-This is the only thing you need to do this week. Don't read further until these are done.
-
-1. **Set up the portfolio site** (3 hrs). Quarto or Astro. Pick in 30 min, don't overthink. Live URL by Sunday.
-2. **Pull 50 real classifier traces** from past Clay/winery/HVAC runs (2 hrs). Dump into a single file or notebook.
-3. **Read the free Hamel/Shreya material** (2 hrs): [hamel.dev/blog/posts/evals-faq](https://hamel.dev/blog/posts/evals-faq/) end-to-end + Eugene Yan's [LLM patterns post](https://eugeneyan.com/writing/llm-patterns/).
-4. **Update [PROGRESS.md](./PROGRESS.md) Sunday night.** Honest hours, what shipped, what slipped.
-
-After this week, switch to the monthly cadence in [ROADMAP.md](./ROADMAP.md).
+**Wedge:** Final-year BTech who has *already* shipped a full-stack GenAI SaaS (PresentAI) and a CV/PyTorch project (AsanaBot), plus production-flavored automation experience from Caprae and Precise Leads internships. Add an eval-first portfolio + MCP server + OSS contribution on top and you skip the entire "looks-like-every-other-fresher" pile.
 
 ---
 
-## Repo Map — read in this order
+## 1. Why this plan replaces the old one
 
-| File | Purpose |
+The previous plan was written for a different persona — a Bengaluru-based senior GTM engineer with years of Clay/winery/HVAC production traces and a Clay Cup community position. You don't have that profile. You have a *better-for-juniors* profile (real shipped GenAI app + CV project + two internships + active GTM role), and the plan now reflects it.
+
+**What carries forward from your last three weeks:**
+- 50 staffing-firm classifier traces in [projects/business-classification-pipeline/data/traces-week-1.jsonl](./projects/business-classification-pipeline/data/traces-week-1.jsonl)
+- Saturday open-coding notes in [notes/week-1-saturday-notes.md](./notes/week-1-saturday-notes.md) (genuinely good thinking — three named failure modes)
+- Modal hello-world + Instructor speedrun in [month-1/test files/](./month-1/test%20files/)
+- Awareness of Hamel's evals canon and the Three Gulfs framework
+
+**What changes:** the project shapes are no longer Clay/winery/HVAC-themed; the project codenames are now `leadlens` / `docsight` / `reposcout`; Week 1 is a code-rebuild week (not a tooling-setup week); MCP server is explicit in Project 3; the funnel is India-product + India-remote primary, US/EU-remote stretch.
+
+## 2. Target role recommendation
+
+After the research brief, the recommendation is **GenAI / LLM Application Engineer with an agent tilt**. Reasoning:
+
+| Why this role | Why not the others |
 |---|---|
-| [README.md](./README.md) | One-screen positioning |
-| **MASTER_PLAN.md** (this file) | Strategy, audit, target roles, anti-patterns, resources |
-| [ROADMAP.md](./ROADMAP.md) | Week-by-week plan with deliverables and "behind if" markers |
-| [PROJECTS.md](./PROJECTS.md) | Specs and standards for the 3 flagship projects |
-| [EXERCISES.md](./EXERCISES.md) | Monthly checklist (tick boxes as you go) |
-| [PROGRESS.md](./PROGRESS.md) | Weekly log — update every Sunday |
-| `month-1/` … `month-6/` | Per-month READMEs and any drill material |
-| `projects/business-classification-pipeline/` | Project 1 home |
-| `projects/gtm-clay-rag/` | Project 2 home |
-| `projects/icp-research-agent/` | Project 3 home |
+| Highest-volume junior hiring bucket in 2026 — most JDs in this category | ML Engineer wants MS or strong publications; very hard at fresher level |
+| Bar is "ship working LLM features + evals," not "derive backprop" — winnable | MLOps Platform wants 2+ yrs SWE infra; you don't have that yet |
+| Directly compounds what you've already built (PresentAI ≈ this work, AsanaBot proves PyTorch literacy on the side) | Forward-Deployed Engineer wants 2–3 yrs customer-facing; door opens after 1st job |
+| Indian product startups (Sarvam, Razorpay, Postman, Atlan, Eka, Glean BLR, Sprinklr) actively hire juniors for this | Pure agent-engineer roles exist but small junior market |
+| Same portfolio also qualifies for US-remote stretch (Sierra, Decagon, 11x India ICs) | |
 
-**Ignore:** the older `compass_artifact_wf-378304b4-...md` (backend/async foundations plan) and the `week-*` subfolders inside each month. Those came from an earlier four-month curriculum that's been superseded by this plan. Keep them as drill material only — do not treat them as canonical.
+**You can re-target later** — once you have a junior offer in hand, the next jump to FDE / agent engineer / ML eng is much easier than the first one is now.
 
----
+## 3. Honest skill audit (Manveen, May 2026)
 
-## 1. Honest Skill Audit
-
-What you can defend in interviews **today** vs. what's missing.
-
-### What you can already defend (cite these in every interview)
-
-| Project | What it proves |
+### What you can already defend in interviews
+| Asset | What it proves |
 |---|---|
-| Winery operating-status classifier | Prompt design, schema-driven extraction, business-context judgment, dealing with noisy real-world web data |
-| HVAC distributor segmentation | Classification at scale, ICP-style reasoning encoded in prompts, edge cases and refusal handling |
-| WIRLS enrichment sprint | Coordinating parallel LLM workstreams under deadline; **a hallucination audit** (exactly what hiring managers screen for); web search as fallback when MCP servers failed with auth errors |
-| MCP server work in Clay/Smartlead pipelines | 2025-standard agent integration protocol that 90% of candidates have only read about |
-| Clay Cup 2026 Bengaluru Nomination Round | Operator community credibility — relevant for FDE / DevRel / Solutions roles |
+| **PresentAI** (Next.js + Gemini + Clerk + Prisma + PostgreSQL) | Full-stack GenAI app shipping; auth + DB + state; prompt-driven generation; SaaS-shaped thinking. *Most fresher candidates don't have this.* |
+| **AsanaBot** (Vision Transformers + MediaPipe + OpenCV) | PyTorch literacy, real-time video, model selection, deployment-shaped thinking |
+| **Caprae internship** (Sasquatch data pipelines) | Production data pipelines, validation layers, "blocked 35% of erroneous records" = quality-aware engineering |
+| **Precise Leads** (n8n + scraping + Slack) | Workflow orchestration in production, multi-source data joins, "40% manual time reduction" = outcome framing |
+| **50 staffing-firm classifier traces + open-coding notes** | You've already started eval-first thinking — three named failure modes on real data |
 
-**Translate into hiring-manager language:**
-- "Built LLM classification pipelines processing X records with prompt-driven extraction and validation"
-- "Designed enrichment workflows with fallback retrieval when primary tool calls failed"
-- "Ran a hallucination audit on a multi-pipeline output — caught Y% defect rate before delivery"
-
-### What you cannot yet defend
-
-| Gap | Why it matters | Where this gets fixed |
+### What you cannot yet defend (the 24-week target list)
+| Gap | Why it matters | Where it gets closed |
 |---|---|---|
-| Eval harnesses with golden datasets and aligned LLM-as-judge | Hamel Husain's hiring lens explicitly screens for this. "Did you look at your data?" is the canonical question. | Self-paced eval work (Month 1) + every project after |
-| Retrieval-quality measurement (recall@k, MRR, NDCG, faithfulness) | RAG roles test this directly. Jason Liu: "RAG is just a recommendation system squeezed between two LLMs — improve search first." | Project 2 |
-| Production deployment (Modal, Langfuse traces, cost/latency budget) | Demo on localhost ≠ shipped. | Every project deployed on Modal or Fly.io with Langfuse instrumentation |
-| Agent reliability patterns — step budgets, tool surface area, trajectory evals | Agent engineering is the highest-paid sub-specialization in 2026. | Project 3 |
-| Python fluency rebuild — async, typing, Pydantic, pytest, packaging | You don't need beginner Python; you need to be fast and idiomatic again. | Ambient via every project |
-| Public technical writing | Eugene Yan and Hamel built careers on writing. Zero posts = invisible. | Monthly post starting Month 2 |
-| Spoken AI engineering vocabulary | You can do the work; can you explain trade-offs in 2 sentences? | Mock interviews from Month 5 |
+| **Modern Python fluency** — async, typing, Pydantic, uv, ruff, pytest | Every junior screen tests live coding; AI-written code on your CV with no muscle behind it is a major risk | Month 1, Week 1 code-rebuild block + threaded daily warm-ups |
+| **Eval harnesses with golden datasets + calibrated LLM-as-judge** | The single highest-signal junior portfolio artifact in 2026 (research confirms) | Project 1 (leadlens), Months 1–2 |
+| **Retrieval-quality measurement** (recall@k, MRR, NDCG, faithfulness, context precision) | RAG roles test this directly; you don't have this yet | Project 2 (docsight), Months 3–4 |
+| **Production deployment story** (Modal, Langfuse traces, p50/p95, $/call) | "Runs on my laptop" reads as student in 2026; deployed + observed reads as engineer | Every project deployed |
+| **Agent reliability patterns** — step budgets, tool surface area, idempotency, trajectory evals | Highest comp ceiling, only hire-able after a junior offer but worth credentialing now | Project 3 (reposcout), Month 5 |
+| **MCP server literacy** | Table-stakes in 2026 — Anthropic open-sourced Nov 2024, by mid-2026 it's the way tools are exposed to Claude/ChatGPT/Cursor | Project 3 |
+| **Public technical writing** | Most juniors don't have any — even one well-written post moves you up the stack | 4–6 posts across 24 weeks |
+| **One merged OSS PR to a known LLM repo** | Signals you can read others' code, hold a PR conversation, ship inside someone else's codebase | Month 3 or 4 (Instructor, Langfuse, Ragas, simonw/llm, LiteLLM — pick one) |
 
-**Honest framing:** You're not transitioning *into* AI engineering. You're already doing parts of it without the title. The 6 months are about closing specific gaps and packaging existing work so hiring managers see what's there.
+### What you don't need to grind (but should still be able to *speak* to)
+- **Build-an-LLM-from-scratch (nanoGPT).** Watch Karpathy once. Skip the grind.
+- **400 LeetCode problems.** Junior AI-eng interviews at AI-native startups lean lighter on DSA. 60–80 problems focused on arrays/hash maps/strings/graphs is enough. (GCC + Razorpay-style platform roles weight DSA heavier — add 30 more if you target those.)
+- **Full Andrew Ng ML specialization or Stanford CS231n.** Tangential to LLM-app work. You already know enough classical ML to talk about it.
+- **fast.ai.** Excellent but not on the critical path.
+- **Daily paper-of-the-day.** Replace with one weekly deep-read (Latent Space + AI News).
+- **Heavy MLOps (Kubeflow, MLflow, Airflow).** Not a junior AI-eng signal anymore.
 
----
+### Things you must *be able to speak to* even if you don't deep-build with them
+Live JD evidence (Sarvam FDE, Thiranmi AI Backend, multiple LinkedIn India listings, May 2026) shows these are explicitly listed across postings. You'll spend 30–60 min on a notebook for each, then move on.
 
-## 2. Target Roles and Companies
+- **CrewAI + AutoGen** — try one 30-min notebook each in Month 5. Know when each is the wrong choice vs LangGraph.
+- **LlamaIndex** — try one ingestion + query notebook in Month 3 alongside your raw RAG build. Listed at almost every India RAG JD alongside LangChain.
+- **Pinecone** — one 30-min sandbox in Month 3. Default to pgvector in your project, but JDs still ask about Pinecone.
+- **AWS Bedrock + Lambda basics** — one tutorial each in Month 4 or 5. Increasingly mentioned in India JDs.
+- **Docker + Compose** — actually use it in Project 2 deployment. Not optional anymore.
+- **Celery / Kafka basics** — conceptual + one minimal Celery setup in Month 4 (async tasks for ingestion). RabbitMQ/SQS = same vocabulary.
+- **Guardrails + LLM safety basics** — Anthropic Skills docs + Guardrails AI repo skim, 1 hr in Month 5.
 
-Three concentric circles. Don't restrict yourself early.
+## 4. Target funnel (US-remote primary, India backup)
 
-### Circle 1 — GTM-flavored AI engineer (your strongest wedge)
+You raised it directly: India fresher AI-eng hiring is brutal (most JDs ask 2–5 yrs and screen on college tier and DSA), and you already do outbound for a living at Precise Leads. Pointing that exact skill at US founders/CTOs is your wedge — most AI-eng candidates can't do outbound. The funnel inverts accordingly.
 
-Where your production experience reads as senior-level immediately. Category exploded 11.4× in 2025. Demand outpaces supply at ~2.1 jobs per technical candidate.
+### Primary funnel — US-remote (3 channels, run all three in parallel from Month 4)
 
-- **Clay.com** — Forward-Deployed and internal GTMEs. You're already in this community.
-- **Decagon, Sierra, 11x.ai, Artisan, Regie.ai, AiSDR** — sales/CS agent companies. 11x posts $150K–$220K for Agent Engineer.
-- **Apollo.io, Common Room, Default, Persana** — GTM platforms hiring AI engineers who understand the actual work.
-- **Hebbia, Glean, Mendable** — adjacent doc-Q&A companies that hire FDEs.
+**Channel A — Curated remote job boards** (apply weekly, the "warm portal" path)
+- [HN "Who is Hiring?" monthly thread](https://hnhiring.com/locations/remote) — first Tuesday of each month. Filter for "AI / LLM / RAG / agents." Junior-friendly + founder-written JDs.
+- [YC Work at a Startup](https://www.workatastartup.com/) — filter: AI + remote + open to junior. 51 India HQ + ~hundreds remote-friendly.
+- [Wellfound](https://wellfound.com/) (formerly AngelList) — startup-heavy, often founder-screened.
+- [WeWorkRemotely](https://weworkremotely.com/) and [Arc.dev](https://arc.dev/remote-jobs/llm).
+- Direct careers pages: Sierra, Decagon, 11x.ai, Harvey, Hebbia, Cresta, Glean — they hire India ICs for some roles.
 
-### Circle 2 — Bengaluru/India AI-native and remote roles
+**Channel B — Talent marketplaces** (apply once, get matched)
+- **[Mercor](https://www.mercor.com/) — highest priority.** Their interview is *exclusively on your open-source contributions*. The OSS PR in this plan is no longer a checkbox; it's the *primary asset* for this route. Apply in Month 4 once the PR is merged. Hiring takes ~60 days; payouts weekly via Stripe Connect, USD-denominated.
+- [Turing](https://www.turing.com/jobs/remote-ai-jobs) — assessment-heavy. Lower selectivity than direct apps, lower pay ceiling than Mercor.
+- A.Team, Pesto, Pallet, Crossover — secondary; only after Channels A and C are running.
 
-- **Sarvam AI** — Forward-Deployed Software Engineer / Strategic Deployment Engineer. JD almost custom-fit for your background.
-- **Atlan** — context layer for data and AI; remote-first; agent governance and AI eng roles.
-- **Postman** — growth and AI engineers building agents over their API knowledge graph.
-- **Krutrim, Fractal, Razorpay AI** — local options. Krutrim has documented culture issues (NDTV Dec 2024, Blind reviews); apply with eyes open.
-- **Remote-for-US Series A/B** via Mercor, Turing, or direct application — senior remote from Bengaluru reaches ₹60–80 LPA equivalent.
+**Channel C — Direct outbound to US founders** (your unfair advantage)
+- Target: post-Seed / Series A AI startups that *just raised* but haven't hired AI engineers yet (lag is usually 2–6 weeks between raise announcement and posting). Find via [TechCrunch funding announcements](https://techcrunch.com/category/venture/), [Stripe Atlas weekly digest](https://stripe.com/atlas), [Pitchbook](https://pitchbook.com/) Twitter alerts, and YC Bookface RSS if you have access.
+- Volume math (research confirms): **100–200 personalized messages → 5–10 qualified conversations → 1–3 trial contracts → 1 FT-equivalent**. Doable over Months 5–6 at 1 hr/day on outreach.
+- Pitch shape (Insight Email, then Specific Offer): one observation about their product/blog/launch + one specific 2-week trial you'd do for them (build their internal RAG eval suite; ship a customer-facing classifier; instrument their existing agent with Langfuse traces; build them an MCP server). Not "I'm looking for a job." Not "I have these skills."
+- This is exactly what you do at Precise Leads. The only difference is the target ICP is "US AI startup CTO who just raised," not staffing firms.
 
-### Circle 3 — Applied AI / FDE at frontier and enterprise AI companies
+**Compensation expectations (May 2026 live data):**
+- Indian remote AI eng cost to US employers: $500–950/week ($26k–49k/year) all-inclusive. (F5 Hiring Solutions, May 2026.)
+- Contract entry rate: $30–50/hr for a fresher with shipped portfolio.
+- Reasonable 12-month trajectory: contract trial → FT-remote at $50–80k USD with equity.
+- "4–6 weeks from purposeful start to first dollar" is aggressive but documented as achievable.
 
-- **Anthropic** — Applied AI Engineer, Forward Deployed Engineer (Boston/SF/NYC/London/Paris). JD requires "production experience with LLMs including advanced prompt engineering, agent development, evaluation frameworks."
-- **OpenAI** — Research Engineer, Applied AI Engineering.
-- **Harvey** ($180K–$280K SF), **Cresta**, **Cognition**, **Cursor (Anysphere)** — higher coding/DSA bar for the latter two.
+### Secondary funnel — India product startups + India remote (the safety)
+Run this in parallel from Month 5 so November isn't all-or-nothing.
 
-### What to optimize for
+**AI-native:** Sarvam, Krutrim (apply with eyes open — documented culture issues), Fractal AI Labs, Razorpay (Magic), Postman (AI features), Atlan, Eka.care, Glean Bangalore, Sprinklr AI, Yellow.ai, Haptik, Setu, Zluri, BrowserStack AI, Uniphore, Rocketlane, Observe.AI, Peakflo (YC, RAG-heavy, hiring 0.5–2 yr range).
+**GCC AI teams (floor option):** Microsoft India, Google India (Gemini eng), Adobe AI, Salesforce, ServiceNow.
+**TC band, fresher / 0–1 yr (directional, May 2026):** ₹10–25 LPA at startups; ₹18–30 LPA at top-tier product startups; ₹8–14 LPA at GCC AI-aliased roles.
 
-Your 6-month target is a **first solid AI engineering offer**, not the absolute top of the market.
+### What the same portfolio buys you in each funnel
+| Funnel | What lands you a first round |
+|---|---|
+| **US-remote — direct outbound** | A *specific* 2-week trial offer + 1 deployed project demoable in 30 seconds + a Loom walkthrough + a personalized observation about their work. Eval table on the project doubles reply rate. |
+| **US-remote — Mercor** | 1 merged OSS PR + GitHub profile with 4–6 months of daily-ish activity + 3 deployed projects in pinned repos. **The PR is the interview.** |
+| **US-remote — HN/Wellfound/YC apply** | Same portfolio + a sharp blog post (one that gets shared) + a Loom video walkthrough. |
+| **India product startup** | 2 deployed LLM apps + public eval suite + blog post + GitHub graph + warm intro through OSS or local meetup. Lighter DSA. |
+| **India GCC AI** | Same as above + a leetcode-easy DSA round + cleaner README presentation. |
 
-> **Technical-adjacent background + part-time prep = 4–6 months focused effort.** Plan for 6 months. Budget for 9.
+## 5. The six tracks
 
-Recruiter quote that defines the market (KORE1, 2026 LLM Engineer Hiring Guide): *"Three of every five resumes hitting our queue for an LLM engineering req right now are not, in any practical sense, LLM engineers. They are software engineers who shipped a LangChain demo."* The bar is lower than fear suggests — if you have shipped evidence with evals.
+Every hour goes into one of these. Rebalance monthly.
 
----
+1. **Code fluency rebuild** — daily 5-min no-AI warm-ups, weekly 2–3 hr build blocks, modern Python stack. The most-underrated track for someone whose AI dependency has grown.
+2. **Eval-first development** — Hamel/Shreya canon, open coding, golden datasets, calibrated LLM-as-judge, CI gates. The single highest-leverage skill in 2026 hiring.
+3. **RAG / retrieval engineering** — chunking, hybrid (BM25 + dense), Anthropic Contextual Retrieval, rerankers, Ragas-style generation evals. The deepest sub-skill tested in interviews.
+4. **Agent engineering + MCP** — workflow-first, step budgets, idempotency, trajectory evals, plus an MCP server. The highest comp ceiling.
+5. **Public footprint** — blog (own domain, not Medium/dev.to), LinkedIn, GitHub readability, OSS contribution, community presence. The hireability multiplier.
+6. **Outbound channel & US-funnel hygiene (your unfair advantage)** — sourcing US AI founders/CTOs from funding announcements, HN, YC, Twitter; Insight-Email outreach in volume; Loom video walkthroughs as the standard demo; building public credibility in US-resonant vocabulary (X, GitHub, Latent Space/AI Tinkerers Discord), not Indian-recruiter vocabulary. **You don't need to learn this — you do it for a living. You need to *point* it.** Starts light in Month 3, ramps Months 5–6.
 
-## 3. The Five Tracks
-
-Every hour over six months goes into one of these. Re-balance monthly.
-
-1. **Production fluency** — shipping projects on Modal/Fly with Langfuse instrumentation, cost/latency reasoning, live URLs.
-2. **Eval-first development** — error analysis, golden datasets, aligned LLM-as-judge, regression tests in CI. Highest-leverage skill in 2026 hiring.
-3. **RAG and retrieval engineering** — hybrid retrieval, contextual retrieval (Anthropic, Sept 2024), reranking, retrieval evals. Deepest and most-tested sub-skill.
-4. **Agent engineering** — workflows vs agents (Anthropic distinction), step budgets, tool surface area, trajectory evals. Highest comp ceiling.
-5. **Public footprint** — writing, OSS contributions, Bengaluru community presence, LinkedIn cadence, GitHub readability. Hireability multiplier.
-
-Will *not* spend significant time on: building an LLM from scratch, deep DSA grind, classical ML refreshers, math from scratch, multiple agent frameworks. Explicit cuts — see Section 7.
-
----
-
-## 4. The Three Flagship Projects
+## 6. The three flagship projects
 
 Three deep projects beat ten demos. Full specs in [PROJECTS.md](./PROJECTS.md). One-line summary:
 
-| # | Project | Months | Project folder |
+| # | Codename | Months | What it proves |
 |---|---|---|---|
-| 1 | Business classification pipeline + eval harness | 1–2 | [projects/business-classification-pipeline](./projects/business-classification-pipeline/) |
-| 2 | RAG over GTM/Clay knowledge with retrieval evals | 3–4 | [projects/gtm-clay-rag](./projects/gtm-clay-rag/) |
-| 3 | ICP research agent with trajectory evals | 5 | [projects/icp-research-agent](./projects/icp-research-agent/) |
+| 1 | **leadlens** | 1–2 | Eval-first development on a real classifier (evolves your existing staffing-firm work) |
+| 2 | **docsight** | 3–4 | Production RAG with measured retrieval quality, hybrid search, reranking |
+| 3 | **reposcout** | 5 | Agent design + MCP server + trajectory evals, composing 1 + 2 as tools |
 
 **Common standard, every project:**
-- Live deployed URL (Modal, Fly.io, or HF Spaces).
-- README with: problem statement, architecture diagram, fresh-venv run instructions, **"Where it fails" section**, eval results table, cost-per-call, latency p50/p95.
+- Live deployed URL (Modal preferred — $30/mo free credits).
+- README with: problem statement, architecture diagram, fresh-venv run instructions, **"Where it fails" section**, eval results table, $/call, latency p50/p95.
 - Eval dataset committed to repo.
-- Iteration history in commits (not one giant initial commit).
+- Iteration history visible in commits (not one big initial dump).
 - Langfuse trace screenshots in README.
-- One public write-up with failure-mode honesty.
+- One public blog post with failure-mode honesty.
+- A 3-minute Loom walkthrough linked from the README (US-remote funnel ROI).
 
-Standard comes from `alexeygrigorev/ai-engineering-field-guide` (analyzed 2,445 JDs and 100+ candidate take-homes Q4 2025–Q1 2026): eval suite + production thinking shows up in 39.6% of AI-First role responsibilities.
+## 7. Anti-patterns to refuse (re-read every Sunday for first three months)
 
----
+1. **Letting AI write everything.** Your single biggest risk. Code without typing it rots fluency, and live coding interviews will expose it in 15 minutes. Hand-code warm-up daily, AI is a pair after that.
+2. **Tutorial-finishing.** Watching DLAI / HF Learn / Anthropic courses without shipping is procrastination dressed as learning. Each course module triggers one small build.
+3. **Framework collecting.** "I learned LangChain, LlamaIndex, CrewAI, AutoGen, LangGraph" reads as beginner. "I shipped three projects with raw SDK + LangGraph at the one node that needed it" reads as senior.
+4. **Fake claims.** Don't say "I built an agent" if you wrote a single LLM call. Don't say "I deployed to production" if it's localhost. Hiring managers see through this in 90 seconds.
+5. **Demo without evals.** A Streamlit chatbot wrapper was a 2023 portfolio. In 2026 it's a negative signal.
+6. **Generic LLM-as-judge.** Running Ragas with default prompts and trusting the numbers. Calibrate against your own labels or the score is noise.
+7. **Hype-posting on LinkedIn.** Don't post "the future of AI is exciting." Post your specific eval table with the failure mode you found.
+8. **Pinning identity to the GTM angle.** That was the previous plan's wedge. Yours is "fresher who ships full-stack GenAI + has eval discipline" — let GTM be background, not headline.
+9. **Skipping the code-rebuild because the AI projects feel more fun.** Project 1 needs you typing real code into real files. Resist the urge to vibe-code your way through it.
 
-## 5. Six-Month Plan (Calendar)
+## 8. Interactive learning curriculum (your explicit ask)
 
-Full week-by-week table is in [ROADMAP.md](./ROADMAP.md). Monthly anchors:
+Eight passive video hours teach less than two interactive build hours. The plan threads these mechanisms into every week:
 
-| Month | Window | Theme |
-|---|---|---|
-| 1 | 2026-05-04 → 2026-05-31 | Eval foundations + Project 1 design |
-| 2 | 2026-06-01 → 2026-06-28 | Ship Project 1 (classification + evals) |
-| 3 | 2026-06-29 → 2026-07-26 | RAG fundamentals + Project 2 design |
-| 4 | 2026-07-27 → 2026-08-23 | Ship Project 2 (RAG + ablation) |
-| 5 | 2026-08-24 → 2026-09-20 | Ship Project 3 (ICP agent) + portfolio polish |
-| 6 | 2026-09-21 → 2026-10-18 | Job search execution |
+- **Daily 5-min no-AI keyboard warm-up.** Tiny exercises (Python tricks, type hints, Pydantic snippets). Goal: hands-on-keyboard reps to rebuild muscle.
+- **Weekly "Build Block" (2–3 hrs).** Hands-on coding only. No reading allowed. The actual project moves forward.
+- **Weekly "Read+Drill" (1–2 hrs).** Short reading then a 30-min exercise applying it. No reading without a build.
+- **Weekly Public Push.** A commit, a tweet, a README diff, a screenshot — something visible weekly.
+- **Monthly "Demo Day Loom."** Record a 3-min walkthrough of what shipped that month. Post on LinkedIn + GitHub README. Builds the on-camera muscle hiring managers test in final rounds.
+- **The "Stuck Box" rule.** When stuck >20 min, log the symptom in `PROGRESS.md`, *then* ask AI. Never silently struggle two hours, never silently let AI write three files. Both are failure modes.
+- **Weekly Sunday `PROGRESS.md` update.** Non-negotiable. The single forcing function for self-paced work.
 
-### Month 1 substitution — free path (no Maven cohort)
+### Resources prioritized for interactivity (use these, skip the rest)
 
-The original plan assumed enrolling in Hamel Husain & Shreya Shankar's Maven AI Evals course (~$1,800). You're skipping the cohort. Free substitute:
+**Hands-on / build-along (priority):**
+- [Anthropic Courses (GitHub)](https://github.com/anthropics/courses) — prompt engineering, tool use, RAG, MCP. All notebook-based.
+- [Hugging Face Learn](https://huggingface.co/learn) — Agents Course + LLM Course are the best free interactive curricula in 2026.
+- [DeepLearning.AI short courses](https://www.deeplearning.ai/short-courses/) — pick four: *Building Agentic RAG with LlamaIndex*, *AI Agents in LangGraph*, *Building Evaluations of LLM Apps*, *Building MCP Apps*. Skip the rest.
+- [Jason Liu — Instructor docs](https://python.useinstructor.com/) + his free RAG content.
+- [Hamel Husain blog](https://hamel.dev/blog/posts/evals/) — eval-driven development; the FAQ post is gold.
+- [Modal Labs examples repo](https://modal.com/docs/examples) — best way to learn serverless GPU inference by doing.
+- [OpenAI Cookbook](https://cookbook.openai.com/) — task-oriented notebooks.
+- [LangChain Academy](https://academy.langchain.com/) — free LangGraph course.
 
-- **Read** the Hamel/Shreya O'Reilly book *Evals for AI Engineers* (or the equivalent free posts on hamel.dev — `evals-faq`, `field-guide-to-rapidly-improving-ai-products`, `llm-judge`).
-- **Read** Eugene Yan's [Patterns for Building LLM-based Systems & Products](https://eugeneyan.com/writing/llm-patterns/).
-- **Apply Three Gulfs** (specification / generalization / comprehension) to 50 real classifier traces — open-coding by hand.
-- **Self-pace with weekly deliverables** mirroring the Maven cohort weeks (open coding → axial coding → judge calibration).
+**Passive video (one-shot only, do not loop):**
+- Karpathy "Intro to LLMs" + "Deep Dive into LLMs" — watch once, mid Month 1.
+- Latent Space podcast — weekly background, while commuting/eating.
 
-Risk: no forced pacing. Mitigation: Sunday `PROGRESS.md` updates are non-negotiable. Slipping two Sundays in a row is the canary.
+**Books (priority order):**
+1. Chip Huyen, *AI Engineering* (O'Reilly 2025) — Ch 1, 3, 5, 6, 10 deeply; skim 7, 9.
+2. [applied-llms.org](https://applied-llms.org) — free, ~3 hrs. Non-negotiable.
+3. Hamel & Shreya, *Evals for AI Engineers* (O'Reilly 2025).
+4. Jay Alammar, *Hands-On Large Language Models* — selectively, tokenization + embeddings sections.
 
----
+**Papers — skim list, ~5 hrs over 24 weeks:**
+- *Attention Is All You Need* (15-min skim)
+- *RAG* — Lewis et al. 2020 (abstract + Fig 1)
+- *Chain-of-Thought* — Wei et al. 2022 (5 min)
+- *ReAct* — Yao et al. 2022 (10 min)
+- *Lost in the Middle* — Liu et al. 2023 (figures, 10 min)
+- *Anthropic Contextual Retrieval* — Sept 2024 (full read, 30 min — implement in Project 2)
+- *Building Effective Agents* — Anthropic, Dec 2024 (full read — frames Project 3)
+- *Effective context engineering for AI agents* — Anthropic, Sept 2025 (full read)
 
-## 6. Interview Readiness Checklist
-
-If you can't speak confidently and concisely on each, drill it.
-
-### Foundations
-- [ ] Tokenization, embeddings, attention at the conceptual level (Alammar's Illustrated Transformer or Karpathy's "Intro to LLMs" 3.5-hr video — pick one).
-- [ ] Prompt patterns: zero-shot, few-shot, chain-of-thought, structured outputs.
-- [ ] Function calling vs JSON mode vs Instructor vs BAML — when to use which.
-- [ ] Cost and latency reasoning per model (Sonnet vs Haiku vs GPT-4o vs GPT-5 mini).
-
-### Evals (interview-critical)
-- [ ] Three Gulfs framework explained in 60 seconds.
-- [ ] Open coding → axial coding → failure taxonomy walkthrough.
-- [ ] LLM-as-judge calibration: critique shadowing, binary > Likert, agreement metrics (TPR/TNR/balanced accuracy).
-- [ ] When LLM-as-judge fails (HaluEval's 58.5% number; Soboroff's "Don't use LLMs to make relevance judgments" for IR ground truth).
-- [ ] Ragas metrics and their failure modes.
-
-### RAG (deep)
-- [ ] Five levels of chunking with when to use each.
-- [ ] Anthropic's Contextual Retrieval prompt and the −67% retrieval-failure number.
-- [ ] Hybrid retrieval — why BM25 still matters (technical identifiers, exact match, code symbols).
-- [ ] Reranker landscape — Cohere 3.5 vs Voyage Rerank 2.5 vs zerank-1.
-- [ ] When NOT to use RAG — long-context (<200k tokens, static corpus), structured DB queries, fine-tuning for style.
-
-### Agents
-- [ ] Workflow vs agent distinction (Anthropic's framing).
-- [ ] The five workflow patterns + agent pattern.
-- [ ] Step budgets, tool surface area, idempotency tokens, taint tracking.
-- [ ] Trajectory evals vs final-output evals.
-- [ ] Why multi-agent uses 10–15× more tokens (Anthropic's number) and when it's worth it.
-- [ ] Lethal trifecta (Simon Willison).
-
-### System design prompts to drill (each in 45 minutes)
-- [ ] Design a doc Q&A system.
-- [ ] Design a customer-support classifier with handoff to human.
-- [ ] Design an ICP research agent.
-- [ ] Design an LLM-powered enrichment pipeline with fallback retrieval.
-- [ ] Design an evaluation harness for an LLM product.
-
-### Coding fluency (modest by SWE standards, focused)
-- [ ] Write a Pydantic model for a non-trivial nested structured output without lookup.
-- [ ] Write a pytest suite that runs LLM-judge evals on a golden dataset.
-- [ ] Implement BM25 + dense hybrid with RRF in <50 lines.
-- [ ] Use async/await for parallel LLM calls without deadlocks.
-- [ ] Cursor / Claude Code use is fluent.
-
-### DSA stance
-Most AI-native startups (Circles 1 and 2) test ML implementation and system design more than classic LeetCode. **Cursor, OpenAI, Anthropic** are exceptions — higher DSA bar. If you target those, budget separate prep; otherwise drill 30–40 LeetCode mediums total over Months 5–6, focused on arrays, hash maps, graphs.
-
----
-
-## 7. Rules and Anti-Patterns
-
-Re-read this every Sunday for the first three months.
-
-### Rules
-1. **Eval before scale.** Every project gets a golden dataset before you optimize anything else.
-2. **Workflow before agent.** Default to deterministic code; add agentic dynamism only at the node where it's genuinely needed.
-3. **One framework or none.** Raw SDK + Pydantic + Instructor is the default. Add LangGraph or PydanticAI only when state/cycles genuinely require it.
-4. **Production thinking shows up in the README.** "Where it fails," cost-per-call, latency p50/p95, eval results table. No exceptions.
-5. **Public > private.** Ship to a URL. Write the post. Tag people. Hidden work doesn't count.
-6. **Lean into your wedge.** GTM domain expertise + Clay community + production LLM experience is your unfair advantage. Don't talk yourself out of it to look more like a generic SWE candidate.
-
-### Anti-patterns to refuse
-1. **Tutorial-finishing.** Watching DLAI courses without shipping is procrastination dressed up as learning.
-2. **Framework collecting.** "I learned LangChain, LlamaIndex, CrewAI, AutoGen, LangGraph" reads as beginner. "I shipped three projects with raw SDK + LangGraph at the one node that needed it" reads as senior.
-3. **Fake claims.** Don't say "I built an agent" if you wrote a single LLM call. Hiring managers see through this in 90 seconds. Use precise vocabulary (workflow vs agent, classification vs extraction, retrieval vs generation evals).
-4. **Demo without evals.** A Streamlit chatbot wrapper is a 2023 portfolio. In 2026 it's a negative signal.
-5. **Generic LLM-as-judge** — running Ragas with default prompts and trusting the numbers. Calibrate against your own labels or the score is noise.
-6. **Hype-posting on LinkedIn.** Don't post "the future of AI is exciting." Post your specific eval table with the failure mode you found.
-7. **Ignoring the Bengaluru network.** Indian AI hiring runs on warm intros and LinkedIn. You already have community via Clay Cup. Use it.
-8. **Optimizing for the wrong roles.** Don't grind LeetCode for FAANG when your strongest fit is a Clay-adjacent GTM-AI startup. Pick the funnel that matches your wedge.
-
-### Things to deliberately skip
-- Building an LLM from scratch (40–60 hrs, ~zero hireability for AI eng vs ML eng).
-- Deep DSA grind unless targeting Cursor/OpenAI/Anthropic SWE.
-- Multiple agent frameworks. Pick one (or none — raw SDK).
-- fast.ai, full Andrew Ng ML specialization, math from scratch.
-- Daily paper-of-the-day. Skim Latent Space's curated list once a quarter.
-
----
-
-## 8. Public Footprint Plan
-
-### Blog
-- Personal site at your own domain. Quarto (Hamel's stack) or Astro. Don't overthink. Ship in Week 1.
-- Cadence: 1 post/month minimum, with one big push at end of Month 6.
-- Cross-post the announcement on LinkedIn and X. Canonical version on your domain.
-- **Do not use Medium or dev.to** — they signal beginner in 2026 AI engineering circles.
-
-### GitHub
-- Pinned repos: the three flagship projects with READMEs to standard.
-- Profile README naming the positioning ("AI engineer building LLM-powered data and GTM systems") and linking to the three projects + blog.
-- Commit history visible — show iteration, not single dumps.
-
-### LinkedIn (highest-ROI surface for India hiring)
-- Headline updated by Month 5: *"AI engineer | LLM pipelines for GTM data | Bengaluru"*.
-- Post every project ship + every blog post + every meetup attended.
-- Don't post AI hype; post specific work and what you learned. Bangalore AI recruiters live here.
-
-### X / Twitter
-- Optional but useful for technical credibility. Follow Hamel, Eugene Yan, Jason Liu, Simon Willison, Harrison Chase, Swyx. Reply with substance occasionally; don't post hot takes.
-- Canonical writing on your domain — X external links are penalized 30–50% since March 2025.
-
-### Open-source contributions (low time budget, high signal)
-Pick **one** repo and make a real contribution:
-- **Instructor** (jxnl/instructor) — cookbook example for a GTM use case. Jason Liu is responsive.
-- **Langfuse** — framework adapter or eval pipeline example.
-- **Ragas** — domain-specific metric or dataset adapter.
-- **simonw/llm** — write a plugin (lowest barrier, high visibility).
-
-One merged PR with a useful README addition and tests > five drive-by typo fixes.
-
-### Bengaluru community
-- 1 meetup/month from Month 3. Lightning talk by Month 4 or 5 — recordings are permanent portfolio assets.
-- **Recommended groups:** Bangalore AI Developers Group (AICamp); Bangalore MLOps Community; AgentsNexus India / GenAI Bangalore; BangPypers; TensorFlow User Group Bangalore; Build Club India.
-- **Conferences worth attending in 2026:** Warpspeed by Lightspeed; The Great Bengaluru Hackathon (Sarvam x HackCulture); Hugging Face × Inferless × Sequoia Generative AI Meetup; ConfAI at Plaksha; CASML at IISc; BDA at IIIT-Bangalore; IEEE Bangalore Section Agentic AI Summit.
-- **Clay operator network is your wedge.** You co-organized Clay Cup 2026 Bengaluru — a credential most candidates can't claim. Mention it in cover letters to GTM-AI companies.
-
----
-
-## 9. Curated Resources
-
-### Books (priority order)
-1. **Chip Huyen, *AI Engineering* (O'Reilly, 2025)** — Ch. 1, 3, 5, 6, 10 deeply; skim 7, 9. ~15 hrs.
-2. **Eugene Yan + Hamel + Jason + Shreya + Bryan + Charles, *What We've Learned From a Year of Building with LLMs*** ([applied-llms.org](https://applied-llms.org)) — free, ~3 hrs. **Non-negotiable.**
-3. **Hamel Husain & Shreya Shankar, *Evals for AI Engineers* (O'Reilly, 2025)** — replaces the Maven cohort for you.
-4. **Jay Alammar, *Hands-On Large Language Models*** — selectively, for tokenization/embeddings/semantic search.
-5. **Skip:** Sebastian Raschka's *Build an LLM From Scratch* (excellent but career-irrelevant for API-layer AI eng — save for after the offer).
-
-### Courses (free / cheap)
-1. **DeepLearning.AI short courses (free, 1–2 hrs each)** — *Evaluating AI Agents*, *Functions/Tools/Agents with LangChain*, *Improving Accuracy of LLM Applications*, *AI Agents in LangGraph*. Cherry-pick 3–4.
-2. **Karpathy's "Deep Dive into LLMs like ChatGPT"** (3.5 hrs, free, YouTube) — for intuition.
-3. **improvingrag.com** — Jason Liu's RAG framework, free.
-4. **Skip:** Stanford CS336 (cherry-pick 1–2 lectures only), full Karpathy Zero-to-Hero, fast.ai, full ML specializations. Research-engineer paths, not AI-engineer paths.
-
-### Blogs (subscribe; batch-read Sunday)
-- **hamel.dev** — eval-driven development; the FAQ post is gold.
-- **eugeneyan.com** — patterns, evaluation, the canonical voice.
-- **applied-llms.org** — group blog, definitive.
-- **jxnl.co** — RAG and agent flywheels.
-- **simonwillison.net** — daily LLM news and primary-source links.
-- **anthropic.com/news + /research** — Contextual Retrieval, Building Effective Agents, MCP.
-- **Latent Space (latent.space)** — Swyx; the 2025 AI Engineering Reading List is meta-canon.
-- **Ahead of AI (Sebastian Raschka)** — best paper summaries.
-
-### Papers — skim only, ~5–8 hrs total over six months
-- *Attention Is All You Need* (2017) — 15-min skim.
-- *RAG* (Lewis et al., 2020) — abstract + figure 1.
-- *Chain-of-Thought* (Wei et al., 2022) — 5-min skim.
-- *ReAct* (Yao et al., 2022) — 10-min skim.
-- *Lost in the Middle* (Liu et al., 2023) — figures, 10 min. Implication for RAG chunk ordering.
-- *LLM-as-Judge with MT-Bench* (Zheng et al., 2023) — abstract.
-- *Anthropic Contextual Retrieval* (Sept 2024) — full read, 30 min. Implement in Project 2.
-- *Building Effective Agents* (Anthropic, Dec 2024 + 2025 expansion) — full read.
-- *DeepSeek-R1* (Jan 2025) — Raschka's literature review, not the paper.
-- *Effective context engineering for AI agents* (Anthropic, Sept 2025) — full read.
-
-### Tools
-- **Cursor** ($20/mo) — daily IDE.
-- **Claude Code** — for complex multi-file work; pair with Cursor.
-- **Modal** — deploy. $30/mo free credits.
-- **Langfuse** (self-host or free cloud, 50K obs/mo) — tracing from line one.
+**Tools:**
+- **Claude Code + Cursor** — paired daily IDEs. Claude Code for multi-file work, Cursor for fast edits.
+- **Modal** ($30/mo free credits) — default deploy.
+- **Langfuse** (free cloud, 50K obs/mo) — tracing from Day 1 of each project.
 - **Instructor** — default structured-output choice.
 - **Ragas** — RAG evals.
-- **pgvector + Postgres** — default vector store. Don't pay for Pinecone unless you have to.
+- **pgvector + Postgres** — default vector store. Don't pay for Pinecone.
+- **uv** — replaces pip + venv. Faster, modern.
+- **ruff** — replaces black + flake8 + isort. One tool.
 
----
+## 9. Public footprint plan (US-resonant from Day 1)
 
-## 10. Notes to Self
+The audience to optimize for is **US AI founders/CTOs and engineering leads at AI startups**, not Indian recruiters. Different audience, different vocabulary, different surfaces. India recruiters will *also* find this footprint — but the reverse is not true.
 
-### Your Bengaluru context is real
-- Local market pays ₹35–60 LPA at GenAI specialist mid level, ₹65 LPA–₹1.2 Cr total comp at FAANG India per shifttotech and taggd 2026 data. Remote-for-US from Bengaluru reaches ₹60–80 LPA equivalent.
-- Sarvam's FDSE role reads almost custom-fit for your profile. Apply when ready, even if you feel under-qualified — JDs in 2026 over-list.
-- Krutrim has documented culture concerns. Don't ignore signals just because the role looks shiny.
-- LinkedIn is the recruiter platform in Bangalore. Prioritize over X for the job search.
+### Blog
+- Personal site on your own domain. **Quarto** (Hamel's stack) or **Astro**. Pick in 30 min, ship in Week 1.
+- Cadence: 1 post/month from Month 2 onward.
+- Cross-post the announcement on LinkedIn + X. **Canonical version on your domain.**
+- Voice: failure-mode honesty, specific numbers, screenshots of eval tables and traces. Not "5 tips for prompting." Not "the future of AI is exciting."
+- Do not use Medium or dev.to — they signal beginner in 2026 AI engineering circles.
 
-### Your Clay community is your wedge — use it deliberately
-- Clay Cup 2026 Bengaluru Nomination Round is on your CV. Most AI engineering candidates don't have community-organizing credentials. Forward-deployed and solutions-engineering hiring managers value this directly.
-- The Clay operator network includes people at or who know hiring managers at Clay, Common Room, Apollo, Default, 11x. Your warm-intro funnel into GTM-AI roles is wider than 95% of candidates'. Build the bridge before you need to walk it.
-- Applying to Clay-adjacent companies (Decagon, Sierra, 11x, Hebbia)? Open with what you've shipped on Clay and MCP — shared vocabulary they don't have to translate.
+### GitHub (the *first* place a US founder or Mercor reviewer looks)
+- Pinned repos: leadlens, docsight, reposcout — with READMEs to standard.
+- Profile README with positioning ("AI engineer | LLM systems with evals | MCP servers | open to remote contracts") + project links + blog link + Loom links.
+- Commit graph visible. Show iteration, not single dumps. **Daily-ish activity for 4–6 months is a Mercor screen filter** — treat green squares as a job artifact, not vanity.
+- Each project repo has a 3-min Loom video walkthrough linked at the top of the README.
 
-### Your GTM background is a feature, not a bug
-- "GTM Engineer" grew 11.4× in 2025 (Steven Moody benchmark) and pays $137K–$252K in the US. Companies hiring this title explicitly want operators who can code, not SWEs learning sales.
-- Hamel and Eugene's writing repeatedly emphasizes domain expertise as the biggest predictor of useful AI products. You have GTM domain expertise. That's worth more than a CS degree to any AI company building for the GTM market.
-- "Tell me about a hard production LLM failure" — you have the WIRLS hallucination audit. Stronger than 90% of candidates can give.
+### X / Twitter (much higher leverage for US audience than India audience)
+- Move from "optional" to "secondary surface." Bio: positioning + portfolio link.
+- Follow Hamel, Eugene Yan, Jason Liu, Simon Willison, Harrison Chase, Swyx, Shreya Shankar, Andrej Karpathy, Greg Kamradt, Logan Kilpatrick.
+- 3 posts/week minimum from Month 3: build-in-public progress, eval table screenshots, "here's the bug I hit and how I fixed it." Reply to 3 substantive threads/week.
+- Canonical writing on your domain — X external links are penalized 30–50% since March 2025, so post the meat in the thread itself + link to long version.
 
-### Your biggest risk is drift, not capability
-- 8 hrs/week sounds like a lot until weeks 5–8 when project work gets hard and writing feels optional. **Without the Maven cohort's forced pacing, Sunday `PROGRESS.md` updates are your only insurance.** Don't skip even one.
-- Cost of finishing a month behind is not catastrophic. Cost of three months of silent drift is.
+### LinkedIn (the India backup channel)
+- Headline updated by Month 4: *"AI engineer | LLM systems with evals | MCP servers | open to remote"*.
+- Post every project ship, every blog post, every OSS PR merged.
+- Don't post AI hype. Post your specific eval table with the failure mode you found.
 
-### Be willing to go faster if you can
-- Strong week? Push to Project 2 design earlier. Month boundaries are guides, not laws.
-- Bengaluru company posts a role that fits *now* — apply now. Don't wait until Month 6. Funnels take time; you can interview while still building.
-- Great speaking slot at a meetup in Month 3? Take it even if the project isn't fully polished. Talks recorded in March become permanent assets by June.
+### Open-source contribution (high leverage; Mercor-mandatory)
+Pick **one** repo and make a real contribution by **end of Month 4** (not Month 5 — earlier is better, especially for Mercor):
+- **Instructor** (jxnl/instructor) — cookbook example using one of your projects. Jason Liu is responsive.
+- **Langfuse** — framework adapter or eval pipeline example. They use Discord; ask first.
+- **Ragas** — domain-specific metric or dataset adapter.
+- **simonw/llm** — write a plugin (lowest barrier, high visibility). Simon is responsive.
+- **LiteLLM** — provider/adapter PR.
+- **Bonus targets:** PydanticAI (lower competition), Letta (memory), Helicone (observability), Outlines (structured output).
 
-### One last thing
-You're not switching careers. You're upgrading the title on work you're already doing. The next six months are the smallest, most leveraged version of that upgrade. Stay specific, ship visibly, and protect the eight hours.
+One merged PR with a useful README addition + tests + a Discord/Twitter thank-you from a maintainer > five drive-by typo fixes.
+
+### Loom video walkthroughs (a 2026 US-remote standard — non-optional)
+- Every project README: 3-min Loom embedded at the top. Show: problem → architecture → live demo → eval table → "where it fails."
+- Record once, link everywhere (GitHub, blog, LinkedIn, X bio, Mercor profile, outbound emails).
+- Practice ahead — first take is bad. Re-record until ≤3 min.
+
+### Community (where founders and engineers actually hang out)
+- **[Latent Space Discord](https://discord.gg/latent-space)** — Swyx's community. AI engineers, founders, hiring managers all present. Reply substantively 2×/week.
+- **[AI Tinkerers](https://aitinkerers.org/)** — local + virtual chapters. Founders attend. Demo nights are recruiting events in disguise.
+- **[Maven AI Evals Discord](https://maven.com/parlance-labs/evals)** — Hamel/Shreya's community.
+- **[Hugging Face Discord](https://huggingface.co/join/discord)** — broader, but #agents and #applied channels are valuable.
+- **Build Club India**, **AgentsNexus India / GenAI Bangalore** — secondary; useful for warm intros to India startups but not US founders.
+- 1 lightning talk by Month 5 or 6 (5 min, recorded). Builds the on-camera muscle Mercor and US founders test in final rounds.
+
+### Outbound funnel (Track 6 — your unfair advantage)
+The detailed playbook is built out in Months 5–6 weekly files. Headline elements:
+- **Sourcing:** TechCrunch funding → just-raised seed/Series A AI startups → find CTO/founding eng on LinkedIn/X → enrich with email via Hunter/Apollo (you already know these tools).
+- **Cadence:** ~50 contacts/week in Months 5–6 = 200/month. Steady, not spammy.
+- **Email structure:** Insight + Specific Offer. One observation from their product/blog/launch + one specific 2-week trial you'd build for them. Cold email research consistently shows 5–10 min/prospect with one sharp hook beats 30 min of generic personalization.
+- **Tracking:** the same Clay/Smartlead/n8n stack you use at Precise Leads, applied to your own funnel. Build it as a meta-project in Month 5 — itself a portfolio piece (you can show it on calls).
+
+## 10. Notes to self (re-read monthly)
+
+- **You are not behind.** You're three weeks into the *wrong* plan. The work you did (50 traces, Saturday notes, tooling setup) carries forward. You're at Week 1 of the right plan now, not at Week -3.
+- **The Aug 2026 graduation hits mid-Month 3.** Account for final exams + project submissions. If you have specific exam windows, tell me — I'll insert lighter weeks around them. Default assumption: ~2 lighter weeks in Month 3, recovered in Month 4 or Month 6.
+- **8–10 hrs/week is the budget.** Stuffing 15 hrs of work into a 10-hr week is the most common failure mode for self-paced plans. Slipping two Sundays in a row is the canary — reset, don't pretend.
+- **Your PresentAI and AsanaBot are not invisible.** Refresh both READMEs in Month 1 Week 1 with one-paragraph problem statements + screenshots + live links. They double the apparent portfolio in 30 minutes of writing.
+- **US-remote is now the primary funnel.** India product startups are the safety. Your GTM-engineer skill (outbound, qualification, enrichment) is the biggest single asset most fresher candidates don't have — point it at US AI founders, not just at job boards. Mercor + HN + Wellfound + direct outbound is the four-channel funnel; portfolio is the same across all four.
+- **One last thing.** You don't have to become a different person to do this. You already ship. The next 24 weeks are about packaging what you do + adding the eval / RAG / agent / MCP layer on top so hiring managers see what's there.

@@ -1,93 +1,99 @@
-# Month 5 - ICP Research Agent And Portfolio Polish
+# Month 5 — Ship reposcout (Agent + MCP) + Outbound Funnel Goes Live
 
 ## Goal
 
-Build Project 3: an ICP research agent that starts as a deterministic workflow and adds agentic behavior only where the next action genuinely depends on returned evidence. The deliverable must be bounded, observable, testable, and deployable.
+Ship the third project — an agent that composes leadlens + docsight as tools via MCP — and *simultaneously* turn on the US-remote outbound funnel that your GTM-engineer skill is uniquely suited for.
 
-Canonical output by the end of the month:
+By Sunday 2026-10-11 you have three deployed projects, an MCP server demoable from Claude Desktop, a lightning talk delivered or recorded, and 50 cold-outreach Insight Emails sent to US AI founders with specific 2-week trial offers.
 
-- Deployed ICP research agent.
-- Workflow-first design document.
-- Typed tool I/O with Pydantic.
-- Step budget capped at 20.
-- Idempotency tokens for tool calls.
-- 30 golden ICP trajectories.
-- Trajectory judge and state-transition matrix.
-- Final-output precision/recall evals.
-- All three project READMEs polished.
-- LinkedIn and portfolio site updated.
-- Public post 5 published.
+**Pace:** 8–10 hrs/week.
+**Window:** 2026-09-14 → 2026-10-11.
 
-## Week Plan
+## Outcome by end of month
 
-| Week | Time | Focus | Deliverable |
-|---|---:|---|---|
-| 17 | 8h | Read Anthropic agent guidance and context engineering. Sketch workflow-first design. | design doc and agent boundary decision |
-| 18 | 8h | Build raw orchestration, typed tools, step budget, idempotency tokens | working ICP research workflow/agent |
-| 19 | 8h | Add trajectory evals, golden paths, trajectory judge, state-transition matrix | eval harness and dashboard/report |
-| 20 | 8h | Deploy, write up, polish all project READMEs, update LinkedIn/portfolio | deployed Project 3 and post 5 |
+### Project (Track 4)
+- `projects/reposcout/` (renamed from `icp-research-agent` via `git mv`) deployed on Modal.
+- Agent reads Anthropic *Building Effective Agents* discipline: workflow first, identified one agentic node.
+- leadlens + docsight wired as **MCP tools** using `mcp` Python SDK.
+- Step budget capped at 20. Idempotency tokens on all external tool calls.
+- 30 golden reference topics with hand-curated "good" repo lists.
+- Trajectory judge prompt + state-transition matrix.
+- Precision/recall evals on final repo lists.
+- MCP server registered + demoable from Claude Desktop (GIF in README).
+- 3-min Loom walkthrough including MCP demo in Claude Desktop.
+- Blog post 5 published: "Workflow first, agent second, MCP always."
 
-## Project 3 Design Requirements
+### Outbound channel (Track 6)
+- 50 just-raised US AI startups researched (sourced from TechCrunch funding announcements last 90 days).
+- 50 Insight Emails sent — each with a *specific* 2-week trial offer for their context (not "looking for a job").
+- Outbound tracker live (Google Sheet or a small Streamlit dashboard). Bonus: build the tracker as a meta-portfolio piece.
+- All replies answered within 24 hours.
 
-The design doc should define:
+### Public (Track 5)
+- 1 lightning talk delivered or recorded — Latent Space Discord demo night, AI Tinkerers, or local meetup.
+- LinkedIn headline + About updated: "AI engineer | LLM systems with evals | MCP servers | open to remote contracts."
+- X bio updated with portfolio link.
+- 3 substantive X posts/week.
 
-- ICP input schema.
-- Workflow steps that are deterministic.
-- The specific node where agentic search/validation is justified.
-- Tool registry and risk levels.
-- Step budget and stop conditions.
-- Idempotency token strategy.
-- Evidence and confidence model.
-- Taint/safety assumptions for web content.
-- Trajectory eval methodology.
-- Final-output eval methodology.
+## Week themes
 
-Suggested location: `projects/icp-research-agent/docs/design.md`.
+| Week | Window | Theme |
+|---|---|---|
+| 17 | Sep 14 – Sep 20 | Anthropic agents reading + reposcout `DESIGN.md` + outbound list build (50 targets) |
+| 18 | Sep 21 – Sep 27 | Raw orchestration + MCP server skeleton + first 25 Insight Emails sent |
+| 19 | Sep 28 – Oct 4 | Trajectory evals + state-transition matrix + next 25 Insight Emails (50 total) |
+| 20 | Oct 5 – Oct 11 | Deploy + Loom + blog post 5 + lightning talk + README polish across all 3 projects |
 
-## Build Requirements
+Week files arrive ~3 days before each week.
 
-- Raw Python orchestration by default.
-- Pydantic schemas for ICP input, tool calls, tool outputs, and final result.
-- Tool validation on every output.
-- Search, Maps-style lookup, enrichment, and judge tools behind interfaces.
-- Step budget capped at 20.
-- Structured traces for each run and tool call.
-- Deployment on Modal or equivalent.
+## Required reading
 
-## Eval Requirements
+- **Anthropic — *Building Effective Agents*** (Dec 2024). Workflow vs agent. The five workflow patterns. Frames every architecture decision in reposcout.
+- **Anthropic — *Effective Context Engineering for AI Agents*** (Sept 2025).
+- **Anthropic SDK — MCP docs** at [modelcontextprotocol.io](https://modelcontextprotocol.io).
+- Skim **PydanticAI** + **Letta** README (one example notebook each).
 
-- 30 reference ICPs.
-- Golden path of expected tool calls for each reference ICP.
-- LLM-as-judge for trajectory accuracy.
-- Precision/recall on final company list where labels exist.
-- State-transition matrix.
-- Cost/task, steps/task, and escalation rate.
+## Outbound playbook (Track 6 — your unfair advantage)
 
-## Monthly Checklist
+This is the work you already do at Precise Leads. The only difference is the target ICP and the offer.
 
-- [ ] Anthropic agent guidance read.
-- [ ] Workflow-first design doc written.
-- [ ] Agentic node justified.
-- [ ] Tool registry implemented.
-- [ ] Step budget implemented.
-- [ ] Idempotency tokens implemented.
-- [ ] Tool output validation implemented.
-- [ ] 30 golden ICP trajectories created.
-- [ ] Trajectory judge implemented.
-- [ ] State-transition matrix/report created.
-- [ ] Final-output evals implemented.
-- [ ] Deployment works.
-- [ ] All three project READMEs polished.
-- [ ] LinkedIn headline/About updated.
-- [ ] Portfolio site updated.
-- [ ] Post 5 published: "Workflows beat agents until they do not: a step-budgeted ICP researcher."
+**Sourcing:**
+- TechCrunch funding category + Pitchbook Twitter alerts for last-90-day raises of AI startups Seed–Series A.
+- Filter: 5–30 employees + at least one engineer post on LinkedIn + active GitHub.
+- Find CTO/founding eng on LinkedIn → enrich with email via Hunter or Apollo (you use these at Precise Leads).
+- Save to a sheet with `company, founder, raise_date, raise_amount, product_one_liner, observation, offer`.
 
-## Interview Skill Added
+**Insight Email structure (5 sentences):**
+1. One specific observation about their product/blog/launch (the "warm" part — never skip).
+2. One belief about a problem they probably have (RAG quality, agent reliability, eval discipline, MCP integration).
+3. One specific 2-week trial offer: "I'd build X for free, and if you find it useful we can talk about a paid engagement." Pick from: build their eval suite, wrap their product as an MCP server, instrument Langfuse traces, ship a focused classifier, port a feature to a cheaper model.
+4. One line of credibility — link to one of your three project READMEs + Loom.
+5. One question to make replying easy ("worth a 15-min call this week or next?").
 
-You should be able to explain workflow vs agent, step budgets, tool surface area, idempotency, trajectory evals, and why the system does not have unbounded autonomy.
+**Don't:**
+- Don't open with "I'm a final-year student looking for opportunities." This is a job-board email; they get 200/day.
+- Don't pitch yourself as a generalist. Pitch one specific outcome.
+- Don't follow up more than twice — bump after 3 days, polite close after 7. Move on.
 
-## Behind If
+**Volume:**
+- 12–13 messages/day × 4 days/week = 50/week.
+- Replies expected: ~3–5/50 (industry standard). All replies answered within 24 hrs.
 
-- A framework was used without being able to explain the underlying SDK calls.
-- You cannot explain workflow vs agent in 30 seconds.
-- The three projects do not read as one coherent portfolio.
+## Monthly checklist
+
+See [EXERCISES.md](../EXERCISES.md) Month 5 section.
+
+## Interview skill added
+
+You can **demo your MCP server live in Claude Desktop** in a final-round screen-share, narrating workflow-vs-agent design choices in 90 seconds, with a state-transition matrix on screen explaining a loop you caught. That's a Sarvam FDE / Sierra agent eng / Mercor calibration win in 5 minutes.
+
+## Behind if
+
+- No MCP server demoable from Claude Desktop.
+- Fewer than 30 outbound Insight Emails sent.
+- No lightning talk delivered or recorded.
+- Blog post 5 not published.
+
+## Next month
+
+→ [../month-6/README.md](../month-6/README.md) — Run the funnel: applications, mocks, conversion.

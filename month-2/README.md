@@ -1,73 +1,73 @@
-# Month 2 - Ship The Business Classification Pipeline
+# Month 2 — Ship leadlens
 
 ## Goal
 
-Convert Month 1 eval work into a deployed, defensible project. The deliverable is not a prompt demo; it is a classification pipeline with structured outputs, a golden dataset, calibrated judge checks, traces, and honest failure-mode documentation.
+Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented* classifier. By Sunday 2026-07-19 you have a live URL on Modal, a 100-example golden dataset, four calibrated judges, a confusion matrix in the README, a 3-min Loom, and blog post 2 published.
 
-Canonical output by the end of the month:
+**Pace:** 8–10 hrs/week.
+**Window:** 2026-06-22 → 2026-07-19.
 
-- Project 1 deployed.
-- 100-company hand-labeled golden dataset.
-- Pydantic schema and structured-output pipeline.
-- LLM-as-judge checks calibrated against labels.
-- Confusion matrix.
-- Cost and latency analysis.
-- README to the common project standard.
-- Public post 2 published.
+## Outcome by end of month
 
-Existing RAG exercises in this folder are useful later, but Month 2 is now focused on Project 1.
+- `projects/business-classification-pipeline/` (leadlens) is a deployed Modal endpoint at a public URL.
+- 100-example hand-labeled golden dataset committed.
+- 4 calibrated judges all at >90% agreement vs hand labels.
+- README to standard (architecture diagram, "where it fails," eval table, cost-per-call, p50/p95 latency, Loom embed).
+- Langfuse traces wired from line one of every code path; trace screenshots in README.
+- 3-min Loom walkthrough recorded and linked.
+- Blog post 2 published: "Auditing my own LLM classifier."
+- LinkedIn + X announcement with eval-table screenshot.
+- Outbound prep: 30 US AI founders saved to a future-outreach sheet (not contacted yet).
 
-## Week Plan
+## Week themes
 
-| Week | Time | Focus | Deliverable |
-|---|---:|---|---|
-| 5 | 8h | Maven Week 4, synthetic data, RAG/agent evals, CI/CD integration | course homework patterns folded into Project 1 |
-| 6 | 8h | Schema design, Instructor structured outputs, Langfuse instrumentation, label collection | working classifier skeleton and 100 labels |
-| 7 | 8h | Judge calibration, critique shadowing, confusion matrix, failure fixes | eval harness with more than 90% judge agreement target |
-| 8 | 8h | Modal deployment, README, architecture diagram, iteration log, post | deployed Project 1 and blog post 2 |
+| Week | Window | Theme |
+|---|---|---|
+| 5 | Jun 22 – Jun 28 | Scaffolding + Langfuse + DLAI accuracy course + judge port |
+| 6 | Jun 29 – Jul 5 | Hand-label 100 companies → first end-to-end run → confusion matrix v1 |
+| 7 | Jul 6 – Jul 12 | Iterate prompt + schema; calibrate all 4 judges to >90%; cost + latency instrumentation |
+| 8 | Jul 13 – Jul 19 | Modal deploy; README to standard; Loom; blog post 2; X+LinkedIn announce |
 
-## Build Requirements
+Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time).
 
-- Python package with repeatable local setup.
-- Pydantic schema for classification output.
-- Provider boundary for OpenAI/Anthropic or mock mode.
-- Evidence collection path with source/citation fields.
-- Langfuse tracing around retrieval, model calls, judge calls, and final decisions.
-- Tests that run without live LLM calls.
-- Deployment path on Modal or equivalent.
+## Build standard (from PROJECTS.md)
 
-## Eval Requirements
+By end of Week 8, leadlens README answers all seven portfolio questions ([PROJECTS.md](../PROJECTS.md) — "Portfolio rule"):
 
-- 100 hand-labeled companies.
-- Mix of clear pass, clear fail, ambiguous, stale-web, multilingual, and name-collision cases.
-- Binary pass/fail judge checks per major dimension.
-- Critique-shadowing examples in the judge prompt.
-- Judge prompt iteration log.
-- Confusion matrix in README.
-- "Where it fails" section tied to observed examples.
+- What did the system do?
+- What data did it run on?
+- How did you know it was good?
+- What failed and what did you change?
+- What did it cost? How slow?
+- How would you run it in production?
+- What would you do next with two more weeks?
 
-## Monthly Checklist
+## Monthly checklist
 
-- [ ] Project 1 package scaffolded.
-- [ ] Structured output schema implemented.
-- [ ] Mock provider path exists.
-- [ ] Evidence/citation fields implemented.
-- [ ] Langfuse trace points added.
-- [ ] 100-company golden dataset committed.
-- [ ] Judge checks implemented.
-- [ ] Judge prompt iterated at least three times.
-- [ ] Confusion matrix created.
-- [ ] Cost-per-call and latency p50/p95 measured.
-- [ ] Deployment works.
-- [ ] README meets project standard.
-- [ ] Post 2 published: "Auditing my own classifier."
+See [EXERCISES.md](../EXERCISES.md) Month 2 section.
 
-## Interview Skill Added
+## Interview skill added
 
-You should be able to walk through one full eval-first LLM project end to end: data, labels, failure taxonomy, judge calibration, fixes, deployment, and operating cost.
+By end of month you can answer **"Walk me through a real LLM system you shipped end-to-end with evals"** for 5 minutes without notes, with a live URL + Loom + eval-table screenshot you can pull up on screen.
 
-## Behind If
+That single sentence is the entry ticket for every US-remote AI-engineer interview in 2026. Most fresher candidates can't deliver it. You will.
 
-- Project 1 is only a localhost demo.
-- The 100-example golden dataset is missing.
-- Fewer than two public posts exist.
+## Behind if
+
+- No deployment by end of Week 8.
+- Fewer than 80 golden examples labeled.
+- No confusion matrix in README.
+- No Loom recorded.
+- Blog post 2 not published.
+
+## Why week files arrive just-in-time
+
+Old-plan approach: write all 24 week files upfront, follow them rigidly. Doesn't survive contact with real progress.
+
+New approach: each week file is written ~3 days before the week starts, informed by what *actually* shipped the prior week. If Week 5 lands faster than expected, Week 6 absorbs Week 7 work. If Week 5 slips, Week 6 recovers. This is a feature — pre-committed daily plans for weeks you haven't lived yet are usually wrong.
+
+If at any point you want a draft of an upcoming week ahead of time, ask. The plan flexes.
+
+## Next month
+
+→ [../month-3/README.md](../month-3/README.md) — RAG fundamentals + docsight design + first OSS PR.

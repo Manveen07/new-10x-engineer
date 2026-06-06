@@ -1,69 +1,74 @@
-# Month 3 - RAG Fundamentals And Project 2 Design
+# Month 3 — RAG Fundamentals + docsight Design + First OSS PR Opened
 
 ## Goal
 
-Build enough retrieval depth to design Project 2 properly before shipping it. Month 3 is reading-heavy by design, but it must still produce working code: contextualization on a toy corpus, local Postgres/pgvector setup, and the first ingestion pipeline for GTM/Clay knowledge.
+Learn the retrieval stack deeply before building docsight in Month 4. Open your first OSS PR. You graduate this month (BTech, Aug 2026) — exams already done; only graduation week itself may need a lighter Saturday.
 
-Canonical output by the end of the month:
+**Pace:** 8–10 hrs/week.
+**Window:** 2026-07-20 → 2026-08-16.
 
-- Contextual retrieval prototype on a small corpus.
-- Project 2 stack decision.
-- Local Postgres + pgvector running.
-- Initial ingestion pipeline.
-- Retrieval eval plan.
-- Project 2 design doc.
-- Public post 3 published.
-- One Bengaluru/community event attended or watched.
+## Outcome by end of month
 
-Existing agent exercises in this folder are useful in Month 5, but Month 3 is now focused on RAG design.
+- Anthropic Contextual Retrieval implemented on a toy corpus.
+- 30-min LlamaIndex notebook + 30-min Pinecone notebook done (for interview vocabulary).
+- docsight stack picked + committed to `STACK.md`: Postgres + pgvector + BM25 + reranker + FastAPI + Modal + Langfuse.
+- Local Postgres + pgvector running in Docker Compose.
+- docsight `DESIGN.md` complete.
+- `projects/gtm-clay-rag/` renamed to `projects/docsight/` via `git mv`.
+- OSS target repo picked; **draft PR or issue opened with maintainer engagement** (not just `# typo fix`).
+- Blog post 3 published: "What I'm setting up before writing a line of RAG code."
 
-## Week Plan
+## Week themes
 
-| Week | Time | Focus | Deliverable |
-|---|---:|---|---|
-| 9 | 8h | Read Anthropic Contextual Retrieval and Greg Kamradt text splitting | toy contextual retrieval implementation |
-| 10 | 8h | Read Jason Liu and Hamel RAG eval guidance | retrieval notes and eval principles |
-| 11 | 8h | Pick stack, set up Postgres + pgvector, skim AI Engineering Ch. 6 | local retrieval data layer |
-| 12 | 8h | DLAI accuracy/evals course, begin Clay/GTM ingestion, write design doc | Project 2 design doc and post |
+| Week | Window | Theme |
+|---|---|---|
+| 9 | Jul 20 – Jul 26 | Anthropic Contextual Retrieval + 5 Levels of Text Splitting + pick OSS target |
+| 10 | Jul 27 – Aug 2 | Jason Liu RAG content + 30-min LlamaIndex + 30-min Pinecone |
+| 11 | Aug 3 – Aug 9 | docsight stack decision + Postgres+pgvector Docker Compose |
+| 12 | Aug 10 – Aug 16 | `DESIGN.md` + draft OSS PR + blog post 3 |
 
-## Project 2 Design Requirements
+Week files arrive ~3 days before each week (see [month-2 README](../month-2/README.md) for the rationale).
 
-The design doc should define:
+## Required reading
 
-- Corpus sources and attribution/consent rules.
-- Document model and chunk metadata.
-- Chunking strategy and contextualization prompt.
-- Dense retrieval provider.
-- Lexical retrieval choice: BM25 or PostgreSQL full-text search.
-- Hybrid fusion method, defaulting to RRF.
-- Reranker interface.
-- Retrieval eval dataset generation plan.
-- Metrics: recall@10/20, MRR, NDCG, context precision.
-- Generation eval plan and calibration set.
-- Deployment and tracing plan.
+- **Anthropic — *Introducing Contextual Retrieval*** (Sept 2024). Implement the prompt verbatim.
+- **Greg Kamradt — *5 Levels of Text Splitting*** notebook. Run all five splitters on one corpus.
+- **Jason Liu — *Improving RAG*** + his posts on search vs retrieval. Pick 3 posts.
+- **Hamel Husain — RAG eval guidance** (skim `field-guide-to-rapidly-improving-ai-products` for the retrieval-eval section).
 
-Suggested location: `projects/gtm-clay-rag/docs/design.md`.
+## OSS target — pick one
 
-## Monthly Checklist
+(Mercor's interview is exclusively about your OSS contributions — pick well.)
 
-- [ ] Anthropic Contextual Retrieval read.
-- [ ] Greg Kamradt text-splitting notes taken.
-- [ ] Jason Liu RAG articles read.
-- [ ] Hamel RAG eval guidance read.
-- [ ] Toy contextual retrieval prototype works.
-- [ ] Postgres + pgvector running locally.
-- [ ] Project 2 stack decision written.
-- [ ] Ingestion pipeline started.
-- [ ] Retrieval eval design written.
-- [ ] One Bengaluru/community event attended or watched.
-- [ ] Post 3 published: "How I'm setting up retrieval evals before writing a single line of RAG code."
+- **Instructor** (jxnl/instructor) — cookbook example using leadlens. Jason Liu is responsive.
+- **Langfuse** — adapter or eval example. Discord is active.
+- **Ragas** — domain-specific metric or dataset adapter.
+- **simonw/llm** — write a plugin. Lowest barrier, highest visibility.
+- **LiteLLM** — provider adapter PR.
+- **PydanticAI** — lower competition, growing.
 
-## Interview Skill Added
+Pick by end of Week 9. Lurk in the issue tracker + Discord for one week. Open a draft PR or proposal issue by end of Week 12.
 
-You should be able to explain why hybrid retrieval beats pure dense retrieval, why retrieval evals should be separated from generation evals, and why Ragas-style metrics need calibration.
+## Monthly checklist
 
-## Behind If
+See [EXERCISES.md](../EXERCISES.md) Month 3 section.
 
-- No Project 2 code exists.
-- You cannot explain hybrid retrieval in two sentences.
-- The retrieval eval plan is missing.
+## Interview skill added
+
+You can answer **"Walk me through how you'd build a production RAG system"** in 3 minutes:
+- Why hybrid retrieval beats pure dense (BM25 for technical identifiers + dense for semantics).
+- Why contextual retrieval matters (Anthropic's −67% retrieval-failure number).
+- Why rerank as a default stage.
+- How you'd measure each layer (retrieval evals separate from generation evals).
+- When you'd skip RAG entirely (long-context model + small static corpus).
+
+## Behind if
+
+- No `DESIGN.md` for docsight.
+- No OSS PR or proposal issue opened.
+- Cannot explain why hybrid retrieval beats pure dense in 30 seconds.
+- Blog post 3 not published.
+
+## Next month
+
+→ [../month-4/README.md](../month-4/README.md) — Ship docsight + merge OSS PR + apply to Mercor.
