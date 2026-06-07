@@ -31,7 +31,8 @@ How LLMs work under the hood. For interview "explain X" questions + the foundati
 - **Q/K/V:** each token emits Query ("what am I looking for"), Key ("what I offer"), Value ("what I pass on").
 - Token A (being updated) uses **its Query** against **every other token's Key**. A asks, B offers. score = A_query · B_key.
 - **Full pipeline (order matters):** Q·K → **÷ √d_k** (scaled dot-product; prevents giant scores breaking softmax gradients) → **mask future = −∞** (causal/decoder LMs only — GPT/Gemini; encoders/BERT see both ways) → **softmax** (exp → ÷ sum → normalize to 0–1, weights sum to 1) → **weighted sum of Values**.
-- Output = token's new representation = blend of all tokens' Values, weighted by relevance.
+- **What V is + what happens to it:** Q·K decide *how much* attention; **V is the actual content passed along.** Output for a token = **weighted sum of every token's V**, using the softmax weights. e.g. output_"it" = 0.7·V_animal + 0.1·V_street + … → "it" now carries 70% of "animal"'s info. That weighted sum **becomes the token's new representation.** V is the payload; Q/K only set the mixing ratio.
+- **Library analogy:** Query = what you search; Key = title you match against; Value = the book content you walk away with. Match on Q·K, take V. (K and V separate so "how findable" can differ from "what I contribute.")
 - Example: "the animal didn't cross the street because **it** was tired" — "it" attends to "animal" (high) not "street" (low).
 - **Multi-head** = many heads in parallel, each learns a different relation (grammar, reference, …), outputs concatenated.
 - THE transformer mechanism ("Attention Is All You Need" = stacked attention).
@@ -43,11 +44,18 @@ How LLMs work under the hood. For interview "explain X" questions + the foundati
 
 ---
 
-## Re-test queue (ask these next session, no notes)
-1. Attention full pipeline incl. the √d_k step + why it exists (the step you half-knew)
-2. Cosine vs raw dot product — why cosine for RAG?
-3. Causal mask — what is it, which model types use it?
-All three of token/embedding/attention reached 🟢 this session. Re-test in 2 days to confirm retention, not comprehension.
+## Re-test queue (ask next session, no notes) — recall slips found 2026 Sat block
+1. **√d_k not d_k** — you dropped the square root twice. It's divide by SQRT of key-dim.
+2. **Where V enters** — AFTER softmax: output = Σ(weight_i × V_i) = weighted sum of V. Q/K make weights, V is what they multiply.
+3. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed.
+4. **0x80** = the tiktoken error-code example. Shatters to [0,x,80] → dense search fails → BM25 fixes → why hybrid. (forgot the anchor — re-test)
+5. softmax does NOT fix gradients; the √d_k scaling does. softmax just → probabilities.
+
+Comprehension 🟢, retention 🟡. Re-test these 5 in 2 days.
+
+## Full transformer chain (the back half you skipped)
+tokens → embeddings → [ attention (Q·K ÷√d_k → mask → softmax → weighted-sum V) → +residual+norm → FFN → +residual+norm ] × N blocks → last token's final vector → unembed → logits over vocab → softmax#2 → next token.
+- Attention moves info ACROSS tokens (via V). FFN processes EACH token alone. Alternate ×N.
 
 ## Still to cover (weekday drips)
 transformer stack · temperature/sampling · context window + KV cache cost · prompt patterns · function calling · ML basics vocab (supervised/unsupervised/overfitting)
