@@ -44,14 +44,13 @@ How LLMs work under the hood. For interview "explain X" questions + the foundati
 
 ---
 
-## Re-test queue (ask next session, no notes) — recall slips found 2026 Sat block
-1. **√d_k not d_k** — you dropped the square root twice. It's divide by SQRT of key-dim.
-2. **Where V enters** — AFTER softmax: output = Σ(weight_i × V_i) = weighted sum of V. Q/K make weights, V is what they multiply.
-3. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed.
-4. **0x80** = the tiktoken error-code example. Shatters to [0,x,80] → dense search fails → BM25 fixes → why hybrid. (forgot the anchor — re-test)
-5. softmax does NOT fix gradients; the √d_k scaling does. softmax just → probabilities.
+## Re-test queue (ask next session, no notes) — Sat block
+Self-corrected same session (now 🟢): √d_k credit for gradient stability · where V enters (weighted sum after softmax) · full order Q·K→÷√d_k→mask→softmax→ΣweightᵢVᵢ.
+Still to re-test in 2 days (🟡):
+1. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed.
+2. **0x80** = tiktoken error-code example → shatters to [0,x,80] → dense fails → BM25 fixes → why hybrid.
 
-Comprehension 🟢, retention 🟡. Re-test these 5 in 2 days.
+Comprehension 🟢, retention 🟡→🟢 (3 of 5 slips self-corrected same day).
 
 ## Full transformer chain (the back half you skipped)
 tokens → embeddings → [ attention (Q·K ÷√d_k → mask → softmax → weighted-sum V) → +residual+norm → FFN → +residual+norm ] × N blocks → last token's final vector → unembed → logits over vocab → softmax#2 → next token.
