@@ -47,10 +47,16 @@ How LLMs work under the hood. For interview "explain X" questions + the foundati
 ## Re-test queue (ask next session, no notes) — Sat block
 Self-corrected same session (now 🟢): √d_k credit for gradient stability · where V enters (weighted sum after softmax) · full order Q·K→÷√d_k→mask→softmax→ΣweightᵢVᵢ.
 Still to re-test in 2 days (🟡):
-1. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed.
-2. **0x80** = tiktoken error-code example → shatters to [0,x,80] → dense fails → BM25 fixes → why hybrid.
+1. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed. ← ONLY remaining slip.
 
-Comprehension 🟢, retention 🟡→🟢 (3 of 5 slips self-corrected same day).
+Closed same session 🟢: √d_k credit · where V enters · full attention order · 0x80→hybrid (recalled clean, even named TF-IDF as BM25's basis).
+
+Comprehension 🟢, retention 🟢 (4 of 5 slips self-corrected same day; only two-softmaxes left).
+
+## BM25 / hybrid (bonus, locked this session)
+- Vector search = semantic (meaning); nails paraphrases, misses exact codes (0x80 shatters → no clean vector).
+- BM25 = lexical/literal match, built on TF-IDF; finds exact terms.
+- **Hybrid = vector + BM25**, lists fused with RRF (Reciprocal Rank Fusion — detail for Month 3 docsight). This is THE 2026 RAG-interview staple.
 
 ## Full transformer chain (the back half you skipped)
 tokens → embeddings → [ attention (Q·K ÷√d_k → mask → softmax → weighted-sum V) → +residual+norm → FFN → +residual+norm ] × N blocks → last token's final vector → unembed → logits over vocab → softmax#2 → next token.
