@@ -46,12 +46,18 @@ How LLMs work under the hood. For interview "explain X" questions + the foundati
 
 ## Re-test queue (ask next session, no notes) — Sat block
 Self-corrected same session (now 🟢): √d_k credit for gradient stability · where V enters (weighted sum after softmax) · full order Q·K→÷√d_k→mask→softmax→ΣweightᵢVᵢ.
-Still to re-test in 2 days (🟡):
-1. **Two softmaxes, don't merge:** softmax#1 inside attention (over tokens → weights); softmax#2 at the very end (over vocab → next token). Between them: FFN + N blocks + unembed. ← ONLY remaining slip.
+**Two softmaxes (now closed 🟢):**
+| | Softmax #1 | Softmax #2 |
+|---|---|---|
+| Where | inside every attention block | once, very end |
+| Over | other tokens (positions) | whole vocab (~100k) |
+| Produces | attention weights | next-token probabilities |
+| Frequency | every layer × head | once per generated token |
+- #2 flow: last token's final vector → unembed / LM-head matrix → one logit per vocab token → softmax#2 → sample (temperature).
+- Trap: softmax#1 output ≠ next token; just attention weights inside the machine. #2 picks the token.
+- "Softmax#1 mixes tokens; softmax#2 picks the next token. Different axis, different stage."
 
-Closed same session 🟢: √d_k credit · where V enters · full attention order · 0x80→hybrid (recalled clean, even named TF-IDF as BM25's basis).
-
-Comprehension 🟢, retention 🟢 (4 of 5 slips self-corrected same day; only two-softmaxes left).
+All 5 slips closed 🟢. Comprehension 🟢, retention 🟢. (Light durability re-test in 2 days.)
 
 ## BM25 / hybrid (bonus, locked this session)
 - Vector search = semantic (meaning); nails paraphrases, misses exact codes (0x80 shatters → no clean vector).
