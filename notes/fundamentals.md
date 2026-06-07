@@ -56,6 +56,8 @@ Self-corrected same session (now 🟢): √d_k credit for gradient stability · 
 - #2 flow: last token's final vector → unembed / LM-head matrix → one logit per vocab token → softmax#2 → sample (temperature).
 - Trap: softmax#1 output ≠ next token; just attention weights inside the machine. #2 picks the token.
 - "Softmax#1 mixes tokens; softmax#2 picks the next token. Different axis, different stage."
+- **Unembed matrix = [vocab_size × model_dim], LEARNED floats** (not one-hot). Each row = a vocab token's vector. final_vector · matrix → logit per token. (Often weight-tied with input embedding matrix — same geometry both ends.)
+- **Decoding:** argmax = greedy (temp 0, deterministic). temp > 0 = sample from the distribution → same prompt, different outputs. (That's what temperature controls.)
 
 All 5 slips closed 🟢. Comprehension 🟢, retention 🟢. (Light durability re-test in 2 days.)
 
