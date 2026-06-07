@@ -26,9 +26,11 @@ Three layers, each shorter than the last.
 
 ### Layer 2 — Plan (read at the start of each month)
 - [ROADMAP.md](./ROADMAP.md) — six-month week-by-week table.
+- [PLAN-MONTHS-2-6.md](./PLAN-MONTHS-2-6.md) — detailed forward plan + the thought process behind every decision (anti-drift anchor; "where we came from").
 - [PROJECTS.md](./PROJECTS.md) — three flagship project specs (leadlens, docsight, reposcout).
 - [EXERCISES.md](./EXERCISES.md) — monthly checklist (tick boxes as you go).
 - [month-1/README.md](./month-1/README.md) … [month-6/README.md](./month-6/README.md) — per-month overviews.
+- [month-1/FINISH-PLAN.md](./month-1/FINISH-PLAN.md) — Month 1 day-by-day close-out (weekend-loaded, fundamentals drip).
 - [REFERENCE.md](./REFERENCE.md) — technique cheat-sheet (eval / RAG / agent / LLMOps specifics + sources). Open while building.
 - [interview_prep_qa.md](./interview_prep_qa.md) — interview Q&A bank for the 5 clusters (evals, RAG, agents, LLMOps, cost modeling).
 
