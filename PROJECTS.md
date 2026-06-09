@@ -30,7 +30,7 @@ Each project's README is also a sales artifact for the US-remote outbound funnel
 
 **Folder:** [projects/business-classification-pipeline](./projects/business-classification-pipeline/)
 **Codename change:** the directory stays the same; in code, README, and posts we call it **leadlens**. Add a `RENAMING.md` note if needed.
-**Code:** [README](./projects/business-classification-pipeline/README.md) · [DESIGN.md](./projects/business-classification-pipeline/DESIGN.md) (canonical spec).
+**Code:** [README](./projects/business-classification-pipeline/README.md) · [DESIGN.md](./projects/business-classification-pipeline/DESIGN.md) (canonical spec) · [pre-pivot draft](./projects/business-classification-pipeline/docs/design.md) (superseded, history only).
 
 > **Pivot note (Manveen's call):** leadlens classifies **AI-engineering job postings**, not staffing firms. The original 50 staffing traces were ~50/50 pass with no hard failures (low learning signal); JD classification has real failures *and* is a tool Manveen dogfoods on his own Month-6 funnel. The schema-as-eval-spec method ported cleanly across domains. Canonical spec: [projects/business-classification-pipeline/DESIGN.md](./projects/business-classification-pipeline/DESIGN.md).
 

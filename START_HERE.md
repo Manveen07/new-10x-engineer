@@ -25,6 +25,7 @@ Three layers, each shorter than the last.
 ### Layer 1 — Strategy (read once, re-skim monthly)
 - [README.md](./README.md) — one-screen positioning.
 - [MASTER_PLAN.md](./MASTER_PLAN.md) — full strategy: target funnel (US-remote primary), skill audit, anti-patterns, resources, public footprint plan.
+- [CLAUDE.md](./CLAUDE.md) — rules your AI pair (Claude Code / Cursor) follows in this repo, incl. the no-AI kata rule. Repo-maintenance design records live in `docs/superpowers/specs/`.
 
 ### Layer 2 — Plan (read at the start of each month)
 - [ROADMAP.md](./ROADMAP.md) — six-month week-by-week table.
@@ -41,7 +42,7 @@ Three layers, each shorter than the last.
 - [PROGRESS.md](./PROGRESS.md) — Sunday log. The single forcing function.
 - [katas/](./katas/README.md) — daily no-AI Python reps; one line per rep in [LEARNINGS.md](./katas/LEARNINGS.md).
 - [dsa/](./dsa/README.md) — LeetCode arc (2/week from Month 2, weeks 5–20 mapped).
-- `notes/` — running learning notes: [fundamentals.md](./notes/fundamentals.md), [llm-patterns.md](./notes/llm-patterns.md), leadlens iteration logs, Saturday open-coding notes.
+- `notes/` — running learning notes: [fundamentals.md](./notes/fundamentals.md), [llm-patterns.md](./notes/llm-patterns.md), leadlens iterations [1](./notes/leadlens-v01-iteration-1.md)/[2](./notes/leadlens-v01-iteration-2.md), Saturday open-coding notes ([v1](./notes/week-1-saturday-notes.md), [v2](./notes/week-1-saturday-notes-v2.md) — v2 holds the locked taxonomy).
 - `projects/business-classification-pipeline/` — leadlens (Months 1–2): [README](./projects/business-classification-pipeline/README.md) · [DESIGN.md](./projects/business-classification-pipeline/DESIGN.md). Already has your 50 traces.
 - `projects/gtm-clay-rag/` → renames to `projects/docsight/` in Month 3.
 - `projects/icp-research-agent/` → renames to `projects/reposcout/` in Month 5.
