@@ -28,7 +28,7 @@ Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented*
 | 7 | Jul 6 – Jul 12 | Iterate prompt + schema; calibrate all 4 judges to >90%; cost + latency instrumentation |
 | 8 | Jul 13 – Jul 19 | Modal deploy; README to standard; Loom; blog post 2; X+LinkedIn announce |
 
-Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time).
+Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time). ([week-5.md](./week-5.md) has an early draft — refine it the weekend before Week 5 based on your Month 1 close-out outcomes.)
 
 ### Carry-forward — already shipped in Month 1 (you finished ahead). Week 5 starts here; don't rebuild it.
 
