@@ -41,4 +41,4 @@ You build the agent the disciplined way — a raw `while` loop with typed tool c
 - Fewer than 25 Insight Emails sent.
 
 ## Next week
-→ `week-19.md`: 30 golden trajectories + trajectory judge + state-transition matrix; next 25 emails (50 total).
+→ [week-19.md](./week-19.md): 30 golden trajectories + trajectory judge + state-transition matrix; next 25 emails (50 total).

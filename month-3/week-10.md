@@ -38,4 +38,4 @@ You'll deploy pgvector for docsight, but JDs name LlamaIndex and Pinecone at alm
 - No contact made on the OSS repo.
 
 ## Next week
-→ `week-11.md`: stand up Postgres + pgvector in Docker Compose; lock the docsight stack.
+→ [week-11.md](./week-11.md): stand up Postgres + pgvector in Docker Compose; lock the docsight stack.

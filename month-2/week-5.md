@@ -156,4 +156,4 @@ Stratify across `ai_authenticity` so every category and the edge cases are repre
 - Implement the `asyncio.gather` batch from kata 19 in the real runner — turn ~5.4 s/JD serial into a concurrent batch.
 
 ## Next week
-→ `week-6.md` (written the weekend before Week 6): hand-label the 100 JDs, first full end-to-end run, confusion matrix v1 + per-category breakdown.
+→ [week-6.md](./week-6.md) (written the weekend before Week 6): hand-label the 100 JDs, first full end-to-end run, confusion matrix v1 + per-category breakdown.

@@ -304,3 +304,6 @@ These are recoverable in Month 2 Week 5 if needed, but each one delays the Month
 - Start hand-labeling the 100-example golden dataset (Month 2 Week 6 work).
 - Sketch the Modal endpoint shape for leadlens — `modal.fastapi_endpoint` + Pydantic body.
 - Read DLAI *Improving Accuracy of LLM Applications* (Month 2 Week 5 reading).
+
+## Next month
+→ [../month-2/README.md](../month-2/README.md) — ship leadlens (deploy + observe + 100-JD golden set). Week 5 day-by-day: [../month-2/week-5.md](../month-2/week-5.md). Gate: advance only at Month-1 done-bar ≥7/9 incl. blog post 1 (see [FINISH-PLAN.md](./FINISH-PLAN.md)).

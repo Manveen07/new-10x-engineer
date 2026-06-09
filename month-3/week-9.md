@@ -39,4 +39,4 @@ RAG is your weakest area (self-rated 1–2/5) and the single most-asked 2026 int
 - No OSS repo picked.
 
 ## Next week
-→ `week-10.md`: Jason Liu on systematically improving RAG; 30-min LlamaIndex + 30-min Pinecone vocabulary spikes.
+→ [week-10.md](./week-10.md): Jason Liu on systematically improving RAG; 30-min LlamaIndex + 30-min Pinecone vocabulary spikes.

@@ -39,4 +39,4 @@ The 2026 differentiator is agents — but the senior signal is *restraint*: "I b
 - Fewer than 50 outbound targets sourced.
 
 ## Next week
-→ `week-18.md`: raw orchestration + wire leadlens/docsight as MCP tools + first 25 Insight Emails.
+→ [week-18.md](./week-18.md): raw orchestration + wire leadlens/docsight as MCP tools + first 25 Insight Emails.

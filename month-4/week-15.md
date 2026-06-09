@@ -40,4 +40,4 @@ Retrieval feeds generation — now you measure the *answer*, not just the chunks
 - OSS PR still unmerged with no clear path to merge.
 
 ## Next week
-→ `week-16.md`: deploy docsight on Modal, $/query, Loom, blog post 4, **apply to Mercor**.
+→ [week-16.md](./week-16.md): deploy docsight on Modal, $/query, Loom, blog post 4, **apply to Mercor**.

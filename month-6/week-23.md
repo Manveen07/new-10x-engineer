@@ -39,4 +39,4 @@ Two moves this week: keep funnel volume high (interviews are a function of volum
 - Funnel data not used to reallocate effort (volume without learning).
 
 ## Next week
-→ `week-24.md`: interview buffer, contract-trial negotiation, follow-ups — and extend the funnel if no offer is active.
+→ [week-24.md](./week-24.md): interview buffer, contract-trial negotiation, follow-ups — and extend the funnel if no offer is active.

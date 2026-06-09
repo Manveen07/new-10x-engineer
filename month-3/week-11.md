@@ -40,4 +40,4 @@ docsight reuses the production scaffold you built once on leadlens (Docker, Moda
 - Rename not done (docsight still named gtm-clay-rag).
 
 ## Next week
-→ `week-12.md`: docsight `DESIGN.md` (eval plan first), open the OSS PR, blog post 3.
+→ [week-12.md](./week-12.md): docsight `DESIGN.md` (eval plan first), open the OSS PR, blog post 3.

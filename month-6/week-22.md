@@ -39,4 +39,4 @@ First rounds are landing — now the bottleneck is interview fluency, not portfo
 - Stopped applying / replying (funnel stalls).
 
 ## Next week
-→ `week-23.md`: paper-list skim, 50 more outbound (150 total), blog post 6.
+→ [week-23.md](./week-23.md): paper-list skim, 50 more outbound (150 total), blog post 6.

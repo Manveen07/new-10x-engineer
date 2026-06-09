@@ -40,4 +40,4 @@ This is the agent equivalent of the leadlens/docsight eval work — and the key 
 - Fewer than 50 outbound sent cumulatively.
 
 ## Next week
-→ `week-20.md`: deploy reposcout, register the MCP server (demoable from Claude Desktop), Loom, blog post 5, lightning talk.
+→ [week-20.md](./week-20.md): deploy reposcout, register the MCP server (demoable from Claude Desktop), Loom, blog post 5, lightning talk.

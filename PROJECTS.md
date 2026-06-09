@@ -30,6 +30,7 @@ Each project's README is also a sales artifact for the US-remote outbound funnel
 
 **Folder:** [projects/business-classification-pipeline](./projects/business-classification-pipeline/)
 **Codename change:** the directory stays the same; in code, README, and posts we call it **leadlens**. Add a `RENAMING.md` note if needed.
+**Code:** [README](./projects/business-classification-pipeline/README.md) · [DESIGN.md](./projects/business-classification-pipeline/DESIGN.md) (canonical spec).
 
 > **Pivot note (Manveen's call):** leadlens classifies **AI-engineering job postings**, not staffing firms. The original 50 staffing traces were ~50/50 pass with no hard failures (low learning signal); JD classification has real failures *and* is a tool Manveen dogfoods on his own Month-6 funnel. The schema-as-eval-spec method ported cleanly across domains. Canonical spec: [projects/business-classification-pipeline/DESIGN.md](./projects/business-classification-pipeline/DESIGN.md).
 
@@ -69,6 +70,8 @@ An LLM classifier that reads an AI-engineering **job description** and returns a
 ---
 
 ## Project 2 — docsight (Months 3–4)
+
+**Code:** [projects/gtm-clay-rag/](./projects/gtm-clay-rag/README.md) (renames to `docsight` in Month 3) · [seed design](./projects/gtm-clay-rag/docs/design.md).
 
 **Folder:** [projects/gtm-clay-rag](./projects/gtm-clay-rag/) (rename to `docsight` in Month 3 — `git mv`).
 
@@ -115,6 +118,8 @@ This is your strongest "I can ship production RAG" artifact. Mercor reviewers an
 ---
 
 ## Project 3 — reposcout (Month 5)
+
+**Code:** [projects/icp-research-agent/](./projects/icp-research-agent/README.md) (renames to `reposcout` in Month 5) · [seed design](./projects/icp-research-agent/docs/design.md).
 
 **Folder:** [projects/icp-research-agent](./projects/icp-research-agent/) (rename to `reposcout` in Month 5 — `git mv`).
 

@@ -39,7 +39,10 @@ Three layers, each shorter than the last.
 ### Layer 3 — Execution (open every working day)
 - `month-N/week-N.md` — daily plan for the week you're in.
 - [PROGRESS.md](./PROGRESS.md) — Sunday log. The single forcing function.
-- `projects/business-classification-pipeline/` — leadlens (Months 1–2). Already has your 50 traces.
+- [katas/](./katas/README.md) — daily no-AI Python reps; one line per rep in [LEARNINGS.md](./katas/LEARNINGS.md).
+- [dsa/](./dsa/README.md) — LeetCode arc (2/week from Month 2, weeks 5–20 mapped).
+- `notes/` — running learning notes: [fundamentals.md](./notes/fundamentals.md), [llm-patterns.md](./notes/llm-patterns.md), leadlens iteration logs, Saturday open-coding notes.
+- `projects/business-classification-pipeline/` — leadlens (Months 1–2): [README](./projects/business-classification-pipeline/README.md) · [DESIGN.md](./projects/business-classification-pipeline/DESIGN.md). Already has your 50 traces.
 - `projects/gtm-clay-rag/` → renames to `projects/docsight/` in Month 3.
 - `projects/icp-research-agent/` → renames to `projects/reposcout/` in Month 5.
 

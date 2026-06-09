@@ -72,4 +72,4 @@ For every misclassification: one line — *which category, what the model saw, w
 - Scam-judge CI test not re-run on the 100.
 
 ## Next week
-→ `week-7.md`: iterate prompt + schema on the worst category, push scam judge to TNR ≥0.90, add async-batch + cost/latency instrumentation.
+→ [week-7.md](./week-7.md): iterate prompt + schema on the worst category, push scam judge to TNR ≥0.90, add async-batch + cost/latency instrumentation.

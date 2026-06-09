@@ -28,6 +28,7 @@
 ## Month 1 — Code rebuild, eval foundations, leadlens design
 
 **Window:** 2026-05-25 → 2026-06-21. Theme: rebuild Python fluency without AI, then aim that rebuilt muscle at evals on your existing 50 traces. Project 1 (leadlens) gets a real design doc.
+**Month files:** [overview](month-1/README.md) · [FINISH-PLAN.md](month-1/FINISH-PLAN.md) (day-by-day close-out — wins on sequencing).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -42,6 +43,7 @@
 ## Month 2 — Ship leadlens
 
 **Window:** 2026-06-22 → 2026-07-19. Theme: convert eval learning into a shipped, deployed, observed classifier.
+**Month files:** [overview](month-2/README.md) · reasoning: [PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#month-2--ship-leadlens-deploy--observe--scale-the-golden-set).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -56,6 +58,7 @@
 ## Month 3 — RAG fundamentals + docsight design + first OSS PR
 
 **Window:** 2026-07-20 → 2026-08-16. Theme: learn the retrieval stack deeply before building docsight. Open the first OSS PR.
+**Month files:** [overview](month-3/README.md) · reasoning: [PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#month-3--rag-fundamentals--docsight-design-your-1-red-zone).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -70,6 +73,7 @@
 ## Month 4 — Ship docsight + merge OSS PR + Mercor application
 
 **Window:** 2026-08-17 → 2026-09-13. Theme: build, evaluate, deploy docsight. Land the OSS PR. Apply to Mercor with portfolio in hand.
+**Month files:** [overview](month-4/README.md) · reasoning: [PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#month-4--ship-docsight-the-ablation-table--merge-oss-pr--mercor).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -84,6 +88,7 @@
 ## Month 5 — Ship reposcout (agent + MCP) + outbound funnel starts
 
 **Window:** 2026-09-14 → 2026-10-11. Theme: workflow-first agent that uses leadlens + docsight as tools. Wraps as MCP server. Outbound channel goes live.
+**Month files:** [overview](month-5/README.md) · reasoning: [PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#month-5--ship-reposcout-agent--mcp--outbound-funnel-goes-live).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -98,6 +103,7 @@
 ## Month 6 — Run the funnel
 
 **Window:** 2026-10-12 → 2026-11-08. Theme: portfolio is the asset; now the work is outreach, applications, interviews, conversion.
+**Month files:** [overview](month-6/README.md) · [interview-tracker.md](month-6/interview-tracker.md) · reasoning: [PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#month-6--run-the-funnel-as-an-evaluation-problem).
 
 | Week | Date window | Time | Goals |
 |---|---|---:|---|
@@ -129,6 +135,22 @@ Total target: 8–10 hours/week (roughly 75 min weekdays + 6–8 hrs weekends). 
 **Job-day exhaustion rule:** if a weekday after work is brutal, skip that night's kata — but cap skips at 1/week. Two skipped katas in a row → catch up Saturday morning before the build block.
 
 **DSA standing rule (from Month 2):** Month 1 stays no-AI Python rebuild. From Month 2 onward, swap **2 of the weekday katas for 2 LeetCode problems/week** (arrays / hash maps / strings / graphs — not DP/trees grinding). Target **60–80 problems total by Month 6**, committed to a `dsa/` folder. Rationale: live-coding screens can land the moment outbound opens (Month 5), so 80 problems crammed into Month 6 ([Week 22](#month-6--run-the-funnel)) is too late — spread them. (See [MASTER_PLAN.md §3](MASTER_PLAN.md#L62).)
+
+## Skill ladder — how the 7 axes climb month by month
+
+Same seven axes you rate every Sunday in [PROGRESS.md](PROGRESS.md). Baseline = your Week-1 self-rating. Each cell = where that axis should sit by month-end; the **bold** cells mark the month that axis is the focus. Two Sundays in a row below the current month's row → treat as "behind" and recover before advancing.
+
+| Axis (1–5) | W1 baseline | M1 | M2 | M3 | M4 | M5 | M6 | What moves it |
+|---|---|---|---|---|---|---|---|---|
+| Python fluency (no AI) | 3 | **3.5** | **4** | 4 | 4 | 4.5 | 4.5 | daily katas → [dsa/](dsa/README.md) LeetCode arc |
+| Evals | 3 | **4** | **4.5** | 4.5 | 5 | 5 | 5 | open/axial coding → judge calibration → CI gate → Ragas → trajectory |
+| RAG | 2 | 2 | 2 | **3.5** | **4.5** | 4.5 | 4.5 | build-by-failing → hybrid+rerank+contextual → ablation table |
+| Agents | 3 | 3 | 3 | 3 | 3 | **4.5** | 4.5 | workflow-first reposcout → MCP server → trajectory evals |
+| Production / deploy | 4 | 4 | **4.5** | 4.5 | **5** | 5 | 5 | Modal + FastAPI + Docker + Langfuse + CI, reused 3× |
+| Public footprint | 2 | **2.5** | 3 | 3.5 | 4 | **4.5** | 5 | blog post per month + Looms + OSS PR + lightning talk |
+| Outbound funnel | 3 | 3 | 3 | 3 | 3.5 | **4** | **5** | list-building (M2–4, passive) → 50 sends (M5) → 100+ & interviews (M6) |
+
+The through-line stays one discipline in five shapes — measure-first, eval-driven engineering ([PLAN-MONTHS-2-6.md](PLAN-MONTHS-2-6.md#the-through-line-re-read-when-lost)). No axis is ever dormant: even off-focus months hold maintenance reps (katas/DSA daily, one public push weekly, PROGRESS every Sunday).
 
 ## Readiness bar (Nov 8, 2026)
 

@@ -38,4 +38,4 @@ The portfolio is built; now it does the work. The reframe that makes Month 6 suc
 - No funnel-tracking sheet (you're flying blind).
 
 ## Next week
-→ `week-22.md`: system-design + project deep-dive mocks; 10 more applications; reply discipline.
+→ [week-22.md](./week-22.md): system-design + project deep-dive mocks; 10 more applications; reply discipline.

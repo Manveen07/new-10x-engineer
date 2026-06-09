@@ -40,4 +40,4 @@ The ablation table is docsight's headline artifact — and you can't build it wi
 - Contextual preprocessing not run on the full corpus.
 
 ## Next week
-→ `week-14.md`: add the reranker, build the segmented ablation table (recall@10, MRR, NDCG@10).
+→ [week-14.md](./week-14.md): add the reranker, build the segmented ablation table (recall@10, MRR, NDCG@10).

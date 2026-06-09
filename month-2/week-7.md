@@ -65,4 +65,4 @@ Re-read your Week-6 open-coding notes for the weakest category. Name the failure
 - No p50/p95 + cost numbers captured.
 
 ## Next week
-→ `week-8.md`: Modal deploy, README to standard, 3-min Loom, blog post 2 — leadlens goes live.
+→ [week-8.md](./week-8.md): Modal deploy, README to standard, 3-min Loom, blog post 2 — leadlens goes live.

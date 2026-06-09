@@ -1,6 +1,6 @@
 # Project 1 Design - Business Classification Pipeline
 
-Status: draft.
+Status: SUPERSEDED — pre-pivot staffing-firm draft. Canonical spec: [../DESIGN.md](../DESIGN.md). Kept for history.
 
 ## Objective
 

@@ -40,4 +40,4 @@ This is **the** artifact. Hiring managers and Mercor reviewers screen for "did t
 - Can't explain when rerank hurts.
 
 ## Next week
-→ `week-15.md`: cited generation + calibrated Ragas (faithfulness, answer-relevance, context-precision) + land the OSS PR.
+→ [week-15.md](./week-15.md): cited generation + calibrated Ragas (faithfulness, answer-relevance, context-precision) + land the OSS PR.
