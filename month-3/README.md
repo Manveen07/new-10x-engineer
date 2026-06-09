@@ -38,7 +38,7 @@ Week files arrive ~3 days before each week (see [month-2 README](../month-2/READ
 
 ## OSS target — pick one
 
-(Mercor's interview is exclusively about your OSS contributions — pick well.)
+(the PR anchors your Mercor profile + GitHub credibility — pick well.)
 
 - **Instructor** (jxnl/instructor) — cookbook example using leadlens. Jason Liu is responsive.
 - **Langfuse** — adapter or eval example. Discord is active.

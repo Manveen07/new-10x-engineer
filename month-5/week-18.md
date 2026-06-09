@@ -22,7 +22,7 @@ You build the agent the disciplined way — a raw `while` loop with typed tool c
 | Thu eve | 2026-09-24 | Send first 10 emails; draft 10 more | 30 min |
 | Fri eve | 2026-09-25 | Send 15 more (25 total this week) OR rest | 15–30 min |
 | **Sat** | 2026-09-26 | **Big build**: raw orchestration loop — Pydantic tool I/O, step budget (20), idempotency tokens, structured outputs, tool-arg validation; GitHub API signal tool | **3.5 hrs** |
-| **Sun** | 2026-09-27 | **Build**: expose leadlens + docsight as MCP tools via the `mcp` Python SDK; have reposcout call one over MCP; Langfuse trace per tool call → PROGRESS | **3.5 hrs** |
+| **Sun** | 2026-09-27 | **Build**: expose leadlens + docsight as MCP tools via FastMCP 3.x or the official `mcp` SDK; have reposcout call one over MCP; Langfuse trace per tool call → PROGRESS | **3.5 hrs** |
 
 ## Saturday — raw orchestration (3.5 hrs)
 - A `while steps < 20` loop: model proposes a tool call → validate args against the Pydantic schema → execute → append result → repeat until done or budget hit.
@@ -31,7 +31,7 @@ You build the agent the disciplined way — a raw `while` loop with typed tool c
 - Langfuse: one trace per run, one span per tool call.
 
 ## Sunday — MCP server (3.5 hrs)
-- Wrap leadlens + docsight as MCP tools using Anthropic's `mcp` Python SDK (typed tool definitions + handlers).
+- Wrap leadlens + docsight as MCP tools using FastMCP 3.x (Jan 2026, decorator-based) or the official `mcp` SDK (typed tool definitions + handlers).
 - reposcout calls at least one over MCP (not a direct import) — proving the composition is real.
 - Verify the server lists its tools to an MCP client.
 

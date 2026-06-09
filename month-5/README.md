@@ -14,7 +14,7 @@ By Sunday 2026-10-11 you have three deployed projects, an MCP server demoable fr
 ### Project (Track 4)
 - `projects/reposcout/` (renamed from `icp-research-agent` via `git mv`) deployed on Modal.
 - Agent reads Anthropic *Building Effective Agents* discipline: workflow first, identified one agentic node.
-- leadlens + docsight wired as **MCP tools** using `mcp` Python SDK.
+- leadlens + docsight wired as **MCP tools** using FastMCP 3.x or the official `mcp` SDK.
 - Step budget capped at 20. Idempotency tokens on all external tool calls.
 - 30 golden reference topics with hand-curated "good" repo lists.
 - Trajectory judge prompt + state-transition matrix.

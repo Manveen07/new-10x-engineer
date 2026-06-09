@@ -167,7 +167,7 @@ The checklist is opinionated about *minimum* viable monthly output. If you finis
 ### Build (Track 4)
 - [ ] reposcout `DESIGN.md` — workflow-first sketch, identified agentic node.
 - [ ] Raw orchestration: Pydantic tool I/O, step budget = 20, idempotency tokens.
-- [ ] Wire leadlens + docsight as MCP tools using `mcp` Python SDK.
+- [ ] Wire leadlens + docsight as MCP tools using FastMCP 3.x or the official `mcp` SDK.
 - [ ] GitHub API integration (`PyGithub` or `httpx`).
 - [ ] 30 golden reference topics.
 - [ ] Trajectory judge prompt + state-transition matrix.
@@ -175,7 +175,7 @@ The checklist is opinionated about *minimum* viable monthly output. If you finis
 
 ### Ship (Track 1 + Track 5)
 - [ ] Deploy on Modal.
-- [ ] Register MCP server; demoable from Claude Desktop.
+- [ ] Register MCP server (publish to the official MCP Registry); demoable from Claude Desktop.
 - [ ] Loom of MCP server in Claude Desktop.
 - [ ] `git mv projects/icp-research-agent projects/reposcout`.
 - [ ] README to standard. Workflow vs agent explainer included.

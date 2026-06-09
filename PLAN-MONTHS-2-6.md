@@ -10,7 +10,7 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 
 1. **Original plan was for the wrong person.** v1 targeted a senior Bengaluru GTM engineer ("Avi") with years of Clay production traces. Manveen is a final-year BTech with shipped GenAI projects (PresentAI, AsanaBot) + two internships + rusty hands-on coding. Rebuilt around *that*.
 2. **Target role = GenAI / LLM Application Engineer with agent tilt.** Highest-volume junior bucket in 2026; only bucket where a Tier-2 fresher with a strong public portfolio competes against MS/IIT ML candidates. Bar is "ship working LLM features with evals," not "derive backprop."
-3. **Funnel = US-remote primary, India backup.** Manveen raised this himself; research validated it — his GTM-engineer outbound skill (Precise Leads) is a wedge most AI candidates lack. Mercor (interview = your OSS contributions) + HN/Wellfound/YC + direct outbound to just-raised US AI founders.
+3. **Funnel = US-remote primary, India backup.** Manveen raised this himself; research validated it — his GTM-engineer outbound skill (Precise Leads) is a wedge most AI candidates lack. Mercor (screen = ~20-min AI interview, CV-tailored, camera on, up to 3 retakes — OSS + shipped projects feed the profile it probes; verified 2026-06) + HN/Wellfound/YC + direct outbound to just-raised US AI founders.
 4. **Three flagship projects:** leadlens (classifier + evals, M1–2) → docsight (production RAG, M3–4) → reposcout (agent + MCP, M5). Each deployed, eval-backed, documented.
 5. **leadlens pivoted staffing-firm → AI-JD classifier** (Manveen's call). Reason: the 50 staffing traces were 50/50 pass — no hard failures, low engagement. JD classification = real failures + a tool he'll actually use for his own Month 6 funnel (dogfood).
 6. **The discovered pattern — schema-as-eval-spec.** Every recurring failure mode has a corresponding Pydantic field that forces the model to type the dimension explicitly, killing the failure by construction. Proven 3×: `min_length` on reasoning (F-003 hardcoded confidence), `stack_unspecified: bool` (F-004 thin extraction), `min_length` on judge critique (critique-shadowing). **This is Manveen's signature technique — lead with it in interviews and the blog.**
@@ -43,7 +43,7 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 
 **Blind spots closed:** FastAPI, Docker, Modal deploy, Langfuse, CI/CD, async parallel calls (use the kata-02 `asyncio.gather` to drop the 5.4s/JD serial latency).
 
-**Study (researched):** [FastAPI docs](https://fastapi.tiangolo.com/), [Modal examples](https://modal.com/docs/examples), [Langfuse observability](https://langfuse.com/docs/observability/overview), DeepLearning.AI *Building Evaluations of LLM Apps*.
+**Study (researched):** [FastAPI docs](https://fastapi.tiangolo.com/), [Modal examples](https://modal.com/docs/examples), [Langfuse observability](https://langfuse.com/docs/observability/overview), DeepLearning.AI *Building Evaluations of LLM Apps*. Optional deep-dive: Hamel + Shreya's [*Evals for AI Engineers*](https://www.oreilly.com/library/view/evals-for-ai/9798341660717/) (O'Reilly) and their [Maven cohort](https://maven.com/parlance-labs/evals) — the evals-faq you already use distills both; buy only if you want the structured drill.
 
 **Success bar:** live URL anyone can hit; 100-JD golden set; CI gate green; Langfuse traces visible; Loom + post 2 live.
 
@@ -63,6 +63,7 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 - Contextual retrieval (Anthropic: prepend situating blurb → −49% retrieval failures, −67% with rerank).
 - Reranking (cross-encoder; retrieve 20–50 → rerank → top 5–10).
 - RAG-vs-long-context decision (the interview favorite).
+- 2026 interview vocabulary (know when each applies — build none into docsight v1): query transformation (HyDE / multi-query / decomposition), GraphRAG (entity-heavy corpora + multi-hop), agentic RAG (3–10× LLM calls — only when questions justify it), query routing (cache / tool / RAG / direct per query).
 - **Learning frame: build RAG by failing.** Start with `np.dot(query, chunks)` simplest possible, watch it miss exact matches, then layer BM25 → RRF → rerank → contextual, each layer earning its place by killing a *measured* failure. Don't copy a tutorial pipeline.
 
 **Build deliverables:**
@@ -70,7 +71,7 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 - Postgres + pgvector running in Docker Compose.
 - docsight `DESIGN.md` (retrieval eval plan first, per Hamel — design the measurement before the pipeline).
 - `git mv projects/gtm-clay-rag projects/docsight`.
-- Open the OSS PR (Mercor's interview is your OSS contributions — start early). Target: Instructor / Langfuse / Ragas / simonw/llm / LiteLLM / PydanticAI.
+- Open the OSS PR (a merged PR is the strongest credibility asset on the Mercor profile + GitHub — start early). Target: Instructor / Langfuse / Ragas / simonw/llm / LiteLLM / PydanticAI.
 - Blog post 3: "What I set up before writing a line of RAG code."
 
 **Blind spots closed:** embeddings + vector search, chunking, pgvector, BM25, hybrid fusion, contextual retrieval, the 30-min LlamaIndex + 30-min Pinecone spikes (vocabulary for interviews even though you deploy pgvector).
@@ -102,7 +103,7 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 - Cited generation + calibrated Ragas.
 - Deploy on Modal (Docker + FastAPI + Langfuse). $/query + latency.
 - Merge the OSS PR (get the maintainer thank-you screenshot for portfolio).
-- **Apply to Mercor** with portfolio in hand. + 5 HN/YC/Wellfound applications.
+- **Apply to Mercor** with portfolio in hand. + 5 HN/YC/Wellfound applications. *(2026 process check: Mercor screens with a ~20-min AI interview — camera on, questions tailored to your CV/projects, up to 3 retakes. Rehearse the leadlens + docsight deep-dives **aloud** before applying; the AI probes exactly what your profile claims.)*
 - Blog post 4: "Contextual retrieval on real OSS docs — a measured ablation."
 
 **Blind spots closed:** retrieval measurement, RAG evaluation, reranking, Ragas calibration — the core of the 2026 bar.
@@ -131,15 +132,15 @@ Decisions made and *why*, so the plan never drifts back into the old shape:
 **Build deliverables:**
 - reposcout `DESIGN.md` — workflow-first sketch; identify the one agentic node.
 - Raw orchestration: Pydantic tool I/O, step budget (20), idempotency tokens.
-- Wire leadlens + docsight as MCP tools via the `mcp` Python SDK.
+- Wire leadlens + docsight as MCP tools via FastMCP 3.x (Jan 2026 — decorator-based, handles schema/validation) or the official `mcp` SDK; decide at build time.
 - 30 golden trajectories + a trajectory judge + state-transition view.
-- Deploy + register MCP server (demoable from Claude Desktop — GIF in README).
+- Deploy + publish MCP server to the official [MCP Registry](https://github.com/modelcontextprotocol/registry) (demoable from Claude Desktop — GIF in README). MCP sits under the Linux Foundation's Agentic AI Foundation since Dec 2025 — it's standard infrastructure now, mention that fluency in interviews.
 - Blog post 5: "Workflow first, agent second, MCP always."
 - **Outbound goes live:** 50 just-raised US AI startups sourced; 50 Insight Emails sent (your Precise Leads skill, pointed at your own funnel). 1 lightning talk recorded.
 
 **Blind spots closed:** agent design, trajectory evaluation, MCP servers, context engineering, runtime guardrails, one agent framework (LangGraph) for interview fluency.
 
-**Study (researched):** [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents), [Effective Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), [MCP docs](https://modelcontextprotocol.io), Anthropic Academy *Agentic AI*, [REFERENCE.md](./REFERENCE.md) Appendix C.
+**Study (researched):** [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents), [Effective Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (Nov 2025 — load tools on demand, filter data before the model), [MCP docs](https://modelcontextprotocol.io), Anthropic Academy *Agentic AI*, [REFERENCE.md](./REFERENCE.md) Appendix C.
 
 **Success bar:** MCP server demoable from Claude Desktop; trajectory eval scoring paths; 50 outbound sent; lightning talk recorded; post 5 live.
 

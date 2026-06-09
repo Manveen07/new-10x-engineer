@@ -90,7 +90,7 @@ You raised it directly: India fresher AI-eng hiring is brutal (most JDs ask 2–
 - Direct careers pages: Sierra, Decagon, 11x.ai, Harvey, Hebbia, Cresta, Glean — they hire India ICs for some roles.
 
 **Channel B — Talent marketplaces** (apply once, get matched)
-- **[Mercor](https://www.mercor.com/) — highest priority.** Their interview is *exclusively on your open-source contributions*. The OSS PR in this plan is no longer a checkbox; it's the *primary asset* for this route. Apply in Month 4 once the PR is merged. Hiring takes ~60 days; payouts weekly via Stripe Connect, USD-denominated.
+- **[Mercor](https://www.mercor.com/) — highest priority.** Screen = a ~20-min AI interview (camera on, CV-tailored questions, up to 3 retakes; process verified 2026-06) that probes your OSS contributions and shipped projects. The OSS PR in this plan is no longer a checkbox; it's the *primary asset* for this route. Apply in Month 4 once the PR is merged. Hiring takes ~60 days; payouts weekly via Stripe Connect, USD-denominated.
 - [Turing](https://www.turing.com/jobs/remote-ai-jobs) — assessment-heavy. Lower selectivity than direct apps, lower pay ceiling than Mercor.
 - A.Team, Pesto, Pallet, Crossover — secondary; only after Channels A and C are running.
 
@@ -117,7 +117,7 @@ Run this in parallel from Month 5 so November isn't all-or-nothing.
 | Funnel | What lands you a first round |
 |---|---|
 | **US-remote — direct outbound** | A *specific* 2-week trial offer + 1 deployed project demoable in 30 seconds + a Loom walkthrough + a personalized observation about their work. Eval table on the project doubles reply rate. |
-| **US-remote — Mercor** | 1 merged OSS PR + GitHub profile with 4–6 months of daily-ish activity + 3 deployed projects in pinned repos. **The PR is the interview.** |
+| **US-remote — Mercor** | 1 merged OSS PR + GitHub profile with 4–6 months of daily-ish activity + 3 deployed projects in pinned repos. **The profile feeds the AI interview; rehearse project deep-dives aloud.** |
 | **US-remote — HN/Wellfound/YC apply** | Same portfolio + a sharp blog post (one that gets shared) + a Loom video walkthrough. |
 | **India product startup** | 2 deployed LLM apps + public eval suite + blog post + GitHub graph + warm intro through OSS or local meetup. Lighter DSA. |
 | **India GCC AI** | Same as above + a leetcode-easy DSA round + cleaner README presentation. |

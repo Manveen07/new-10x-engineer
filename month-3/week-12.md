@@ -8,7 +8,7 @@
 
 ## Why this week matters
 
-You design the measurement before the pipeline (Hamel's rule) — the `DESIGN.md` you write this week is the spec the Month-4 ablation table fills in. And you open the OSS PR: Mercor's interview is *exclusively* your OSS contributions, so getting a real one in motion now (not Month 5) is the highest-leverage non-project move you make all plan.
+You design the measurement before the pipeline (Hamel's rule) — the `DESIGN.md` you write this week is the spec the Month-4 ablation table fills in. And you open the OSS PR: a merged OSS PR is the strongest Mercor-profile + GitHub credibility asset, so getting a real one in motion now (not Month 5) is the highest-leverage non-project move you make all plan.
 
 **The single must-do:** docsight `DESIGN.md` committed (with the retrieval-eval plan) + an OSS PR opened (draft is fine) + blog post 3 published — by Sunday.
 

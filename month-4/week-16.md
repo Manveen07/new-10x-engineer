@@ -8,7 +8,7 @@
 
 ## Why this week matters
 
-docsight goes live, and with a merged OSS PR + two deployed eval-backed projects, you now meet Mercor's bar — whose interview is *exclusively* your open-source contributions. This is the first week the portfolio starts doing the job-search work for you. Reuse the leadlens deploy scaffold wholesale (Docker + Modal + Langfuse + CI) — that's why you built it first.
+docsight goes live, and with a merged OSS PR + two deployed eval-backed projects, you now meet Mercor's bar — whose ~20-min AI-interview screen (CV-tailored, camera on, up to 3 retakes) probes exactly these assets. This is the first week the portfolio starts doing the job-search work for you. Reuse the leadlens deploy scaffold wholesale (Docker + Modal + Langfuse + CI) — that's why you built it first.
 
 **The single must-do:** docsight live at a public Modal URL with README to standard + Loom, blog post 4 published, **and the Mercor application submitted** — by Sunday.
 

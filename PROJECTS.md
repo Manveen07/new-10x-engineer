@@ -141,7 +141,7 @@ Wrapped as an **MCP server** so it's usable from Claude Desktop, Cursor, or any 
 - GitHub API (`PyGithub` or raw `httpx`)
 - leadlens (called as a local tool)
 - docsight (called as an MCP tool)
-- MCP server via `mcp` Python SDK (Anthropic's official)
+- MCP server via FastMCP 3.x or the official `mcp` SDK
 - **Step budget capped at 20** (Anthropic's *Building Effective Agents* discipline)
 - Idempotency tokens for all external tool calls
 - Langfuse trace per agent run + per tool call

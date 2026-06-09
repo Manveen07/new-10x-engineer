@@ -31,7 +31,7 @@ RAG is your weakest area (self-rated 1–2/5) and the single most-asked 2026 int
 
 ## Sunday — chunking + pick OSS target (3 hrs)
 - Chunking: compare recursive ~512-tok vs auto-merging on the same queries. Recall: why overlap often adds nothing.
-- **Pick ONE OSS repo** to contribute to (Mercor's interview = your OSS contributions — start now). Criteria: responsive maintainer, a `good first issue` you understand, repo you'll actually use. Write the pick + the candidate issue in `notes/oss-target.md`.
+- **Pick ONE OSS repo** to contribute to (strongest Mercor-profile + GitHub credibility asset — start now). Criteria: responsive maintainer, a `good first issue` you understand, repo you'll actually use. Write the pick + the candidate issue in `notes/oss-target.md`.
 
 ## Behind if
 - No notebook showing the dense-miss → contextual-fix.
