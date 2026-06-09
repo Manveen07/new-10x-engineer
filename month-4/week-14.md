@@ -21,11 +21,11 @@ This is **the** artifact. Hiring managers and Mercor reviewers screen for "did t
 | Wed eve | 2026-08-26 | **LeetCode ×1** | 20 min |
 | Thu eve | 2026-08-27 | Tag each eval query with a segment (exact-term / conceptual / multi-hop) | 30 min |
 | Fri eve | 2026-08-28 | Rest or skim | 0–20 min |
-| **Sat** | 2026-08-29 | **Big build**: add reranker (Cohere Rerank 3.5 or local bge) → write the metric harness (recall@k, MRR, NDCG@10) → run all 5 variants | **3.5 hrs** |
+| **Sat** | 2026-08-29 | **Big build**: add reranker (Cohere Rerank 4 / Voyage Rerank 2.5 / zerank-2, or local bge for cheap) → write the metric harness (recall@k, MRR, NDCG@10) → run all 5 variants | **3.5 hrs** |
 | **Sun** | 2026-08-30 | **Build**: segment the metrics, find where rerank *hurts* and why, write the ablation table + the one-paragraph reading of it → PROGRESS | **3.5 hrs** |
 
 ## Saturday — reranker + metric harness (3.5 hrs)
-- Add `rerank(query, candidates)` (Cohere Rerank 3.5, Voyage Rerank, or a local `bge-reranker` for the cheap path). Pattern: retrieve 30 → rerank → top 10.
+- Add `rerank(query, candidates)` (Cohere Rerank 4 / Voyage Rerank 2.5 / ZeroEntropy zerank-2 — current 2026 leaders — or a local `bge-reranker` for the cheap path). Pattern: retrieve 30 → rerank → top 10.
 - Write the metric harness over `data/retrieval-eval.jsonl`: `recall@5/@10`, `MRR`, `NDCG@10`.
 - Run all 5 variants: pure dense / BM25 / hybrid-RRF / hybrid+rerank / hybrid+rerank+contextual. Record every cell.
 

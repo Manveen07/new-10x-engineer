@@ -58,6 +58,7 @@ An LLM classifier that reads an AI-engineering **job description** and returns a
 - Confusion matrix + per-category breakdown in README.
 - Failure taxonomy (F-003 hardcoded confidence, F-004 thin-stack extraction, F-006 scam under-call) — each killed by a schema field where possible.
 - Cost-per-call table ($0.00085/JD at v0.1) + p50 / p95 latency table.
+- Tooling: **DeepEval** (pytest-native, CI-friendly) is the recommended harness for the judge-in-CI gate — purpose-built for asserting metrics in `pytest` (see [REFERENCE.md](./REFERENCE.md) Appendix A).
 
 ### Founder-facing one-liner
 *"Built an LLM JD-classifier with a 100-example golden dataset and a calibrated scam judge (TPR 1.0 / TNR 0.90). Killed three failure modes by construction with the schema-as-eval-spec pattern — e.g. a `min_length=100` reasoning field that makes a hardcoded confidence impossible — and gated it in CI."*
@@ -80,10 +81,10 @@ The previous plan used Clay docs as a private corpus. You don't have Clay access
 ### Stack
 - FastAPI + Pydantic
 - Postgres 16 + pgvector + Postgres full-text search (BM25 via `pg_search` or hand-rolled)
-- Voyage embeddings (`voyage-3` or `voyage-3-large`)
-- Cohere Rerank 3.5 (or Voyage Rerank 2.5, or a local `bge-reranker` as the cheap path)
+- Embeddings: Voyage-3-large or Gemini Embedding 001 (2026 MTEB leaders — see [REFERENCE.md](./REFERENCE.md) Appendix B)
+- Reranker: Cohere Rerank 4 / Voyage Rerank 2.5 / ZeroEntropy zerank-2 (current 2026 leaders), or local `bge-reranker` as the cheap path
 - Anthropic Contextual Retrieval preprocessing (Sept 2024 prompt — implement exactly)
-- Ragas for generation evals; custom retrieval metrics for retrieval evals
+- **Ragas** for RAG generation metrics; **DeepEval** (pytest-native) for the CI eval gate; custom retrieval metrics for retrieval evals
 - Langfuse traces
 - Docker + Docker Compose for local dev
 - Modal deployment

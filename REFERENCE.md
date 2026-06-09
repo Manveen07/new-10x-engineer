@@ -2,6 +2,8 @@
 
 > Salvaged from the v4 roadmap. Open while building each phase: the appendices below capture concrete numbers, knobs, and trade-offs from the primary 2025–2026 sources. The plan + week-by-week schedule lives in [ROADMAP.md](./ROADMAP.md); this file is the depth.
 
+> **✅ Live-verified 2026-06-09 (web).** This file held up well — confirmed current: **DeepEval** (pytest-native CI evals), **ZeroEntropy zerank-2** + Cohere/Voyage rerankers, the 2026 embedding leaders, **Langfuse v3** (OTel, `@observe`), and the agent-framework lineup. Deltas applied across the plan: OpenAI's current frontier is **GPT-5.5** (not GPT-4.1); **Gemini 2.5 Flash** (~$0.30/$2.50 per 1M) stays the cheapest fit for leadlens, with Gemini 3.5 Flash as a step up; MCP servers are built with **FastMCP + `@mcp.tool()`** ([build-server guide](https://modelcontextprotocol.io/docs/develop/build-server)); **DeepEval** is now the recommended harness for the judge-in-CI gate. Re-verify model names/prices before quoting them in interviews — they move monthly.
+
 ---
 
 ## Appendix A — Evals (Hamel + Shreya canon)

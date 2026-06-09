@@ -47,7 +47,7 @@ Drill these in mocks. Each should be answerable in 3 minutes.
 - [ ] Tokenization, embeddings, attention at the conceptual level (Karpathy's *Intro to LLMs* video sufficient).
 - [ ] Prompt patterns: zero-shot, few-shot, chain-of-thought, structured outputs.
 - [ ] Function calling vs JSON mode vs Instructor vs BAML — when each.
-- [ ] Cost/latency reasoning per model (Sonnet vs Haiku vs GPT-5 vs GPT-5-mini).
+- [ ] Cost/latency reasoning per model, current 2026 tiers (Claude Sonnet 4.6 vs Haiku 4.5 vs Gemini 2.5/3.5 Flash vs OpenAI GPT-5.5) — know the $/1M-token in/out.
 
 ### Evals (interview-critical)
 - [ ] Three Gulfs in 60 seconds.
