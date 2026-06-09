@@ -44,7 +44,7 @@ By Sunday 2026-10-11 you have three deployed projects, an MCP server demoable fr
 | 19 | Sep 28 – Oct 4 | Trajectory evals + state-transition matrix + next 25 Insight Emails (50 total) |
 | 20 | Oct 5 – Oct 11 | Deploy + Loom + blog post 5 + lightning talk + README polish across all 3 projects |
 
-Week files arrive ~3 days before each week.
+Week files arrive ~3 days before each week. Provisional drafts exist — refine each the weekend before it starts: [week-17.md](./week-17.md) · [week-18.md](./week-18.md) · [week-19.md](./week-19.md) · [week-20.md](./week-20.md).
 
 ## Required reading
 

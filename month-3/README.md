@@ -27,7 +27,7 @@ Learn the retrieval stack deeply before building docsight in Month 4. Open your 
 | 11 | Aug 3 – Aug 9 | docsight stack decision + Postgres+pgvector Docker Compose |
 | 12 | Aug 10 – Aug 16 | `DESIGN.md` + draft OSS PR + blog post 3 |
 
-Week files arrive ~3 days before each week (see [month-2 README](../month-2/README.md) for the rationale).
+Week files arrive ~3 days before each week (see [month-2 README](../month-2/README.md) for the rationale). Provisional drafts exist — refine each the weekend before it starts: [week-9.md](./week-9.md) · [week-10.md](./week-10.md) · [week-11.md](./week-11.md) · [week-12.md](./week-12.md).
 
 ## Required reading
 

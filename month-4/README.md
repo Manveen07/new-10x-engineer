@@ -34,7 +34,7 @@ Build, evaluate, deploy docsight. Land the OSS PR. Apply to Mercor with portfoli
 | 15 | Aug 31 – Sep 6 | Cited generation + Ragas calibration + land OSS PR |
 | 16 | Sep 7 – Sep 13 | Docker + Modal deploy + Loom + blog post 4 + Mercor + first apps |
 
-Week files arrive ~3 days before each week.
+Week files arrive ~3 days before each week. Provisional drafts exist — refine each the weekend before it starts: [week-13.md](./week-13.md) · [week-14.md](./week-14.md) · [week-15.md](./week-15.md) · [week-16.md](./week-16.md).
 
 ## docsight corpus
 

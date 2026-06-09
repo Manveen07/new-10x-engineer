@@ -2,7 +2,7 @@
 
 ## Goal
 
-Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented* classifier. By Sunday 2026-07-19 you have a live URL on Modal, a 100-example golden dataset, four calibrated judges, a confusion matrix in the README, a 3-min Loom, and blog post 2 published.
+Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented* **JD classifier**. By Sunday 2026-07-19 you have a live URL on Modal, a 100-JD golden dataset, a category-accuracy CI gate + a calibrated scam judge (TPR ≥0.75 / TNR ≥0.90), a confusion matrix in the README, a 3-min Loom, and blog post 2 published.
 
 **Pace:** 8–10 hrs/week.
 **Window:** 2026-06-22 → 2026-07-19.
@@ -10,8 +10,8 @@ Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented*
 ## Outcome by end of month
 
 - `projects/business-classification-pipeline/` (leadlens) is a deployed Modal endpoint at a public URL.
-- 100-example hand-labeled golden dataset committed.
-- 4 calibrated judges all at >90% agreement vs hand labels.
+- 100-JD hand-labeled golden dataset committed.
+- Category-accuracy CI gate (≥75% on real labels) + calibrated scam judge (TPR ≥0.75 / TNR ≥0.90); add judges for other dimensions (e.g. evidence support) as needed.
 - README to standard (architecture diagram, "where it fails," eval table, cost-per-call, p50/p95 latency, Loom embed).
 - Langfuse traces wired from line one of every code path; trace screenshots in README.
 - 3-min Loom walkthrough recorded and linked.
@@ -24,11 +24,11 @@ Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented*
 | Week | Window | Theme |
 |---|---|---|
 | 5 | Jun 22 – Jun 28 | Scaffolding + Langfuse + DLAI accuracy course + judge port |
-| 6 | Jun 29 – Jul 5 | Hand-label 100 companies → first end-to-end run → confusion matrix v1 |
-| 7 | Jul 6 – Jul 12 | Iterate prompt + schema; calibrate all 4 judges to >90%; cost + latency instrumentation |
+| 6 | Jun 29 – Jul 5 | Hand-label 100 JDs → first full end-to-end run → confusion matrix v1 + per-category breakdown |
+| 7 | Jul 6 – Jul 12 | Iterate prompt + schema on failures; push scam judge to TNR ≥0.90; async-batch + cost/latency instrumentation |
 | 8 | Jul 13 – Jul 19 | Modal deploy; README to standard; Loom; blog post 2; X+LinkedIn announce |
 
-Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time). ([week-5.md](./week-5.md) has an early draft — refine it the weekend before Week 5 based on your Month 1 close-out outcomes.)
+Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time). ([week-5.md](./week-5.md) · [week-6.md](./week-6.md) · [week-7.md](./week-7.md) · [week-8.md](./week-8.md) have early drafts — refine each the weekend before it starts, anchored on what actually shipped the prior week.)
 
 ### Carry-forward — already shipped in Month 1 (you finished ahead). Week 5 starts here; don't rebuild it.
 

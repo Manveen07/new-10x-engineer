@@ -31,38 +31,39 @@ Each project's README is also a sales artifact for the US-remote outbound funnel
 **Folder:** [projects/business-classification-pipeline](./projects/business-classification-pipeline/)
 **Codename change:** the directory stays the same; in code, README, and posts we call it **leadlens**. Add a `RENAMING.md` note if needed.
 
+> **Pivot note (Manveen's call):** leadlens classifies **AI-engineering job postings**, not staffing firms. The original 50 staffing traces were ~50/50 pass with no hard failures (low learning signal); JD classification has real failures *and* is a tool Manveen dogfoods on his own Month-6 funnel. The schema-as-eval-spec method ported cleanly across domains. Canonical spec: [projects/business-classification-pipeline/DESIGN.md](./projects/business-classification-pipeline/DESIGN.md).
+
 ### What it is
-An LLM classifier that takes a company name + domain and returns structured fields: operating status, segment, signals detected with evidence, confidence, citations. Built around your existing 50-trace staffing-firm dataset, expanded to 100 hand-labeled examples.
+An LLM classifier that reads an AI-engineering **job description** and returns a structured, evidence-grounded fit assessment: `seniority`, `ai_authenticity` (real_ai_role / ai_adjacent / ai_washed / non_ai), `core_stack` + `stack_unspecified`, `remote_status`, `comp_signal`, `red_flags`, a ≥100-char `confidence_reasoning`, and `fit_for_manveen`. A separate calibrated judge catches the highest-cost failure mode — under-calling scams/ai-washed roles. Built on a 20-JD golden set, expanding to 100.
 
 ### Why this project
-- You're already 25% in (50 traces + open-coding notes + Modal/Langfuse accounts).
+- You're already past v0.1 (schema + Instructor runner + calibrated scam judge + cost/latency, running locally on 20 JDs).
 - Classification is the cleanest surface to learn eval-first development on.
-- Direct extension of Caprae + Precise Leads work — interview story already exists.
+- **Dogfood:** you'll run leadlens on your own US-remote funnel in Month 6 — the tool that helps get you hired is itself the portfolio piece.
 - Founders hiring for "I need an LLM pipeline that's actually reliable on my noisy data" instantly recognize this shape.
 
 ### Stack
 - Python 3.12+ + `uv` + `ruff` + `pytest`
-- Pydantic + Instructor (structured output)
-- Anthropic Claude as primary model; OpenAI GPT-4.1 as judge
-- Web search + DuckDuckGo / Google CSE / Tavily for evidence collection
-- Langfuse tracing (from line one, not bolted on at the end)
+- Pydantic + Instructor (structured output; schema = eval spec)
+- **Gemini 2.5 Flash** as primary model (cheap, fast, generous free tier); same-model judge for now, cross-model judge optional later
+- Langfuse tracing (from line one in Month 2, replacing the hand-rolled `jd-metrics.jsonl`)
 - Modal deployment
 - Docker for local dev
 
 ### Eval standard
-- 100 hand-labeled companies covering pass / fail / edge cases.
-- Binary pass/fail LLM-as-judge per classification dimension (not 1–5 — see Hamel).
-- Judge calibrated to **>90% agreement with your labels.**
+- 100 hand-labeled **JDs** covering pass / fail / edge cases (stratified across categories).
+- Classifier metric: **category accuracy** vs `expected_category` (≥75% on real labels = CI gate).
+- Binary pass/fail LLM-as-judge for the scam failure mode (not 1–5 — see Hamel); **calibrated on TPR/TNR, not raw agreement** (class imbalance: only ~15% positive, so an always-no baseline scores 0.85 raw). Target **TPR ≥0.75, TNR ≥0.90.**
 - At least three judge-prompt iterations visible in commits.
-- Confusion matrix in README.
-- Failure taxonomy from open-coding notes (you already have v1 of this — extend it).
-- Cost-per-call table + p50 / p95 latency table.
+- Confusion matrix + per-category breakdown in README.
+- Failure taxonomy (F-003 hardcoded confidence, F-004 thin-stack extraction, F-006 scam under-call) — each killed by a schema field where possible.
+- Cost-per-call table ($0.00085/JD at v0.1) + p50 / p95 latency table.
 
 ### Founder-facing one-liner
-*"Built an LLM classifier with a 100-example golden dataset, calibrated LLM-as-judge, and a confusion matrix. Identified three failure modes — false executive-search signal, mixed-boundary ambiguity, schema drift — and walked the precision back to 91%."*
+*"Built an LLM JD-classifier with a 100-example golden dataset and a calibrated scam judge (TPR 1.0 / TNR 0.90). Killed three failure modes by construction with the schema-as-eval-spec pattern — e.g. a `min_length=100` reasoning field that makes a hardcoded confidence impossible — and gated it in CI."*
 
 ### Public write-up
-**"Auditing my own LLM classifier"** — blog post 2. Walk through one trace, the failure mode it exposed, what you changed in the prompt/schema, the new eval numbers.
+**"Auditing my own LLM classifier"** — blog post 2. Walk through one JD, the failure mode it exposed (e.g. F-006 scam under-call), the schema/prompt change that fixed it, and the new eval numbers.
 
 ---
 

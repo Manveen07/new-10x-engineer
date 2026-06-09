@@ -37,7 +37,7 @@ Portfolio is the asset; this month is execution. By Sunday 2026-11-08 you have 1
 | 23 | Oct 26 – Nov 1 | 50 more outbound (cumulative 150) + 5 more India apps + blog post 6 published |
 | 24 | Nov 2 – Nov 8 | Interview buffer + contract-trial negotiation + follow-ups |
 
-Week files arrive ~3 days before each week — by Month 6 they're mostly funnel templates + interview drills, lightly customized.
+Week files arrive ~3 days before each week — by Month 6 they're mostly funnel templates + interview drills, lightly customized. Provisional drafts exist — refine each the weekend before it starts: [week-21.md](./week-21.md) · [week-22.md](./week-22.md) · [week-23.md](./week-23.md) · [week-24.md](./week-24.md).
 
 ## Interview prep checklist
 
