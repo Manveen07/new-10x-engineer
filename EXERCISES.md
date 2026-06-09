@@ -10,31 +10,33 @@ The checklist is opinionated about *minimum* viable monthly output. If you finis
 
 **Window:** 2026-05-25 → 2026-06-21.
 
+> ✅ **Git-reconciled 2026-06-09:** `[x]` below = verified from commits / PROGRESS.md. Unticked items are genuinely open — judgment calls (e.g., "did I really re-read evals-faq end-to-end") stay yours to tick.
+
 ### Code rebuild (Track 1)
 - [ ] Daily 30-min no-AI Python kata (Mon–Fri, 4 weeks = 20 sessions). Log in [PROGRESS.md](./PROGRESS.md).
-- [ ] Install + use `uv`, `ruff`, `pytest`, `pre-commit`. Set up one Python project from scratch with all four.
+- [x] Install + use `uv`, `ruff`, `pytest`, `pre-commit`. Set up one Python project from scratch with all four. *(katas/ — Week 1)*
 - [ ] Write one nested Pydantic model + one Instructor extraction without AI (build muscle).
 - [ ] Write three short scripts using `asyncio` / `httpx.AsyncClient` for parallel API calls.
 - [ ] Write five pytest tests for an existing function in one of your old projects.
-- [ ] Set up Cursor + Claude Code together as paired IDEs. Configure to refuse silent code writes (use chat, not in-line "accept all").
+- [x] Set up Cursor + Claude Code together as paired IDEs. Configure to refuse silent code writes (use chat, not in-line "accept all"). *(Week 1: Cursor Tab off + User Rules; Claude Code 2.1.47 + CLAUDE.md)*
 
 ### Portfolio + writing setup
-- [ ] Personal domain live (Quarto or Astro).
-- [ ] Refresh AsanaBot README — problem, screenshots, live demo gif, "where it fails."
-- [ ] Refresh PresentAI README — same treatment + screenshot of the running app.
+- [x] Personal domain live (Quarto or Astro). *(manveen.me on Vercel — Week 1)*
+- [x] Refresh AsanaBot README — problem, screenshots, live demo gif, "where it fails." *(Week 1)*
+- [x] Refresh PresentAI README — same treatment + screenshot of the running app. *(Week 1)*
 - [ ] GitHub profile README with positioning + 3 pinned repos (AsanaBot, PresentAI, this roadmap repo for now — will become leadlens by Month 2).
 
 ### Eval foundations (Track 2)
 - [ ] Re-read Hamel `evals-faq` end-to-end with your 50 traces open.
-- [ ] Read Eugene Yan *Patterns for Building LLM-based Systems & Products*.
+- [x] Read Eugene Yan *Patterns for Building LLM-based Systems & Products*. *(commit `8b539a4` — mapped to all 3 projects)*
 - [ ] Read Hamel `llm-judge`.
-- [ ] Apply Three Gulfs framework to all 50 traces (open coding).
-- [ ] Convert open-coding notes into an axial failure taxonomy (≥3 named failure modes).
-- [ ] Build a Streamlit or FastHTML annotation viewer (~2 hrs).
+- [x] Apply Three Gulfs framework to all 50 traces (open coding). *(50/50 in `data/notes.jsonl` — 2026-05-25)*
+- [x] Convert open-coding notes into an axial failure taxonomy (≥3 named failure modes). *(F-001…F-006 in `notes/week-1-saturday-notes-v2.md`; `failure-taxonomy.md` consolidation still pending — see FINISH-PLAN)*
+- [x] Build a Streamlit or FastHTML annotation viewer (~2 hrs). *(`annotator.py` — 2026-05-25)*
 - [ ] Calibrate first LLM-as-judge against your labels — target >90% agreement.
 
 ### leadlens design (Track 2/3)
-- [ ] Draft `projects/business-classification-pipeline/DESIGN.md` (1–2 pages: schema, judges, eval plan, deployment shape).
+- [x] Draft `projects/business-classification-pipeline/DESIGN.md` (1–2 pages: schema, judges, eval plan, deployment shape). *(commit `b70bd50` — 2026-06-08)*
 - [ ] Sketch the architecture diagram (excalidraw → PNG → commit).
 
 ### Public footprint (Track 5)
