@@ -31,7 +31,7 @@
 |---|---|---:|---|
 | 1 | May 25 – May 31 | 8–10h | **No-AI code rebuild block.** Daily 30-min hand-coded Python katas. Set up modern stack (`uv`, `ruff`, `pytest`). Stand up portfolio site (Quarto or Astro). Refresh AsanaBot + PresentAI READMEs. |
 | 2 | Jun 1 – Jun 7 | 8–10h | **Open-code your 50 traces** with Three Gulfs framework. Re-read Hamel `evals-faq`. Build a simple Streamlit/FastHTML annotation viewer. |
-| 3 | Jun 8 – Jun 14 | 8–10h | **Axial-code into a failure taxonomy.** Read Hamel `llm-judge`. Calibrate first LLM-as-judge against your hand labels — target >90% agreement. |
+| 3 | Jun 8 – Jun 14 | 8–10h | **Axial-code into a failure taxonomy** (`failure-taxonomy.md`, 4–7 named categories). Read Hamel `llm-judge`. Judge v1 already built (TPR=1.0/TNR=0.882) — push calibration to **>85% now, >90% by Week 4**. Slack from being ahead → draft blog post 1 early. |
 | 4 | Jun 15 – Jun 21 | 8–10h | **leadlens design doc.** Pydantic schemas, golden-dataset plan, deployment shape. Publish blog post 1: "Open-coding 50 traces from a real classifier." |
 
 **Public ship:** live portfolio site + first blog post + refreshed AsanaBot/PresentAI READMEs.
@@ -116,7 +116,7 @@ You work at Precise Leads Mon–Fri, so the plan is weekend-loaded.
 | Day | What | Time |
 |---|---|---|
 | Mon eve | Open week file. Copy 2–3 main goals to sticky note. **Kata 1 (no AI).** | 15 min |
-| Tue / Wed / Thu eve | One kata each evening (no AI). End of Thu: one commit if anything ready. | 15 min × 3 |
+| Tue / Wed / Thu eve | One kata each evening (no AI), **committed to `katas/` that same night** — daily green squares are a Mercor screen filter (§9), so treat the commit as part of the rep. | 15 min × 3 |
 | Fri eve | Kata 5 OR rest if Friday's exhausting. Skim one post (Hamel / Eugene / Latent Space). | 15–30 min |
 | **Sat** | **Big build block.** Project work, deployments, builds. The week's deliverable lives here. | **3–4 hrs** |
 | **Sun** | **Reading + writing block.** Reading, blog drafting, refactor cleanup. End with 30-min `PROGRESS.md` update + `START_HERE.md` pointer update + plan next week. | **3–4 hrs** |
@@ -125,6 +125,8 @@ You work at Precise Leads Mon–Fri, so the plan is weekend-loaded.
 Total target: 8–10 hours/week (roughly 75 min weekdays + 6–8 hrs weekends). If you drop below 6 hrs total for two weeks in a row, the Sunday log will tell you — read the "Behind if" markers and recover.
 
 **Job-day exhaustion rule:** if a weekday after work is brutal, skip that night's kata — but cap skips at 1/week. Two skipped katas in a row → catch up Saturday morning before the build block.
+
+**DSA standing rule (from Month 2):** Month 1 stays no-AI Python rebuild. From Month 2 onward, swap **2 of the weekday katas for 2 LeetCode problems/week** (arrays / hash maps / strings / graphs — not DP/trees grinding). Target **60–80 problems total by Month 6**, committed to a `dsa/` folder. Rationale: live-coding screens can land the moment outbound opens (Month 5), so 80 problems crammed into Month 6 ([Week 22](#month-6--run-the-funnel)) is too late — spread them. (See [MASTER_PLAN.md §3](MASTER_PLAN.md#L62).)
 
 ## Readiness bar (Nov 8, 2026)
 

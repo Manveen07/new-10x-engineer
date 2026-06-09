@@ -10,6 +10,27 @@ The detailed close-out for Month 1. Window ends **2026-06-21**. Two weekends + w
 
 ---
 
+## Status — 2026-06-09 (single source of truth for the Month 1 close-out)
+
+**This file is the operative plan for finishing Month 1.** [week-3.md](week-3.md) / [week-4.md](week-4.md) hold extra daily-kata + code detail, but when they disagree with this file on *what to do next*, this file wins.
+
+**You're ahead of the calendar.** Git shows "Weekend 1" is essentially done already:
+
+- [x] Fundamentals to green — tokens / embeddings / attention / transformer stack, all 5 retention slips closed (commits Jun 7–8). *Self-verify: explain attention aloud in 90 sec before ticking the done-bar box.*
+- [x] Eugene Yan 7 LLM patterns read + mapped to leadlens / docsight / reposcout (Jun 8).
+- [x] leadlens `DESIGN.md` committed (Jun 8).
+- [~] Judge **v1** live: TPR=1.0 / TNR=0.882 (Jun 7). Built — but not yet at the TNR ≥0.90 target.
+
+**Remaining for Month 1 (by 2026-06-21), in priority order:**
+1. `failure-taxonomy.md` — formalize the v2 taxonomy into 4–7 named categories, committed.
+2. Judge → **TNR ≥0.90, TPR=1.0** (the "Weekend 2" judge iteration; few-shot + borderline rule).
+3. **Publish blog post 1** — the single highest-leverage Month 1 artifact (see Weekend 2 below).
+4. Anthropic Academy prompt course (cert) → interview Cluster 1 self-test all 🟢 → Demo Day Loom → PROGRESS monthly review.
+
+So your weekends are freed for **depth + the blog post**, not racing into Month 2. That is the 10x move here: bank the lead into a publishable artifact + interview-ready fundamentals, not more half-built code.
+
+---
+
 ## The blind-spot gap this plan closes
 
 Applied progress is strong (leadlens classifier + calibrated judge + cost/latency). **The gap is fundamentals** — being able to explain *how things work under the hood* in an interview: tokens, embeddings, attention, transformers, ML basics. Research (2026 interview guides) confirms these are the most-asked "do you actually understand LLMs" questions. Weekday micro-lessons below close this without stealing weekend build time.
@@ -94,11 +115,11 @@ By end of weekday drips: you can answer every fundamentals question in interview
 
 ## Month 1 "done" bar (2026-06-21)
 
-- [ ] Fundamentals: can explain tokens, embeddings, attention, transformer stack, temperature, context-window-cost — each in <60 sec.
-- [ ] Eugene Yan 7 patterns read + applied to leadlens.
-- [ ] leadlens DESIGN.md committed.
-- [ ] judge v2 at TNR ≥ 0.90, TPR = 1.0.
-- [ ] Blog post 1 published on own domain + cross-posted.
+- [x] Fundamentals: can explain tokens, embeddings, attention, transformer stack, temperature, context-window-cost — each in <60 sec. *(retention drills green Jun 8 — verify temp + context-cost aloud)*
+- [x] Eugene Yan 7 patterns read + applied to leadlens. *(Jun 8)*
+- [x] leadlens DESIGN.md committed. *(Jun 8)*
+- [ ] judge v2 at TNR ≥ 0.90, TPR = 1.0. *(at v1: TNR=0.882 — push remaining)*
+- [ ] Blog post 1 published on own domain + cross-posted. **← single must-do remaining**
 - [ ] Anthropic Academy prompt course done (cert).
 - [ ] interview_prep_qa.md Cluster 1 all 🟢.
 - [ ] Demo Day Loom recorded.

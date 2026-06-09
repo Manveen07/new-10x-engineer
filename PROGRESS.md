@@ -97,6 +97,105 @@ All 3 named failure modes (`false_executive_search_signal`, `mixed_boundary_ambi
 
 ---
 
+## Week 2 — Week of 2026-06-01 (Month 1, Week 2)
+
+> **Stub — git-reconciled, 2026-06-09.** "Shipped" is pulled from commit history (facts). Fill in hours, learnings, slipped, confidence honestly before this counts as a real log.
+
+### Focus this week
+1. _(fill in — what you set out to do)_
+2.
+3.
+
+### Hours spent
+- Project work: _(fill in)_
+- Reading / course: _(fill in)_
+- Writing / community: _(fill in)_
+- No-AI katas (days completed out of 5): _(katas 02–05 committed 2026-06-06 — confirm count)_
+- Outbound (messages sent, replies received): _(fill in)_
+- Total: __ / 10 target
+
+### Shipped this week (from git — verify)
+- Katas 02–05 (no-AI) — commit `week-1 wip` 2026-06-06
+- leadlens v0.1 schema + runner + 10-JD corpus — 2026-06-06
+- leadlens v0.1 **iteration 1**: `stack_unspecified` field, label hygiene, 75% category match — 2026-06-06
+- leadlens v0.1 **iteration 2**: 20-JD corpus + cost/latency instrumentation; F-006 surfaced — 2026-06-06
+- leadlens v0.1 **judge v1**: critique-shadowing scam detector, **TPR=1.0 / TNR=0.882** — 2026-06-07
+- `month-1/FINISH-PLAN.md` (day-by-day close-out) — 2026-06-07
+- `PLAN-MONTHS-2-6.md` (forward plan + thought process) — 2026-06-07
+- Fundamentals: tokens / embeddings / attention to green + tiktoken demo; recall-test results — 2026-06-07
+
+### What I learned
+_(fill in — one specific paragraph)_
+
+### What slipped
+- _(fill in)_
+
+### Next week's focus (Week 3)
+1. Axial taxonomy → `failure-taxonomy.md` (4–7 named categories)
+2. _(see week-3.md — note judge v1 already shipped, so adjust)_
+3.
+
+### Stuck Box
+- _(fill in)_
+
+### Confidence check (1–5)
+- Python fluency (no AI): _(fill in)_
+- Evals knowledge:
+- RAG knowledge:
+- Agents knowledge:
+- Production / deploy:
+- Public footprint:
+- Outbound funnel readiness:
+
+---
+
+## Week 3 — Week of 2026-06-08 (Month 1, Week 3) — IN PROGRESS
+
+> **Stub — git-reconciled, 2026-06-09.** Week still running. Update at Sunday review (2026-06-14).
+
+### Focus this week
+1. Axial taxonomy committed as `failure-taxonomy.md` (must-do per week-3.md)
+2. _(judge v1 already built 2026-06-07 — ahead of plan; decide what replaces the Sunday judge-build block)_
+3.
+
+### Hours spent
+- Project work: _(fill in)_
+- Reading / course: _(fill in)_
+- Writing / community: _(fill in)_
+- No-AI katas (days completed out of 5): _(fill in)_
+- Outbound (messages sent, replies received): _(fill in)_
+- Total: __ / 10 target
+
+### Shipped this week (from git — verify, week ongoing)
+- Fundamentals: all 5 retention slips closed to green (two-softmaxes, 0x80→hybrid/TF-IDF/BM25) — 2026-06-08
+- Patterns: Eugene Yan 7 LLM patterns learned + mapped to leadlens / docsight / reposcout — 2026-06-08
+- leadlens: `DESIGN.md` eval-first design doc consolidating v0.1 — 2026-06-08
+
+### What I learned
+_(fill in at Sunday review)_
+
+### What slipped
+- _(fill in)_
+
+### Next week's focus (Week 4)
+1.
+2.
+3.
+
+### Stuck Box
+- _(fill in)_
+
+### Confidence check (1–5)
+- Python fluency (no AI): _(fill in)_
+- Evals knowledge:
+- RAG knowledge:
+- Agents knowledge:
+- Production / deploy:
+- Public footprint:
+- Outbound funnel readiness:
+
+---
+
 ## Weekly template (copy this for each new week)
 
 ```markdown

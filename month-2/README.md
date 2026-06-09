@@ -30,6 +30,15 @@ Convert Month 1's eval discipline into a *deployed, observed, eval-instrumented*
 
 Week files (`week-5.md` through `week-8.md`) get written ~3 days before each week begins, anchored on what you actually shipped the prior week. See [the cadence note below](#why-week-files-arrive-just-in-time).
 
+### Carry-forward — already shipped in Month 1 (you finished ahead). Week 5 starts here; don't rebuild it.
+
+- **leadlens v0.1**: Pydantic schema + Instructor runner + 20-JD corpus → Week 5 "scaffolding" largely exists.
+- **Judge v1** (critique-shadowing, TPR=1.0 / TNR=0.882) → Week 5 "judge port" is lift-and-calibrate, not a rebuild.
+- **Cost/latency instrumentation** already surfaced (F-006) → Week 7 instrumentation has a head start.
+- **leadlens `DESIGN.md`** committed.
+
+So Month 2's real weight shifts forward to: the **100-example golden dataset** (Week 6), pushing **all 4 judges to >90%** (Week 7), and **Modal deploy + README-to-standard + blog post 2** (Week 8). Week 5 absorbs forward instead of repeating Month 1.
+
 ## Build standard (from PROJECTS.md)
 
 By end of Week 8, leadlens README answers all seven portfolio questions ([PROJECTS.md](../PROJECTS.md) — "Portfolio rule"):

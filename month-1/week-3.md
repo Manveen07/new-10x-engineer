@@ -1,5 +1,7 @@
 # Week 3 — Axial Taxonomy + First LLM-as-Judge
 
+> ⚠ **Superseded for sequencing by [FINISH-PLAN.md](./FINISH-PLAN.md).** You executed the FINISH-PLAN close-out (fundamentals drip + DESIGN.md), not this file's kata schedule. Keep this file for daily-kata + code detail — but FINISH-PLAN's Status block is what tells you the next action.
+
 **Window:** Mon 2026-06-08 → Sun 2026-06-14
 **Time budget:** 8–10 hours
 **Position:** Month 1, Week 3 of 24
@@ -12,6 +14,8 @@ This is the exact pipeline Hamel and Shreya teach in their Maven AI Evals cohort
 
 **The single must-do:** a `failure-taxonomy.md` with 4–7 named categories committed to the repo by Friday.
 
+> **Reality update (2026-06-09):** You're ahead. Judge v1 already shipped (commit `judge v1`, 2026-06-07, TPR=1.0 / TNR=0.882) and `DESIGN.md` is done — that was this week's Sunday work. So this week is NOT "build the judge from scratch." It's: **formalize `failure-taxonomy.md`, push judge calibration from current numbers toward >90% on all 50 traces, and use the slack to draft blog post 1 early** (the Week 4 deliverable). Banking the lead into depth + public footprint, not racing Month 2 forward.
+
 ## At-a-glance daily plan (weekday-light, weekend-heavy)
 
 | Day | Date | Task | Time |
@@ -21,8 +25,8 @@ This is the exact pipeline Hamel and Shreya teach in their Maven AI Evals cohort
 | Wed eve | 2026-06-10 | **Kata 12** (async LLM calls with `AsyncAnthropic`, no AI) | 15 min |
 | Thu eve | 2026-06-11 | **Kata 13** (small refactor of one kata, no AI) | 15 min |
 | Fri eve | 2026-06-12 | Skim one post OR rest | 15 min |
-| **Sat** | 2026-06-13 | **Big build block**: draft taxonomy + tag all 50 traces in annotator + read Hamel `llm-judge` + sketch first judge prompt | **3.5 hrs** |
-| **Sun** | 2026-06-14 | **Big block**: build judge v1, run on 20 traces, iterate to v2, run on all 50, commit `failure-taxonomy.md` + disagreement notes + tweet + PROGRESS | **3.5 hrs** |
+| **Sat** | 2026-06-13 | **Big build block**: finalize `failure-taxonomy.md` (4–7 categories) from the v2 taxonomy + tag all 50 traces in annotator + read Hamel `llm-judge` + run existing judge v1 on all 50, log disagreements | **3.5 hrs** |
+| **Sun** | 2026-06-14 | **Big block**: iterate judge to >90% agreement on all 50, commit `failure-taxonomy.md` + disagreement notes + **draft blog post 1 ("Open-coding 50 traces from a real classifier")** + tweet + PROGRESS | **3.5 hrs** |
 
 Total: ~9 hours.
 

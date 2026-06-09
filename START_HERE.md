@@ -6,13 +6,15 @@ It tells you exactly where you are and what to do today. Nothing else needs to b
 
 ---
 
-## Today is in: **Month 1, Week 1** (2026-05-25 → 2026-05-31)
+## Today is in: **Month 1 close-out** (2026-06-08 → 2026-06-21)
 
-→ Open: **[month-1/week-1.md](./month-1/week-1.md)**
+→ Open: **[month-1/FINISH-PLAN.md](./month-1/FINISH-PLAN.md)** — the single day-by-day plan for finishing Month 1. Its **Status block** tells you exactly what's done and what's next.
 
-That file has your daily plan for this week. Find today's row, do that task, log it on Sunday.
+**Where you are (2026-06-09): ahead.** Done — fundamentals green, Eugene Yan 7 patterns, leadlens `DESIGN.md`, judge v1 (TPR=1.0/TNR=0.882). Remaining — `failure-taxonomy.md` → judge TNR ≥0.90 → **publish blog post 1** → Anthropic Academy prompt course → interview Cluster 1 self-test → Demo Day Loom → PROGRESS monthly review.
 
-When Week 1 ends, update this section to point at `week-2.md`. (Sunday review — 30-second edit.)
+The per-week files [week-3.md](./month-1/week-3.md) / [week-4.md](./month-1/week-4.md) hold extra kata + code detail, but FINISH-PLAN.md wins on sequencing.
+
+**Advance to Month 2 only when the Month 1 done-bar hits ≥7/9 — including blog post 1 published.** Then point this section at [month-2/README.md](./month-2/README.md) (Week 5). Don't skip the blog post to move faster — it's *the* Month 1 asset, the thing 90% of fresher applicants don't have.
 
 ---
 
@@ -90,6 +92,10 @@ You work at Precise Leads Mon–Fri, so the plan is weekend-loaded. Weekdays are
 | **Sun** | **Reading + writing block.** Reading, blog post drafting, refactor cleanup. End with 30-min PROGRESS update + plan next week. | **3–4 hrs** |
 
 Total: ~8–10 hours/week. Weekday touches keep the muscle warm (5 katas = 75 min). Weekends are where the actual project moves forward.
+
+**Two habits baked into the weekday katas:**
+- **Commit each kata the night you write it** (to `katas/`). Daily green squares are a Mercor screen filter — the commit is part of the rep, not optional.
+- **From Month 2:** swap 2 weekday katas/week for **2 LeetCode problems** (arrays/hash maps/strings/graphs), committed to `dsa/`. Target 60–80 by Month 6 so live-coding screens never catch you cold. Month 1 stays pure no-AI Python.
 
 **If a weekday is exhausting after work, skip the kata that night — but cap skips at 1/week.** Two skipped katas in a row → catch up Saturday morning before the build block.
 

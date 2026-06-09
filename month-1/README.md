@@ -30,6 +30,8 @@ Month 1 is not about shipping a large app. It's about earning the right to ship 
 
 Open the file for the week you're in. Don't skim ahead — each week's content adapts to what you learned last week.
 
+> **The Month 1 close-out (Weeks 3–4) is driven by [FINISH-PLAN.md](./FINISH-PLAN.md).** It reconciles what's already shipped (you're ahead — fundamentals, patterns, DESIGN.md, judge v1 all done) and sequences the remaining work: `failure-taxonomy.md` → judge TNR ≥0.90 → blog post 1. The `week-3.md` / `week-4.md` files are kept for kata + code detail only.
+
 | Week | File | Window | Outcome |
 |---|---|---|---|
 | 1 | [week-1.md](./week-1.md) | 2026-05-25 → 2026-05-31 | No-AI rebuild + portfolio site live + AsanaBot/PresentAI READMEs refreshed |

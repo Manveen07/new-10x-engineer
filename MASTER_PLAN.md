@@ -2,7 +2,7 @@
 
 **Mission:** Be hireable as a junior **GenAI / LLM Application Engineer** by November 2026, on 8–10 hours/week, with three deployed projects, an MCP server, and an OSS contribution that prove eval-first thinking.
 
-**Window:** 2026-05-25 → 2026-11-08 (24 weeks). Currently: pre-Week 1 reset.
+**Window:** 2026-05-25 → 2026-11-08 (24 weeks). Currently: **Month 1, Week 3** (week of 2026-06-08) — ahead of schedule (leadlens v0.1 + judge v1 already shipped).
 
 **Wedge:** Final-year BTech who has *already* shipped a full-stack GenAI SaaS (PresentAI) and a CV/PyTorch project (AsanaBot), plus production-flavored automation experience from Caprae and Precise Leads internships. Add an eval-first portfolio + MCP server + OSS contribution on top and you skip the entire "looks-like-every-other-fresher" pile.
 
@@ -18,7 +18,7 @@ The previous plan was written for a different persona — a Bengaluru-based seni
 - Modal hello-world + Instructor speedrun in [month-1/test files/](./month-1/test%20files/)
 - Awareness of Hamel's evals canon and the Three Gulfs framework
 
-**What changes:** the project shapes are no longer Clay/winery/HVAC-themed; the project codenames are now `leadlens` / `docsight` / `reposcout`; Week 1 is a code-rebuild week (not a tooling-setup week); MCP server is explicit in Project 3; the funnel is India-product + India-remote primary, US/EU-remote stretch.
+**What changes:** the project shapes are no longer Clay/winery/HVAC-themed; the project codenames are now `leadlens` / `docsight` / `reposcout`; Week 1 is a code-rebuild week (not a tooling-setup week); MCP server is explicit in Project 3; the funnel is **US-remote primary, India product/remote as the last-resort safety** (see §4).
 
 ## 2. Target role recommendation
 
@@ -279,8 +279,8 @@ The detailed playbook is built out in Months 5–6 weekly files. Headline elemen
 
 ## 10. Notes to self (re-read monthly)
 
-- **You are not behind.** You're three weeks into the *wrong* plan. The work you did (50 traces, Saturday notes, tooling setup) carries forward. You're at Week 1 of the right plan now, not at Week -3.
-- **The Aug 2026 graduation hits mid-Month 3.** Account for final exams + project submissions. If you have specific exam windows, tell me — I'll insert lighter weeks around them. Default assumption: ~2 lighter weeks in Month 3, recovered in Month 4 or Month 6.
+- **You are not behind — you're ahead.** As of Week 3 (mid-June 2026) leadlens v0.1, a calibrated judge v1 (TPR=1.0 / TNR=0.882), and a DESIGN.md are already shipped — work the calendar scheduled for Week 3's Sunday and parts of Month 2. Don't race that lead into burnout; bank it into depth (push the judge to >90%, write blog post 1 early) per the 8–10 hr/week cap below.
+- **Graduation lands in August 2026, mid-Month 3 — but exams are confirmed done, so Month 3 is NOT thinned.** Only graduation week itself may need a lighter Saturday; log it on `PROGRESS.md` when it lands.
 - **8–10 hrs/week is the budget.** Stuffing 15 hrs of work into a 10-hr week is the most common failure mode for self-paced plans. Slipping two Sundays in a row is the canary — reset, don't pretend.
 - **Your PresentAI and AsanaBot are not invisible.** Refresh both READMEs in Month 1 Week 1 with one-paragraph problem statements + screenshots + live links. They double the apparent portfolio in 30 minutes of writing.
 - **US-remote is now the primary funnel.** India product startups are the safety. Your GTM-engineer skill (outbound, qualification, enrichment) is the biggest single asset most fresher candidates don't have — point it at US AI founders, not just at job boards. Mercor + HN + Wellfound + direct outbound is the four-channel funnel; portfolio is the same across all four.

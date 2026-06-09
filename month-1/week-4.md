@@ -1,5 +1,7 @@
 # Week 4 — Calibrated Judge + leadlens DESIGN.md + Blog Post 1
 
+> ⚠ **Superseded for sequencing by [FINISH-PLAN.md](./FINISH-PLAN.md).** `DESIGN.md` is already committed (Jun 8) — ignore the Wed/Thu "write DESIGN.md" cells here. The live remaining work is judge → TNR ≥0.90 and **publish blog post 1**; FINISH-PLAN's Status block sequences it.
+
 **Window:** Mon 2026-06-15 → Sun 2026-06-21
 **Time budget:** 8–10 hours
 **Position:** Month 1, Week 4 of 24
