@@ -20,7 +20,7 @@ Month 1 is not about shipping a large app. It's about earning the right to ship 
 - Personal portfolio site live at your domain.
 - AsanaBot + PresentAI READMEs refreshed.
 - All 50 traces open-coded with one-line notes (extends your existing Saturday-notes start).
-- Failure taxonomy with 4–7 named categories (you already have 3 — `false executive-search signal`, `mixed-boundary ambiguity`, `schema drift` — extend).
+- Failure taxonomy with 4–7 named categories. (Started on the 50 staffing-firm traces; after the JD pivot the live taxonomy is **F-003 hardcoded confidence, F-004 thin-stack extraction, F-006 scam under-call** — see `failure-taxonomy.md` + [DESIGN.md](../projects/business-classification-pipeline/DESIGN.md).)
 - Lightweight annotation viewer (Streamlit or FastHTML).
 - Calibrated LLM-as-judge prototype with >90% agreement against hand labels.
 - leadlens design doc at `projects/business-classification-pipeline/DESIGN.md`.
@@ -39,18 +39,15 @@ Open the file for the week you're in. Don't skim ahead — each week's content a
 | 3 | [week-3.md](./week-3.md) | 2026-06-08 → 2026-06-14 | Axial taxonomy + first LLM-as-judge + first iteration to >85% agreement |
 | 4 | [week-4.md](./week-4.md) | 2026-06-15 → 2026-06-21 | Judge calibrated to >90% + leadlens DESIGN.md + blog post 1 published |
 
-## leadlens DESIGN.md — what it must contain by end of Week 4
+## leadlens DESIGN.md — committed; the canonical spec
 
-- **Input contract:** company name, domain, optional location.
-- **Output schema** (Pydantic, nested): operating status, segment (e.g. `executive_search` / `general_staffing` / `mixed`), signals[] with evidence + confidence, citations[].
-- **Retrieval/evidence path:** web search (Tavily or Google CSE), Maps lookups, prior known data — fallback chain if primary fails.
-- **Golden dataset plan:** how you'll hand-label 100 companies in Month 2 (sourcing, ambiguity sampling, label rubric).
-- **Eval dimensions:** segment correctness, signal correctness, evidence support quality, confidence calibration.
-- **Judge plan:** binary judge per dimension, critique shadowing pattern, agreement target >90%.
-- **Failure taxonomy reference:** link to `failure-taxonomy.md`.
-- **Deployment target + observability:** Modal + Langfuse + cost target + p50/p95 target.
+✅ **Already written** (post-JD-pivot): [projects/business-classification-pipeline/DESIGN.md](../projects/business-classification-pipeline/DESIGN.md). leadlens classifies an **AI-engineering job description**, not a company. Summary of what it contains:
 
-Location: [projects/business-classification-pipeline/DESIGN.md](../projects/business-classification-pipeline/) (create file in Week 4).
+- **Input contract:** one JD per record (`title`, `company`, `url`, `location`, `description`).
+- **Output schema** (Pydantic): `seniority`, `ai_authenticity` (real_ai_role / ai_adjacent / ai_washed / non_ai), `core_stack` + `stack_unspecified`, `remote_status`, `comp_signal`, `red_flags`, `confidence_reasoning` (min_length=100), `fit_for_manveen`. Each field exists because it's measurable and/or forces a dimension a failure mode hides in (schema-as-eval-spec).
+- **Eval:** category accuracy vs `expected_category` (CI gate ≥75%) + a calibrated scam judge (critique-shadowing, TPR/TNR — TPR 1.0 / TNR ≥0.90).
+- **Failure taxonomy:** F-003 hardcoded confidence, F-004 thin-stack extraction, F-006 scam under-call.
+- **Deployment + observability:** Gemini 2.5 Flash + Instructor; Modal + Langfuse; cost ~$0.00085/JD; latency target from p50/p95.
 
 ## Interactivity rules for this month
 
@@ -64,7 +61,7 @@ Location: [projects/business-classification-pipeline/DESIGN.md](../projects/busi
 
 You should be able to answer **"How do you build an eval?"** in three concise sentences using your own classifier as the example:
 
-> "Pulled 50 real traces from my staffing-firm classifier, open-coded them by hand to discover three failure modes — false executive-search signal, mixed-boundary ambiguity, schema drift — then built a binary LLM-as-judge with critique shadowing and iterated the prompt three times until it agreed with my hand labels at 92%. The judge then runs in CI."
+> "I open-coded real classifier traces by hand and named the recurring failure modes — hardcoded confidence, thin extraction, under-called scams — then killed each *by construction* with a schema field (e.g. a `min_length=100` reasoning field so the model can't emit a default confidence), and built a critique-shadowing scam judge calibrated on TPR/TNR (TPR 1.0, TNR ≥0.90) that runs in CI."
 
 If you can say that fluently and pull up the artifacts on screen, that's a senior-junior signal in 60 seconds.
 

@@ -62,7 +62,7 @@ The checklist is opinionated about *minimum* viable monthly output. If you finis
 - [ ] Watch DLAI *Improving Accuracy of LLM Applications* (1–2 hrs).
 - [ ] Pydantic + Instructor schema for leadlens.
 - [ ] Langfuse instrumentation from line one.
-- [ ] Hand-label 100-company golden dataset.
+- [ ] Hand-label 100-JD golden dataset.
 - [ ] First end-to-end run; confusion matrix v1.
 - [ ] Three judge prompt iterations to >90% agreement.
 - [ ] Cost + latency p50/p95 instrumentation.
