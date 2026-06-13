@@ -243,15 +243,38 @@ One specific paragraph.
 
 ---
 
-## Monthly review template
+## Monthly review — Month 1 (2026-05 → 2026-06)
 
-### Month N — YYYY-MM
+**Shipped:**
+- Python rebuild: 5 no-AI katas (Pydantic, async/httpx, context managers, pytest, typing).
+- Fundamentals to green: tokens/BPE, embeddings/cosine, full attention pipeline (Q·K → √d_k → mask → softmax → weighted-sum-V), two-softmaxes, transformer chain. Closed the interview blind spot.
+- Eugene Yan 7 LLM patterns, mapped to own projects.
+- leadlens classifier (Pydantic + Instructor + Gemini): schema, runner, cost/latency instrumentation.
+- Scaled golden set 10 → 20 → **72 real JDs** (merge + dedupe; added `ml_training` 5th category).
+- Scam judge v1 (critique-shadowing) → v2 (few-shot + tightened rule).
+- **Caught + fixed eval label-leak (F-007):** descriptions leaked the answer; cleaned → honest TPR 0.818 / TNR 1.0.
+- leadlens DESIGN.md + failure-taxonomy.md committed.
 
-- Shipped:
-- Public post/update:
-- Community / network action:
-- Outbound numbers (cumulative messages, replies, calls):
-- Biggest failure mode found:
-- Biggest cut from the plan (and was it honest?):
-- Next month adjustment:
-- Demo Day Loom URL:
+**Public post/update:** Blog post 1 live — manveen.me/writing/schema-as-eval-spec (v2: schema-as-eval-spec + the eval-leak discovery).
+
+**Community / network action:** none yet (deferred — amplify post on LinkedIn/X in Month 2).
+
+**Outbound numbers:** 0 (funnel starts Month 5-6).
+
+**Biggest failure mode found:** F-007 — the eval was grading its own crib notes. Found by reading the data, not the dashboard. The lower honest number (0.818) beats the fake 1.0.
+
+**Biggest cut from the plan (honest?):** Pivoted leadlens staffing → AI-JD classifier (Manveen's call); skipped Anthropic Academy cert + Demo Day Loom so far. Honest — depth on evals + the published post mattered more than ticking those.
+
+**Confidence re-rate (Week 1 → end Month 1):**
+- Python fluency (no AI): 3 → 3 (real code, still building confidence)
+- Evals knowledge: 3 → 4 (2 judges built + calibrated + caught a leak)
+- Fundamentals (new axis): → 3 (transformer end-to-end; intricacies still fuzzy)
+- RAG knowledge: 2 → 2 (Month 3 work)
+- Agents knowledge: 3 → 3 (Month 5 work)
+- Production / deploy: 4 → 4 (not yet deployed leadlens — Month 2)
+- Public footprint: 2 → 4 (post published)
+- Outbound readiness: 3 → 3
+
+**Next month adjustment:** Month 2 = deploy leadlens (FastAPI + Modal + Langfuse) → the live-URL milestone. Already ahead (golden-set scaling was a Month 2 item, done early). Don't rush — deliberate start.
+
+**Demo Day Loom URL:** _(not recorded yet — optional)_
