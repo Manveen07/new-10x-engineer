@@ -19,7 +19,7 @@ from leadlens_v01 import JobPosting
 
 load_dotenv()
 
-JDS_PATHS = [Path("data/jds-v0.jsonl"), Path("data/jds-v0-expansion.jsonl")]
+JDS_PATHS = [Path("data/golden-jds.jsonl")]
 OUTPUTS_PATH = Path("data/jd-outputs.jsonl")
 METRICS_PATH = Path("data/jd-metrics.jsonl")
 MODEL = "gemini-2.5-flash"

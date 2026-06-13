@@ -28,7 +28,7 @@ from pydantic import BaseModel, Field
 load_dotenv()
 
 OUTPUTS_PATH = Path("data/jd-outputs.jsonl")
-JDS_PATHS = [Path("data/jds-v0.jsonl"), Path("data/jds-v0-expansion.jsonl")]
+JDS_PATHS = [Path("data/golden-jds.jsonl")]
 JUDGE_OUTPUTS_PATH = Path("data/judge-v2-outputs.jsonl")
 MODEL = "gemini-2.5-flash"
 

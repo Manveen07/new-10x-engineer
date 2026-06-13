@@ -1,30 +1,24 @@
 ---
-title: "Schema-as-eval-spec: killing LLM failure modes by construction"
+title: "Schema-as-eval-spec: killing LLM failure modes by construction (and catching my eval cheating)"
 date: 2026-06-14
 author: Manveen Singh
-description: "I built an LLM job-posting classifier, watched it fail in three specific ways, and fixed each one by changing the output schema — not the prompt. Here's the pattern, with the numbers."
+description: "I built an LLM job-posting classifier, fixed three failure modes by changing the output schema instead of the prompt, then discovered my own evaluation was leaking the answer. The second part taught me more than the first."
 tags: [llm, evals, pydantic, llm-as-judge]
 ---
 
-I've been building **leadlens** — an LLM classifier that reads an AI-engineering job posting and tells me whether it's a real role, what the stack is, whether it's remote-friendly, and whether it's worth applying to. I'm a final-year CS student aiming at remote AI-engineering roles, so the tool is also a dogfood: the thing that helps me find jobs is itself the portfolio piece.
+I've been building **leadlens** — an LLM classifier that reads an AI-engineering job posting and decides whether it's a real role, what kind, and whether it's worth applying to. I'm a final-year CS student aiming at remote AI-engineering work, so the tool doubles as dogfood: the thing that helps me find jobs is the portfolio piece.
 
-Along the way I kept hitting the same shape of problem — and kept solving it the same way. This post is that pattern, with real numbers from a 20-posting golden set.
+Two things happened building it that were worth more than the tool itself. First, a pattern for fixing model failures. Second, the more uncomfortable lesson — my evaluation was quietly cheating, and I almost shipped the result.
 
-## The naive instinct that doesn't work
+## Part 1 — Fix failures in the schema, not the prompt
 
-When an LLM does something wrong, the reflex is to add a line to the prompt: *"Don't hardcode confidence."* *"Don't miss scams."* *"Be thorough."*
+When an LLM misbehaves, the reflex is to add a line to the prompt: *"don't hardcode confidence," "don't miss scams," "be thorough."* It mostly doesn't hold — instructions are suggestions, and the model drifts back.
 
-It mostly doesn't work. Instructions are suggestions; the model drifts back. What *does* work is making the wrong behaviour **impossible to express** — by changing the output schema so the model has to expose the dimension it was hiding in. I started calling this **schema-as-eval-spec**: every recurring failure mode gets a schema field that forces the model to declare itself, which makes the failure measurable and usually kills it by construction.
+What worked instead was making the bad behaviour **impossible to express**, by changing the output schema so the model has to surface the thing it was hiding. I started calling it **schema-as-eval-spec**: every recurring failure gets a schema field that forces the model to declare itself, which both kills the failure and makes it measurable.
 
-Here are the three times it worked.
+Three times this worked:
 
-## Failure 1 — Hardcoded confidence
-
-leadlens returned a `confidence` value per classification. Reading the outputs, every single one was `0.95`. The model wasn't reasoning about confidence — it was emitting a number that *sounds* confident. A 0.95 on an obvious role and a 0.95 on a garbage one tell you nothing.
-
-**The prompt fix would be:** "actually think about your confidence." (Useless.)
-
-**The schema fix:**
+**Hardcoded confidence.** The classifier returned a `confidence` value that was always the same number — it wasn't reasoning, it was defaulting. The fix wasn't "please reason about confidence." It was a `confidence_reasoning` field with a minimum length, so the model literally cannot answer without first writing out the evidence. You can't default through a justification you're forced to produce.
 
 ```python
 confidence_reasoning: str = Field(
@@ -33,64 +27,36 @@ confidence_reasoning: str = Field(
 )
 ```
 
-`min_length=100` means the model literally cannot return an answer without first typing 100 characters of evidence. You can't default your way through a justification you're forced to write. The hardcoded 0.95 disappeared because the structure made it impossible.
+**Invisible thin extraction.** It pulls the frameworks a posting names into `core_stack`. Sometimes that came back empty — but "empty" was ambiguous: did the posting name nothing, or did the model miss something that was there? Both looked identical. Adding a `stack_unspecified: bool` companion split the two apart, turning an invisible failure into a countable one.
 
-## Failure 2 — Thin extraction that looked like success
+**Ungrounded judge verdicts.** For catching fake "AI" roles I built a second LLM as a judge. Same trick: it must write a critique *before* the verdict, never after. The order is the discipline — a verdict with no reasoning in front of it is where calibration quietly breaks.
 
-leadlens extracts `core_stack` — the frameworks named in a posting. Sometimes it came back empty. But "empty" was ambiguous: did the *posting* name no frameworks (model did its job), or did the model *miss* frameworks that were there (real failure)? Both looked identical — `[]`.
+The reframing is the takeaway: the schema stops being a formatting detail and becomes the spec for what "good" means. Most of my fixes were schema edits, not prompt edits.
 
-**The schema fix:**
+## Part 2 — My evaluation was cheating
 
-```python
-core_stack: list[str] = Field(...)
-stack_unspecified: bool = Field(
-    description="True if the source named no frameworks; False if it did.",
-)
-```
+Here's the part I didn't expect.
 
-Now an empty `core_stack` with `stack_unspecified=True` means "nothing to find" — fine. Empty with `False` means "the model missed something" — a bug I can see and count. The boolean turned an invisible failure into a measurable one.
+To trust the scam-detecting judge, I built a small hand-labelled set, then grew it — more postings, more variety, more of the genuinely tricky cases (sales roles with "AI" in the title, gig "AI trainer" work, partnership pitches with no salary). I expected the judge to start failing as the set got harder. It didn't. It kept scoring suspiciously well.
 
-## Failure 3 — The judge that under-called scams
+That should have made me happy. It made me uneasy. A judge that aces every case usually means the test is too easy, not that the judge is brilliant.
 
-The most interesting one. AI job boards are full of "AI" postings that aren't real engineering roles — partnership-not-a-job pitches, equity-only-no-salary asks, "AI Customer Success Manager" titles with zero engineering. leadlens kept under-calling these.
+So I read my own evaluation data line by line — which is the one eval habit that actually pays off. And the problem was obvious in hindsight: **I'd written the answer into the input.** My job descriptions had editorial notes baked in — phrases like "zero technical AI work" or "this is a sales role, not engineering." The judge wasn't judging a raw posting. It was reading my hint and repeating it back. The headline score was measuring my own annotations, not the model.
 
-So I built a second LLM as a **judge** whose only job is to flag scams, using critique-shadowing: it writes a 2–3 sentence critique *before* the verdict (`min_length` again — same pattern), then a binary `yes`/`no`.
+I stripped every one of those tells out of the descriptions, leaving only what a real posting would actually say, and ran it again. The score dropped. The judge started missing the subtlest cases — a "Director of Partnerships" at a real AI company, a coding-heavy gig that's really piecework annotation. Exactly the cases where a human skimming fast would also be fooled.
 
-Then I did the part most demos skip: I calibrated it against my own hand-labels.
+The lower number is the honest one. The high number was never real — it was the eval grading its own crib notes.
 
-### Why I didn't measure accuracy
+## Why this is the better lesson
 
-Only 3 of my 20 postings are scams. A lazy judge that says "not a scam" to everything scores **85% raw agreement** — and catches zero scams. Accuracy lies under class imbalance. So I measured **TPR** (of real scams, how many caught?) and **TNR** (of real roles, how many correctly cleared?) separately.
+A failure mode you can fix with a schema field is satisfying but tidy. A failure mode in your *measurement* is the dangerous one, because it doesn't look like a failure — it looks like success. If I'd trusted the first result, I'd have shipped a judge I believed was near-perfect and watched it fall apart on real job boards, with no idea why.
 
-### The iteration
-
-**v1:** TPR 1.0, **TNR 0.882**. It caught all 3 scams but wrongly flagged 2 real startup roles as scams — it over-fired on "vague" and "founding engineer" language.
-
-**v2:** I added two few-shot examples (one real scam, one real-but-sketchy-looking role) and one rule — *vague + a real product is not a scam*. Re-ran:
-
-| Version | TPR | TNR | False positives |
-|---|---|---|---|
-| v1 | 1.0 | 0.882 | 2 |
-| **v2** | **1.0** | **1.0** | **0** |
-
-Both false positives flipped to correct. No scam slipped.
-
-### The honest caveat
-
-1.0 on 20 examples is **encouraging, not solved.** Twenty is a small set; at 100 postings I fully expect TNR to dip and need another iteration. The *method* is proven — measure, find the failing cases, fix with examples + a rule, re-measure — but the *number* needs a bigger golden set before I'd trust it. I'd rather say that than wave a 100% around.
-
-## The pattern, stated plainly
-
-Every recurring failure had the same fix shape: **a schema field that forces the model to expose the dimension the failure was hiding in.**
-
-- Hardcoded confidence → `min_length` reasoning field.
-- Invisible thin extraction → a `_unspecified` boolean.
-- Ungrounded judge verdicts → critique-before-verdict.
-
-The schema stops being just an output format and becomes the eval spec — it defines what "good" looks like and makes "bad" measurable. That reframing is the most useful thing I learned building this.
+The fix for the model was a schema. The fix for the eval was reading the data and being willing to make my own numbers look worse. The second one was harder and mattered more.
 
 ## What's next
 
-leadlens runs locally at ~$0.00085 per posting. Next I'm deploying it (FastAPI + Modal), wiring real tracing (Langfuse), and scaling the golden set from 20 to 100 real postings — which is where the judge's 1.0 will get its real test.
+The judge now misses the genuinely ambiguous cases — partnership-flavoured roles at real AI companies, coding gig work that isn't really a job. Those are the frontier, and the next iteration targets them with worked examples of exactly those shapes. The classifier itself is the weaker link — it still over-trusts the word "AI" in a title — so that's next too.
+
+leadlens runs for a fraction of a cent per posting. Cost was never the constraint. Honesty about what the evaluation is actually measuring was.
 
 *Code: [github.com/Manveen07/new-10x-engineer](https://github.com/Manveen07/new-10x-engineer)*

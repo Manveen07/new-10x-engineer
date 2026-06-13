@@ -11,7 +11,13 @@ class JobPosting(BaseModel):
 
     # classifier outputs — each field justifies existence by measurability
     seniority: Literal["intern", "junior", "mid", "senior", "staff", "lead", "unclear"]
-    ai_authenticity: Literal["real_ai_role", "ai_adjacent", "ai_washed", "non_ai"]
+    ai_authenticity: Literal[
+        "real_ai_role",  # LLM/agent/RAG application engineering — Manveen's lane
+        "ml_training",  # trains/fine-tunes models, MLOps, CV/DL research — real AI, but wants MS/PhD, not app-layer
+        "ai_adjacent",  # data/infra/backend that serves AI but isn't building it
+        "ai_washed",  # AI in title, role is sales/CS/marketing/partnership/scam
+        "non_ai",  # no AI content at all
+    ]
     core_stack: list[str] = Field(
         max_length=20,
         description="Specific frameworks/libraries named in the source description: LangGraph, RAG, MCP, PyTorch, Postgres, etc. If source does not enumerate any frameworks, return an empty list AND set stack_unspecified=True.",
